@@ -8,6 +8,10 @@ export default defineConfig({
   server: {
     port: 5173,
     host: "0.0.0.0",
+    allowedHosts: [
+      "cupid-simple.humorist.ai",
+      "3.136.156.43",
+    ],
     proxy: {
       "/chatkit": {
         target: backendTarget,
