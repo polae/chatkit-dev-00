@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: cupid-backend-dev
+    ports:
+      - "8003:8003"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PORT=8003
+    volumes:
+      - ./backend:/app
+      - backend-venv:/app/.venv
+    restart: unless-stopped
+    networks:
+      - cupid-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: cupid-frontend-dev
+    ports:
+      - "5173:5173"
+    environment:
+      - BACKEND_URL=http://backend:8003
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - cupid-network
+
+volumes:
+  backend-venv:
+
+networks:
+  cupid-network:
+    driver: bridge

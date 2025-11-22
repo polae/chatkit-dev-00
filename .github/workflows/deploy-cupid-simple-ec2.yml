@@ -1,0 +1,31 @@
+name: Deploy Cupid-Simple to EC2
+
+on:
+  push:
+    branches: [main, development]
+    paths:
+      - 'apps/cupid-simple/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/chatkit-dev-00/apps/cupid-simple
+            git pull origin main
+            echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" > .env
+            docker compose down
+            docker compose build --no-cache
+            docker compose up -d
+            docker compose ps
+            echo "Deployment complete!"

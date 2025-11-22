@@ -1,0 +1,13 @@
+# Caddyfile for Cupid-Simple
+# Caddy automatically handles HTTPS with Let's Encrypt
+
+# For local development (no HTTPS)
+:80 {
+    reverse_proxy frontend:80
+}
+
+# For production with domain (automatic HTTPS)
+# Uncomment and replace yourdomain.com with your actual domain
+# yourdomain.com {
+#     reverse_proxy frontend:80
+# }

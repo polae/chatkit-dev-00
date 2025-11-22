@@ -3,7 +3,7 @@
 from typing import Any, TypedDict
 
 
-class RequestContext(TypedDict):
+class RequestContext(TypedDict, total=False):
     """Context for tracking game state across conversation turns."""
 
     chapter: int  # 1=mortal profile, 2=match profile, 3+=game scenes

@@ -9,14 +9,9 @@ from chatkit.widgets import WidgetRoot
 
 from .widget_template import WidgetTemplate
 
-# Locate the widget file relative to the repo root
-WIDGET_PATH = (
-    Path(__file__).parent.parent.parent.parent.parent.parent
-    / "specs"
-    / "cupid-simple"
-    / "widgets"
-    / "ProfileCard00.widget"
-)
+# Locate the widget file relative to this file
+# Works in both development (relative to repo) and Docker (within /app)
+WIDGET_PATH = Path(__file__).parent / "ProfileCard00.widget"
 
 # Load the ProfileCard widget template
 profilecard_template = WidgetTemplate.from_file(str(WIDGET_PATH))

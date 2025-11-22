@@ -100,11 +100,20 @@ class CupidServer(ChatKitServer[RequestContext]):
     ) -> AsyncIterator[ThreadStreamEvent]:
         """Handle conversation turns with chapter-based logic."""
 
-        # Initialize chapter tracking if needed
-        if "chapter" not in context:
-            context["chapter"] = 1
-            context["mortal_data"] = self.mortal_data
-            context["match_data"] = self.match_data
+        # Initialize chapter tracking in thread metadata if needed
+        if "chapter" not in thread.metadata:
+            logging.info("Initializing chapter metadata to 1")
+            thread.metadata["chapter"] = 1
+            thread.metadata["mortal_data"] = self.mortal_data
+            thread.metadata["match_data"] = self.match_data
+            await self.store.save_thread(thread, context)
+        else:
+            logging.info(f"Loading existing chapter: {thread.metadata['chapter']}")
+
+        # Copy data to context for agent access (context needs these for validation)
+        context["chapter"] = thread.metadata["chapter"]
+        context["mortal_data"] = thread.metadata["mortal_data"]
+        context["match_data"] = thread.metadata["match_data"]
 
         # Create agent context
         agent_context = CupidAgentContext(
@@ -128,8 +137,8 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Convert to agent input format
         input_items = await self.thread_item_converter.to_agent_input(items)
 
-        # Chapter-based logic
-        chapter = context.get("chapter", 1)
+        # Chapter-based logic - read from thread metadata
+        chapter = thread.metadata.get("chapter", 1)
 
         if chapter == 1:
             # Chapter 1: Present Zara (mortal)
@@ -143,19 +152,43 @@ class CupidServer(ChatKitServer[RequestContext]):
             async for event in stream_agent_response(agent_context, result):
                 yield event
 
-            # Stream ProfileCard widget for mortal character
-            profilecard_widget = build_profilecard_widget(self.mortal_data)
+            # Transform YAML data to ProfileCard format
+            mortal_data = context.get("mortal_data", self.mortal_data)
+            logging.info(f"Chapter 1: Building ProfileCard for {mortal_data.get('name')}")
+
+            # Extract and format fields for ProfileCard
+            profilecard_data = {
+                "name": mortal_data["name"],
+                "age": mortal_data["age"],
+                "occupation": mortal_data["occupation"],
+                "location": mortal_data["location"],
+                "birthdate": mortal_data["birthdate"],
+                "origin": mortal_data["origin"],
+                "astrological_notes": {
+                    "sun_sign": mortal_data["astrological_notes"]["sun_sign"].upper(),
+                    "moon_sign": mortal_data["astrological_notes"]["moon_sign"].upper(),
+                    "venus_sign": mortal_data["astrological_notes"]["venus_sign"].upper(),
+                    "mars_sign": mortal_data["astrological_notes"]["mars_sign"].upper(),
+                },
+                "short_bio": mortal_data["short_bio"],
+            }
+
+            # Build widget from formatted data
+            profilecard_widget = build_profilecard_widget(profilecard_data)
             widget_item = WidgetItem(
                 thread_id=thread.id,
                 id=f"widget_{thread.id}_{datetime.now().timestamp()}",
                 created_at=datetime.now(),
                 widget=profilecard_widget,
-                copy_text=f"{self.mortal_data['name']}, {self.mortal_data['age']}, {self.mortal_data['occupation']}",
+                copy_text=f"{profilecard_data['name']}, {profilecard_data['age']}, {profilecard_data['occupation']}",
             )
             yield ThreadItemDoneEvent(item=widget_item)
 
-            # Increment chapter
-            context["chapter"] = 2
+            # Increment chapter in thread metadata
+            logging.info("Chapter 1 complete - incrementing to chapter 2")
+            thread.metadata["chapter"] = 2
+            await self.store.save_thread(thread, context)
+            logging.info(f"Saved thread with chapter = {thread.metadata['chapter']}")
 
         elif chapter == 2:
             # Chapter 2: Present Sam (match)
@@ -169,19 +202,41 @@ class CupidServer(ChatKitServer[RequestContext]):
             async for event in stream_agent_response(agent_context, result):
                 yield event
 
-            # Stream ProfileCard widget for match character
-            profilecard_widget = build_profilecard_widget(self.match_data)
+            # Transform YAML data to ProfileCard format
+            match_data = context.get("match_data", self.match_data)
+            logging.info(f"Chapter 2: Building ProfileCard for {match_data.get('name')}")
+
+            # Extract and format fields for ProfileCard
+            profilecard_data = {
+                "name": match_data["name"],
+                "age": match_data["age"],
+                "occupation": match_data["occupation"],
+                "location": match_data["location"],
+                "birthdate": match_data["birthdate"],
+                "origin": match_data["origin"],
+                "astrological_notes": {
+                    "sun_sign": match_data["astrological_notes"]["sun_sign"].upper(),
+                    "moon_sign": match_data["astrological_notes"]["moon_sign"].upper(),
+                    "venus_sign": match_data["astrological_notes"]["venus_sign"].upper(),
+                    "mars_sign": match_data["astrological_notes"]["mars_sign"].upper(),
+                },
+                "short_bio": match_data["short_bio"],
+            }
+
+            # Build widget from formatted data
+            profilecard_widget = build_profilecard_widget(profilecard_data)
             widget_item = WidgetItem(
                 thread_id=thread.id,
                 id=f"widget_{thread.id}_{datetime.now().timestamp()}",
                 created_at=datetime.now(),
                 widget=profilecard_widget,
-                copy_text=f"{self.match_data['name']}, {self.match_data['age']}, {self.match_data['occupation']}",
+                copy_text=f"{profilecard_data['name']}, {profilecard_data['age']}, {profilecard_data['occupation']}",
             )
             yield ThreadItemDoneEvent(item=widget_item)
 
-            # Increment chapter
-            context["chapter"] = 3
+            # Increment chapter in thread metadata
+            thread.metadata["chapter"] = 3
+            await self.store.save_thread(thread, context)
 
         else:
             # Chapter 3+: Normal game conversation following instructions
