@@ -12,7 +12,11 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Build the app
+# Accept build arguments for environment variables
+ARG VITE_CHATKIT_API_DOMAIN_KEY
+ENV VITE_CHATKIT_API_DOMAIN_KEY=$VITE_CHATKIT_API_DOMAIN_KEY
+
+# Build the app (Vite will embed VITE_* env vars)
 RUN npm run build
 
 # Stage 2: Production
