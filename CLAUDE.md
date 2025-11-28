@@ -97,6 +97,7 @@ my_agent = Agent[MyAgentContext](
 
 ## Important Notes
 
+- **NEVER push branches or PRs to the original https://github.com/openai/openai-chatkit-advanced-samples** - always push to this project's repo (chatkit-dev-00)
 - Environment variables must be exported in the shell running npm (not just in .env)
 - Each example runs on different ports - check the console output
 - The openai-agents SDK handles OpenAI API calls
