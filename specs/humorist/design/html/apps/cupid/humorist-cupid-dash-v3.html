@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cupid - The Humorist</title>
+    <title>Cupid v3 - The Humorist</title>
 
     <!-- Google Fonts: Lexend Superfamily -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend+Peta:wght@700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
-/* Humorist Design System - Cupid Dashboard */
+/* Humorist Design System - Cupid Dashboard v3 */
 /* Witty Warmth Aesthetic */
 
 :root {
@@ -539,7 +539,7 @@ button {
     background: rgba(231, 181, 160, 0.25);
     border-radius: 9999px;
     font-family: var(--font-body);
-    font-size: 17px;
+    font-size: 12px;
     font-weight: 400;
     color: #b07d66;
 }
@@ -604,6 +604,35 @@ html.dark .badge-small {
     letter-spacing: 0.05em;
 }
 
+/* Compatibility Display (no bar) */
+.compatibility-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) 0;
+}
+
+.compat-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.compat-value {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.difficulty-rating .compat-value {
+    font-size: 16px;
+    margin-left: 4px;
+}
+
 /* Planet Vertical Bar Chart */
 .planet-badges {
     display: flex;
@@ -655,9 +684,9 @@ html.dark .badge-small {
 
 .planet-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     margin-top: 4px;
 }
 
@@ -675,26 +704,15 @@ html.dark .badge-small {
 }
 
 .planet-label {
-    font-family: var(--font-body);
-    font-size: 9px;
-    color: var(--text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    line-height: 1;
+    display: none;
 }
 
-/* Compatibility Bar Chart */
-.compatibility-chart {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-}
-
-.chart-row {
+/* Connection Row (at bottom) */
+.connection-row {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
+    margin-top: var(--space-md);
 }
 
 .chart-label {
@@ -731,10 +749,6 @@ html.dark .badge-small {
     height: 100%;
     border-radius: 6px;
     transition: width 400ms ease-out;
-}
-
-.chart-bar-fill.compatibility {
-    background: var(--text-primary);
 }
 
 .chart-bar-fill.connection {
@@ -846,10 +860,10 @@ html.dark .badge-small {
                                 <span>Greenpoint, Brooklyn</span>
                             </div>
                             <div class="astro-badges-small">
-                                <span class="badge-small">☀️♈</span>
-                                <span class="badge-small">☽♍</span>
-                                <span class="badge-small">♀♉</span>
-                                <span class="badge-small">♂♈</span>
+                                <span class="badge-small">☀️ ♈</span>
+                                <span class="badge-small">☽ ♍</span>
+                                <span class="badge-small">❤️ ♉</span>
+                                <span class="badge-small">🔥 ♈</span>
                             </div>
                         </div>
                     </div>
@@ -878,10 +892,10 @@ html.dark .badge-small {
                                 <span>Queens, New York</span>
                             </div>
                             <div class="astro-badges-small">
-                                <span class="badge-small">☀️♊</span>
-                                <span class="badge-small">☽♒</span>
-                                <span class="badge-small">♀♊</span>
-                                <span class="badge-small">♂♉</span>
+                                <span class="badge-small">☀️ ♊</span>
+                                <span class="badge-small">☽ ♒</span>
+                                <span class="badge-small">❤️ ♊</span>
+                                <span class="badge-small">🔥 ♉</span>
                             </div>
                         </div>
                     </div>
@@ -893,30 +907,9 @@ html.dark .badge-small {
                     <div class="section-title">
                         <h2 class="title-text">Compatibility</h2>
                         <div class="difficulty-rating">
+                            <span class="compat-value">69</span>
                             <div class="difficulty-stars">★★★☆☆</div>
                             <div class="difficulty-label">Moderate</div>
-                        </div>
-                    </div>
-
-                    <!-- Compatibility Bar Chart -->
-                    <div class="compatibility-chart">
-                        <!-- Compatibility Bar -->
-                        <div class="chart-row">
-                            <div class="chart-label">Compatibility</div>
-                            <div class="chart-value">69</div>
-                            <div class="chart-bar-container">
-                                <div class="chart-bar-fill compatibility" style="width: 69%;"></div>
-                            </div>
-                        </div>
-
-                        <!-- Connection Bar -->
-                        <div class="chart-row">
-                            <div class="chart-label">Connection</div>
-                            <div class="chart-value">36</div>
-                            <div class="chart-bar-container">
-                                <div class="chart-bar-fill connection" style="width: 36%;"></div>
-                            </div>
-                            <div class="chart-increase">+12</div>
                         </div>
                     </div>
 
@@ -927,9 +920,8 @@ html.dark .badge-small {
                                 <div class="planet-bar-fill" style="height: 56%;"></div>
                             </div>
                             <div class="planet-info">
-                                <div class="planet-emoji">☀</div>
-                                <div class="planet-score">56</div>
-                                <div class="planet-label">Sun</div>
+                                <span class="planet-emoji">☀</span>
+                                <span class="planet-score">56</span>
                             </div>
                         </div>
                         <div class="planet-badge">
@@ -937,9 +929,8 @@ html.dark .badge-small {
                                 <div class="planet-bar-fill" style="height: 72%;"></div>
                             </div>
                             <div class="planet-info">
-                                <div class="planet-emoji">☽</div>
-                                <div class="planet-score">72</div>
-                                <div class="planet-label">Moon</div>
+                                <span class="planet-emoji">☽</span>
+                                <span class="planet-score">72</span>
                             </div>
                         </div>
                         <div class="planet-badge">
@@ -947,9 +938,8 @@ html.dark .badge-small {
                                 <div class="planet-bar-fill" style="height: 78%;"></div>
                             </div>
                             <div class="planet-info">
-                                <div class="planet-emoji">♀</div>
-                                <div class="planet-score">78</div>
-                                <div class="planet-label">Venus</div>
+                                <span class="planet-emoji">❤️</span>
+                                <span class="planet-score">78</span>
                             </div>
                         </div>
                         <div class="planet-badge">
@@ -957,11 +947,20 @@ html.dark .badge-small {
                                 <div class="planet-bar-fill" style="height: 74%;"></div>
                             </div>
                             <div class="planet-info">
-                                <div class="planet-emoji">♂</div>
-                                <div class="planet-score">74</div>
-                                <div class="planet-label">Mars</div>
+                                <span class="planet-emoji">🔥</span>
+                                <span class="planet-score">74</span>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Connection Row (at bottom) -->
+                    <div class="connection-row">
+                        <div class="chart-label">Connection</div>
+                        <div class="chart-value">36</div>
+                        <div class="chart-bar-container">
+                            <div class="chart-bar-fill connection" style="width: 36%;"></div>
+                        </div>
+                        <div class="chart-increase">+12</div>
                     </div>
 
                 </div>

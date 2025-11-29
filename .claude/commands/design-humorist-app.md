@@ -14,4 +14,4 @@ Always include the nav bar at the top.
 
 Please write files to the html directory: `specs/humorist/design/html`
 
-Before completing your work, please check it with playwright mcp.
+$ARGUMENTS
