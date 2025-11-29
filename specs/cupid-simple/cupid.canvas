@@ -8,7 +8,6 @@
 		{"id":"bd49bc50b11d48b2","type":"text","text":"AgentCupidGame","x":885,"y":540,"width":250,"height":60},
 		{"id":"8d1a08880207e2d7","type":"text","text":"AgentCupidEnd","x":884,"y":840,"width":250,"height":60},
 		{"id":"4d1b9e1b0a6da77e","type":"text","text":"AgentMortalShow","x":1265,"y":-440,"width":250,"height":60},
-		{"id":"5edce51e539c4f62","type":"text","text":"state.chapter +1","x":1585,"y":-440,"width":250,"height":60},
 		{"id":"319996273b32f535","type":"text","text":"ProfileBox","x":1264,"y":-330,"width":250,"height":60},
 		{"id":"cf191245d103ca1a","type":"text","text":"AgentMatchShow\n","x":1264,"y":-110,"width":250,"height":60},
 		{"id":"674336af0777df6b","type":"text","text":"state.chapter +1","x":1645,"y":-110,"width":250,"height":60},
@@ -19,7 +18,8 @@
 		{"id":"c5b5086a5cc17f14","type":"text","text":"state.chapter +1","x":1296,"y":540,"width":250,"height":60},
 		{"id":"a3846ed5b30190a1","type":"text","text":"CompatibilityDash","x":1296,"y":660,"width":250,"height":60},
 		{"id":"fa7c801be2ec2680","type":"text","text":"CupidEvalDash","x":1295,"y":1020,"width":250,"height":60},
-		{"id":"0054e0e8c02cd0a7","type":"text","text":"state.chapter +1","x":1296,"y":840,"width":250,"height":60}
+		{"id":"0054e0e8c02cd0a7","type":"text","text":"state.chapter +1","x":1296,"y":840,"width":250,"height":60},
+		{"id":"5edce51e539c4f62","type":"text","text":"state.chapter +1","x":1644,"y":-440,"width":250,"height":60}
 	],
 	"edges":[
 		{"id":"02b591548ea1fb27","fromNode":"e1cbf930cb3dde32","fromSide":"bottom","toNode":"abffae455d6b8ce6","toSide":"top"},

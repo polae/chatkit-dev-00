@@ -14,10 +14,10 @@
     <mood>Witty, warm, approachable, intelligent, playful-but-refined</mood>
     <product-type>Publication-style hub with app-like navigation to AI agents</product-type>
     <screenshots>
-      <screenshot file="humorist-homepage-light-desktop.png" description="Homepage in light mode - desktop view"/>
-      <screenshot file="humorist-homepage-dark-desktop.png" description="Homepage in dark mode - desktop view"/>
-      <screenshot file="humorist-about-light-desktop.png" description="About page (article layout) in light mode"/>
-      <screenshot file="humorist-about-dark-desktop.png" description="About page (article layout) in dark mode"/>
+      <screenshot file="screenshots/humorist-homepage-light-desktop.png" description="Homepage in light mode - desktop view"/>
+      <screenshot file="screenshots/humorist-homepage-dark-desktop.png" description="Homepage in dark mode - desktop view"/>
+      <screenshot file="screenshots/humorist-about-light-desktop.png" description="About page (article layout) in light mode"/>
+      <screenshot file="screenshots/humorist-about-dark-desktop.png" description="About page (article layout) in dark mode"/>
     </screenshots>
   </meta>
 

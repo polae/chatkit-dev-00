@@ -189,4 +189,4 @@ _"The stars incline, they do not compel. But a skilled Cupid knows when to shoot
 
 ## Instructions
 
-Please simply give a breif instroduction to the game, and as if Cupid (the user) is ready to see the mortal?
+Please simply give a brief introduction to the game, and ask if Cupid (the user) is ready to see the mortal?
