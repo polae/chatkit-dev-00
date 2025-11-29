@@ -277,10 +277,12 @@ button {
 
 .chat-content {
     padding: var(--space-md);
-    height: 100%;
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    overflow-y: auto;
 }
 
 .chat-title {
@@ -350,10 +352,9 @@ button {
     padding: var(--space-md);
     background: var(--bg-primary);
     border-top: 1px solid var(--border-color);
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    margin: 0 calc(-1 * var(--space-lg));
-    margin-bottom: calc(-1 * var(--space-lg));
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    flex-shrink: 0;
 }
 
 .chat-input {
@@ -538,7 +539,7 @@ button {
     background: rgba(231, 181, 160, 0.25);
     border-radius: 9999px;
     font-family: var(--font-body);
-    font-size: 12px;
+    font-size: 17px;
     font-weight: 400;
     color: #b07d66;
 }
@@ -830,13 +831,10 @@ html.dark .badge-small {
                                 <span>Greenpoint, Brooklyn</span>
                             </div>
                             <div class="astro-badges-small">
-                                <span class="badge-small">Sun Aries</span>
-                                <span class="badge-small">Moon Virgo</span>
-                                <span class="badge-small">Venus Taurus</span>
-                                <span class="badge-small">Mars Aries</span>
-                            </div>
-                            <div class="profile-bio-small">
-                                Will judge your form AND your life choices. Runs marathons but can't run from commitment issues.
+                                <span class="badge-small">☀️♈</span>
+                                <span class="badge-small">☽♍</span>
+                                <span class="badge-small">♀♉</span>
+                                <span class="badge-small">♂♈</span>
                             </div>
                         </div>
                     </div>
@@ -868,13 +866,10 @@ html.dark .badge-small {
                                 <span>Queens, New York</span>
                             </div>
                             <div class="astro-badges-small">
-                                <span class="badge-small">Sun Gemini</span>
-                                <span class="badge-small">Moon Aquarius</span>
-                                <span class="badge-small">Venus Gemini</span>
-                                <span class="badge-small">Mars Taurus</span>
-                            </div>
-                            <div class="profile-bio-small">
-                                Talks for a living, ghosts for fun. Has 47 podcast episodes about "finding balance" but still checks phone at 3am.
+                                <span class="badge-small">☀️♊</span>
+                                <span class="badge-small">☽♒</span>
+                                <span class="badge-small">♀♊</span>
+                                <span class="badge-small">♂♉</span>
                             </div>
                         </div>
                     </div>
