@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupid v7 - The Humorist</title>
+
+    <!-- Google Fonts: Lexend Superfamily -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend+Peta:wght@700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+/* Humorist Design System - Cupid Dashboard v7 */
+/* COMPACT GRID LAYOUT - Most Dense Option */
+
+:root {
+    /* Light Mode Colors */
+    --bg-primary: #FDF6E3;
+    --bg-surface: #F5EFE0;
+    --text-primary: #464646;
+    --text-secondary: #657B83;
+    --text-muted: #93A1A1;
+    --border-color: rgba(101, 123, 131, 0.1);
+    --border-color-hover: rgba(101, 123, 131, 0.2);
+
+    /* Rainbow Accent Spectrum */
+    --red: #D74E39;
+    --orange: #DA6800;
+    --yellow: #FFC922;
+    --pink: #E7B5A0;
+    --green: #8AA47D;
+    --blue: #6CC2FF;
+    --purple: #9B85B7;
+
+    /* Typography */
+    --font-display: 'Lexend Giga', sans-serif;
+    --font-emphasis: 'Lexend Peta', sans-serif;
+    --font-body: 'Lexend', sans-serif;
+
+    /* Spacing Scale - Extra Compact */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+
+    /* Shadows */
+    --shadow-subtle: 0 1px 3px rgba(70, 70, 70, 0.04);
+    --shadow-medium: 0 4px 16px rgba(70, 70, 70, 0.06);
+    --shadow-elevated: 0 8px 32px rgba(70, 70, 70, 0.08);
+}
+
+html.dark {
+    /* Dark Mode Colors */
+    --bg-primary: #1a1a1a;
+    --bg-surface: #2d2d2d;
+    --text-primary: #E8E8E8;
+    --text-secondary: #A8A8A8;
+    --text-muted: #6B6B6B;
+    --border-color: rgba(168, 168, 168, 0.1);
+    --border-color-hover: rgba(168, 168, 168, 0.2);
+
+    /* Dark Mode Shadows */
+    --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Reset & Base Styles */
+*, ::before, ::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-body);
+    font-weight: 300;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    transition: background-color 200ms ease, color 200ms ease;
+}
+
+html, body {
+    height: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* Navbar */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-primary);
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.navbar-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.navbar-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+@media (max-width: 480px) {
+    .navbar-title {
+        display: none;
+    }
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.theme-toggle {
+    background: var(--bg-surface);
+    padding: 8px;
+    border-radius: 6px;
+    min-height: 44px;
+    min-width: 44px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms ease;
+}
+
+.theme-toggle:hover {
+    background: var(--border-color-hover);
+    color: var(--text-primary);
+}
+
+.theme-toggle-icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+}
+
+/* Main Content */
+.main-content {
+    max-width: 72rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    height: calc(100vh - 60px);
+}
+
+@media (min-width: 1024px) {
+    .main-content {
+        flex-direction: row;
+        gap: var(--space-lg);
+    }
+}
+
+/* Dashboard Panel */
+.dashboard-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-medium);
+    animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 0ms both;
+}
+
+@media (min-width: 1024px) {
+    .dashboard-panel {
+        flex: 1;
+    }
+}
+
+.game-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    overflow-y: auto;
+}
+
+/* Chat Panel */
+.chat-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-medium);
+    animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 80ms both;
+}
+
+@media (min-width: 1024px) {
+    .chat-panel {
+        width: 45%;
+    }
+}
+
+.chat-content {
+    padding: var(--space-md);
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow-y: auto;
+}
+
+.chat-title {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 4vw, 20px);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+}
+
+.chat-placeholder {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-xl) 0;
+}
+
+.placeholder-text {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.chat-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border-color);
+    background: transparent;
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    transition: all 200ms ease;
+}
+
+.action-btn:hover {
+    background: var(--pink);
+    border-color: var(--pink);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-subtle);
+}
+
+.action-btn .emoji {
+    font-size: 16px;
+}
+
+/* Chat Input */
+.chat-input-container {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: center;
+    padding: var(--space-md);
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    flex-shrink: 0;
+}
+
+.chat-input {
+    flex: 1;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-surface);
+    border-radius: 9999px;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--text-primary);
+    transition: all 200ms ease;
+}
+
+.chat-input:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(231, 181, 160, 0.2);
+}
+
+.chat-input::placeholder {
+    color: var(--text-muted);
+}
+
+.send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--pink);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms ease;
+}
+
+.send-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.send-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+/* Section Label */
+.section-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-sm);
+}
+
+/* Profiles Row */
+.profiles-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+}
+
+@media (max-width: 640px) {
+    .profiles-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Profile Card */
+.compact-profile {
+    position: relative;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: var(--space-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    box-shadow: var(--shadow-subtle);
+    transition: all 200ms ease;
+}
+
+.compact-profile:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-elevated);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.avatar-small {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--bg-surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.avatar-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--text-secondary);
+    stroke-width: 1.5;
+}
+
+.profile-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-name-small {
+    font-family: var(--font-display);
+    font-size: clamp(16px, 4vw, 18px);
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-occupation-small {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-location-small {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.location-icon-small {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    stroke-width: 1.5;
+}
+
+/* Astrological Badges */
+.astro-badges-small {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.badge-small {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border: none;
+    background: rgba(231, 181, 160, 0.25);
+    border-radius: 9999px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 400;
+    color: #b07d66;
+}
+
+html.dark .badge-small {
+    background: rgba(231, 181, 160, 0.2);
+    color: #e7b5a0;
+}
+
+/* Compatibility Section - COMPACT GRID LAYOUT */
+.compatibility-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+/* Top Row: Single Header with all info inline */
+.compact-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.header-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.header-score {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.header-stars {
+    font-family: var(--font-body);
+    color: var(--pink);
+    font-size: 14px;
+    letter-spacing: 0.05rem;
+}
+
+.header-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Main Grid: 4 columns */
+.compact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(60px, 1fr)) 2fr;
+    gap: var(--space-sm);
+    align-items: flex-end;
+}
+
+/* Mini Planet Bars */
+.mini-planet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.mini-bar-container {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    background: var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+}
+
+.mini-bar-fill {
+    width: 100%;
+    background: var(--pink);
+    border-radius: 6px 6px 0 0;
+    transition: height 400ms ease-out;
+    position: relative;
+}
+
+.mini-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent);
+    border-radius: 6px 6px 0 0;
+}
+
+.planet-info-compact {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+
+.planet-emoji-small {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.planet-score-small {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+/* Connection Display - Horizontal */
+.connection-compact {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.connection-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.connection-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.connection-value {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.connection-bar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.connection-bar-container {
+    flex: 1;
+    height: 18px;
+    background: var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.connection-bar-fill {
+    height: 100%;
+    background: var(--pink);
+    border-radius: 6px;
+    transition: width 400ms ease-out;
+}
+
+.connection-increase {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--pink);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+/* Scene Progress Graph - Bottom (Full Width) */
+.progress-section {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border-color);
+}
+
+.line-graph-container {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: var(--space-sm);
+    box-shadow: var(--shadow-subtle);
+}
+
+.line-graph {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.graph-line {
+    stroke: #E7B5A0;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw-line 1200ms ease-out 400ms forwards;
+}
+
+@keyframes draw-line {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.data-point {
+    opacity: 0;
+    animation: fade-in-point 400ms ease-out both;
+}
+
+.data-point:nth-child(2) { animation-delay: 800ms; }
+.data-point:nth-child(3) { animation-delay: 1000ms; }
+.data-point:nth-child(4) { animation-delay: 1200ms; }
+.data-point:nth-child(5) { animation-delay: 1400ms; }
+
+@keyframes fade-in-point {
+    to {
+        opacity: 1;
+    }
+}
+
+.data-point-current {
+    opacity: 0;
+    animation: fade-in-current 500ms ease-out 1400ms both;
+}
+
+@keyframes fade-in-current {
+    to {
+        opacity: 1;
+    }
+}
+
+.scene-label {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    fill: var(--text-muted);
+    text-anchor: middle;
+    dominant-baseline: hanging;
+}
+
+/* Dark mode adjustments for SVG */
+html.dark .graph-line {
+    stroke: #E7B5A0;
+}
+
+html.dark .scene-label {
+    fill: #6B6B6B;
+}
+
+/* Animations */
+@keyframes gentle-enter {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="../../humorist-homepage.html" style="display: flex; align-items: center; gap: var(--space-sm); text-decoration: none; color: inherit;">
+                <svg class="navbar-icon" width="24" height="24" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="256" cy="254" r="48" fill="#E7B5A0"/>
+                    <circle cx="368" cy="142" r="48" fill="#DA6800"/>
+                    <circle cx="368" cy="255" r="48" fill="#6CC2FF"/>
+                    <circle cx="148" cy="370" r="48" fill="#D74E39"/>
+                    <circle cx="144" cy="142" r="48" fill="#9B85B7"/>
+                    <circle cx="144" cy="254" r="48" fill="#FFC922"/>
+                    <circle cx="368" cy="366" r="48" fill="#8AA47D"/>
+                </svg>
+                <span class="navbar-title">Humorist</span>
+            </a>
+        </div>
+        <div class="navbar-right">
+            <button class="theme-toggle" aria-label="Toggle theme" id="theme-toggle-btn">
+                <svg id="sun-icon" class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg id="moon-icon" class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                    <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>
+                </svg>
+            </button>
+            <a href="../../humorist-homepage.html" class="navbar-link">Home</a>
+            <a href="../../humorist-about.html" class="navbar-link">About</a>
+            <a href="/login" class="navbar-link">Login</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Game Dashboard Panel (Left on Desktop) -->
+        <div class="dashboard-panel">
+            <div class="game-dashboard">
+                <!-- Profile Cards Row -->
+                <div class="profiles-row">
+                    <!-- Mortal Card -->
+                    <div>
+                        <h3 class="section-label">Your Mortal</h3>
+                        <div class="compact-profile">
+                            <div class="profile-header">
+                                <div class="avatar-small">
+                                    <svg class="avatar-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
+                                <div class="profile-header-info">
+                                    <h3 class="profile-name-small">Zara Patel</h3>
+                                    <p class="profile-occupation-small">Personal Trainer, 28</p>
+                                </div>
+                            </div>
+                            <div class="profile-location-small">
+                                <svg class="location-icon-small" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <span>Greenpoint, Brooklyn</span>
+                            </div>
+                            <div class="astro-badges-small">
+                                <span class="badge-small">☀️ ♈</span>
+                                <span class="badge-small">☽ ♍</span>
+                                <span class="badge-small">❤️ ♉</span>
+                                <span class="badge-small">🔥 ♈</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Match Card -->
+                    <div>
+                        <h3 class="section-label">The Match</h3>
+                        <div class="compact-profile">
+                            <div class="profile-header">
+                                <div class="avatar-small">
+                                    <svg class="avatar-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                </div>
+                                <div class="profile-header-info">
+                                    <h3 class="profile-name-small">Sam Martinez</h3>
+                                    <p class="profile-occupation-small">Podcast Host, 28</p>
+                                </div>
+                            </div>
+                            <div class="profile-location-small">
+                                <svg class="location-icon-small" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <span>Queens, New York</span>
+                            </div>
+                            <div class="astro-badges-small">
+                                <span class="badge-small">☀️ ♊</span>
+                                <span class="badge-small">☽ ♒</span>
+                                <span class="badge-small">❤️ ♊</span>
+                                <span class="badge-small">🔥 ♉</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compatibility Dashboard Section - COMPACT GRID -->
+                <div class="compatibility-section">
+                    <!-- Top Row: Single Inline Header -->
+                    <div class="compact-header">
+                        <span class="header-title">Compatibility:</span>
+                        <span class="header-score">69</span>
+                        <span class="header-stars">★★★☆☆</span>
+                        <span class="header-label">Moderate</span>
+                    </div>
+
+                    <!-- Main Grid: 3 Planet Bars + Connection -->
+                    <div class="compact-grid">
+                        <!-- Sun -->
+                        <div class="mini-planet">
+                            <div class="mini-bar-container">
+                                <div class="mini-bar-fill" style="height: 56%;"></div>
+                            </div>
+                            <div class="planet-info-compact">
+                                <span class="planet-emoji-small">☀</span>
+                                <span class="planet-score-small">56</span>
+                            </div>
+                        </div>
+
+                        <!-- Moon -->
+                        <div class="mini-planet">
+                            <div class="mini-bar-container">
+                                <div class="mini-bar-fill" style="height: 72%;"></div>
+                            </div>
+                            <div class="planet-info-compact">
+                                <span class="planet-emoji-small">☽</span>
+                                <span class="planet-score-small">72</span>
+                            </div>
+                        </div>
+
+                        <!-- Venus -->
+                        <div class="mini-planet">
+                            <div class="mini-bar-container">
+                                <div class="mini-bar-fill" style="height: 78%;"></div>
+                            </div>
+                            <div class="planet-info-compact">
+                                <span class="planet-emoji-small">❤️</span>
+                                <span class="planet-score-small">78</span>
+                            </div>
+                        </div>
+
+                        <!-- Connection - Spans remaining width -->
+                        <div class="connection-compact">
+                            <div class="connection-header">
+                                <span class="connection-label">Connection</span>
+                                <span class="connection-value">52</span>
+                            </div>
+                            <div class="connection-bar-wrapper">
+                                <div class="connection-bar-container">
+                                    <div class="connection-bar-fill" style="width: 52%;"></div>
+                                </div>
+                                <span class="connection-increase">+16</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scene Progress Graph - Bottom (Full Width) -->
+                    <div class="progress-section">
+                        <h3 class="section-label">Scene Progress</h3>
+                        <div class="line-graph-container">
+                            <svg class="line-graph" viewBox="0 0 400 120" preserveAspectRatio="xMidYMid meet">
+                                <!-- Smooth curved line using quadratic Bezier curves -->
+                                <path class="graph-line"
+                                      d="M 50,70 Q 75,60 100,55 Q 125,50 150,58 Q 175,66 200,56 Q 250,40 300,43 Q 325,45 350,33"
+                                      stroke="#E7B5A0" />
+
+                                <!-- Data points (regular) -->
+                                <circle cx="50" cy="70" r="5" fill="#E7B5A0" class="data-point" />
+                                <circle cx="150" cy="58" r="5" fill="#E7B5A0" class="data-point" />
+                                <circle cx="250" cy="56" r="5" fill="#E7B5A0" class="data-point" />
+
+                                <!-- Current scene point (larger with glow) -->
+                                <circle cx="350" cy="33" r="9" fill="#E7B5A0" class="data-point-current"
+                                        style="filter: drop-shadow(0 0 8px rgba(231, 181, 160, 0.5));" />
+
+                                <!-- Scene labels -->
+                                <text x="50" y="95" class="scene-label">Setup</text>
+                                <text x="150" y="95" class="scene-label">S1</text>
+                                <text x="250" y="95" class="scene-label">S2</text>
+                                <text x="350" y="95" class="scene-label">S3</text>
+                            </svg>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Panel (Right on Desktop) -->
+        <div class="chat-panel">
+            <div class="chat-content">
+                <h2 class="chat-title">Cupid</h2>
+                <div class="chat-placeholder">
+                    <p class="placeholder-text">Start a conversation to play matchmaker...</p>
+                </div>
+                <div class="chat-actions">
+                    <button class="action-btn">
+                        <span class="emoji">❤️</span>
+                        <span>Play</span>
+                    </button>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" placeholder="Ask about compatibility...">
+                <button class="send-btn" aria-label="Send message">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M5 12h14"></path>
+                        <path d="m12 5 7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle Implementation
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                document.documentElement.classList.add('dark');
+                updateIcons(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateIcons(false);
+            }
+        }
+
+        function updateIcons(isDark) {
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+
+            if (sunIcon && moonIcon) {
+                sunIcon.style.display = isDark ? 'none' : 'block';
+                moonIcon.style.display = isDark ? 'block' : 'none';
+            }
+        }
+
+        // Theme toggle button event listener
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', function() {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                updateIcons(isDark);
+            });
+        }
+
+        // Initialize theme on page load
+        initTheme();
+    </script>
+</body>
+</html>
