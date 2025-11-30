@@ -126,38 +126,6 @@ Set expectations immediately. Examples:
 
 ---
 
-## Astrological Aspects Reference
-
-### Harmonious Aspects (Bonuses)
-
-| Aspect | Angle | Effect | Gameplay Impact |
-|---|---|---|---|
-| **Trine** | 120° | Natural flow | +15-20% to relevant choices, mistakes forgiven |
-| **Sextile** | 60° | Supportive synergy | +10-12% bonus, strategic advantages available |
-| **Conjunction*** | 0° | Intense merger | +30-50% OR -30-50% (wildcard, can go either way) |
-
-*Conjunction is harmonious ONLY for compatible planets (Sun-Sun, Moon-Moon). Can be overwhelming for others.
-
-### Challenging Aspects (Penalties)
-
-| Aspect | Angle | Effect | Gameplay Impact |
-|---|---|---|---|
-| **Square** | 90° | Tension & friction | -15-20% penalty, mistakes punished harshly |
-| **Opposition** | 180° | Magnetic but difficult | Unpredictable, can swing dramatically either way |
-| **Quincunx** | 150° | Constant adjustment needed | -5-10% subtle penalty, fewer perfect options |
-
-### Scene-Specific Planetary Weights
-
-Different planets dominate different scenes. A couple might have amazing emotional resonance (Moon) but terrible physical chemistry (Mars), or vice versa.
-
-| Scene | Primary Planet (×1.5) | Secondary Planet (×1.2-1.3) |
-|---|---|---|
-| **Scene 1: Meet-Cute** | ☀️ Sun | 💖 Venus |
-| **Scene 2: Date Begins** | 💖 Venus | 🔥 Mars |
-| **Scene 3: Turning Point** | 🌙 Moon | ☀️ Sun |
-| **The Date Ends** | 🔥 Mars | 💖 Venus (Moon/Sun tertiary) |
-
-**Key Principle:** Each scene tests different compatibility dimensions. Strong Venus/Mars means great chemistry in Scenes 2 and 4, but weak Moon means Scene 3 (vulnerability) will be rough.
 
 ---
 
@@ -262,3 +230,7 @@ The Compatibility Matrix shows the odds. The Synastry shows the strategy. Togeth
 Remember: **The stars incline, they do not compel.** Your choices matter. These aspects are constraints, not destiny.
 
 🏹✨
+
+## Instructions
+
+Please present the compatibility analysis, and then ask if Cupid is ready to go the to the Meet Cute, as above. 

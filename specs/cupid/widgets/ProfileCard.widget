@@ -1,0 +1,214 @@
+{
+  "version": "1.0",
+  "name": "ProfileCard",
+  "template": "{\"type\":\"Card\",\"size\":\"sm\",\"children\":[{\"type\":\"Col\",\"gap\":3,\"children\":[{\"type\":\"Row\",\"align\":\"start\",\"gap\":3,\"children\":[{\"type\":\"Box\",\"size\":56,\"radius\":\"full\",\"background\":\"surface-secondary\",\"align\":\"center\",\"justify\":\"center\",\"children\":[{\"type\":\"Icon\",\"name\":\"user\",\"size\":\"xl\",\"color\":\"secondary\"}]},{\"type\":\"Col\",\"flex\":\"auto\",\"gap\":1,\"children\":[{\"type\":\"Title\",\"value\":{{ (name) | tojson }},\"size\":\"md\"},{\"type\":\"Text\",\"value\":{{ ((occupation ~ \", \" ~ age)) | tojson }},\"size\":\"sm\"},{\"type\":\"Row\",\"gap\":1,\"children\":[{\"type\":\"Icon\",\"name\":\"map-pin\",\"size\":\"sm\",\"color\":\"secondary\"},{\"type\":\"Text\",\"value\":{{ (location) | tojson }},\"size\":\"sm\",\"color\":\"secondary\"}]}]}]},{\"type\":\"Row\",\"gap\":2,\"children\":[{\"type\":\"Caption\",\"value\":\"Born\"},{\"type\":\"Text\",\"value\":{{ (birthdate) | tojson }},\"size\":\"sm\",\"color\":\"secondary\"},{\"type\":\"Text\",\"value\":\"•\",\"size\":\"sm\",\"color\":\"tertiary\"},{\"type\":\"Text\",\"value\":{{ ((origin.city ~ \", \" ~ origin.state)) | tojson }},\"size\":\"sm\",\"color\":\"secondary\"}]},{\"type\":\"Row\",\"gap\":2,\"wrap\":\"wrap\",\"children\":[{\"type\":\"Badge\",\"label\":{{ ((\"☀️ \" ~ astrological_notes.sun_sign)) | tojson }},\"variant\":\"soft\",\"color\":\"info\"},{\"type\":\"Badge\",\"label\":{{ ((\"🌙 \" ~ astrological_notes.moon_sign)) | tojson }},\"variant\":\"soft\",\"color\":\"info\"},{\"type\":\"Badge\",\"label\":{{ ((\"💖 \" ~ astrological_notes.venus_sign)) | tojson }},\"variant\":\"soft\",\"color\":\"info\"},{\"type\":\"Badge\",\"label\":{{ ((\"🔥 \" ~ astrological_notes.mars_sign)) | tojson }},\"variant\":\"soft\",\"color\":\"info\"}]}]}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "age": {
+        "type": "number"
+      },
+      "occupation": {
+        "type": "string"
+      },
+      "location": {
+        "type": "string"
+      },
+      "birthdate": {
+        "type": "string"
+      },
+      "origin": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "city",
+          "state",
+          "country"
+        ],
+        "additionalProperties": false
+      },
+      "astrological_notes": {
+        "type": "object",
+        "properties": {
+          "sun_sign": {
+            "type": "string"
+          },
+          "moon_sign": {
+            "type": "string"
+          },
+          "venus_sign": {
+            "type": "string"
+          },
+          "mars_sign": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "sun_sign",
+          "moon_sign",
+          "venus_sign",
+          "mars_sign"
+        ],
+        "additionalProperties": false
+      },
+      "short_bio": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "age",
+      "occupation",
+      "location",
+      "birthdate",
+      "origin",
+      "astrological_notes",
+      "short_bio"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "Card",
+    "size": "sm",
+    "children": [
+      {
+        "type": "Col",
+        "gap": 3,
+        "children": [
+          {
+            "type": "Row",
+            "align": "start",
+            "gap": 3,
+            "children": [
+              {
+                "type": "Box",
+                "size": 56,
+                "radius": "full",
+                "background": "surface-secondary",
+                "align": "center",
+                "justify": "center",
+                "children": [
+                  {
+                    "type": "Icon",
+                    "name": "user",
+                    "size": "xl",
+                    "color": "secondary"
+                  }
+                ]
+              },
+              {
+                "type": "Col",
+                "flex": "auto",
+                "gap": 1,
+                "children": [
+                  {
+                    "type": "Title",
+                    "value": "Zara Patel",
+                    "size": "md"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "Personal Trainer & Wellness Coach, 28",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Row",
+                    "gap": 1,
+                    "children": [
+                      {
+                        "type": "Icon",
+                        "name": "map-pin",
+                        "size": "sm",
+                        "color": "secondary"
+                      },
+                      {
+                        "type": "Text",
+                        "value": "Greenpoint, Brooklyn",
+                        "size": "sm",
+                        "color": "secondary"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Row",
+            "gap": 2,
+            "children": [
+              {
+                "type": "Caption",
+                "value": "Born"
+              },
+              {
+                "type": "Text",
+                "value": "April 2, 1996",
+                "size": "sm",
+                "color": "secondary"
+              },
+              {
+                "type": "Text",
+                "value": "•",
+                "size": "sm",
+                "color": "tertiary"
+              },
+              {
+                "type": "Text",
+                "value": "Los Angeles, CA",
+                "size": "sm",
+                "color": "secondary"
+              }
+            ]
+          },
+          {
+            "type": "Row",
+            "gap": 2,
+            "wrap": "wrap",
+            "children": [
+              {
+                "type": "Badge",
+                "label": "☀️ ARIES",
+                "variant": "soft",
+                "color": "info"
+              },
+              {
+                "type": "Badge",
+                "label": "🌙 VIRGO",
+                "variant": "soft",
+                "color": "info"
+              },
+              {
+                "type": "Badge",
+                "label": "💖 TAURUS",
+                "variant": "soft",
+                "color": "info"
+              },
+              {
+                "type": "Badge",
+                "label": "🔥 ARIES",
+                "variant": "soft",
+                "color": "info"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6IndpZ19iZzFqejUyZCIsIm5hbWUiOiJQcm9maWxlQ2FyZCIsInZpZXciOiI8Q2FyZCBzaXplPVwic21cIj5cbiAgPENvbCBnYXA9ezN9PlxuICAgIDxSb3cgYWxpZ249XCJzdGFydFwiIGdhcD17M30-XG4gICAgICA8Qm94XG4gICAgICAgIHNpemU9ezU2fVxuICAgICAgICByYWRpdXM9XCJmdWxsXCJcbiAgICAgICAgYmFja2dyb3VuZD1cInN1cmZhY2Utc2Vjb25kYXJ5XCJcbiAgICAgICAgYWxpZ249XCJjZW50ZXJcIlxuICAgICAgICBqdXN0aWZ5PVwiY2VudGVyXCJcbiAgICAgID5cbiAgICAgICAgPEljb24gbmFtZT1cInVzZXJcIiBzaXplPVwieGxcIiBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG4gICAgICA8L0JveD5cbiAgICAgIDxDb2wgZmxleD1cImF1dG9cIiBnYXA9ezF9PlxuICAgICAgICA8VGl0bGUgdmFsdWU9e25hbWV9IHNpemU9XCJtZFwiIC8-XG4gICAgICAgIDxUZXh0IHZhbHVlPXtgJHtvY2N1cGF0aW9ufSwgJHthZ2V9YH0gc2l6ZT1cInNtXCIgLz5cbiAgICAgICAgPFJvdyBnYXA9ezF9PlxuICAgICAgICAgIDxJY29uIG5hbWU9XCJtYXAtcGluXCIgc2l6ZT1cInNtXCIgY29sb3I9XCJzZWNvbmRhcnlcIiAvPlxuICAgICAgICAgIDxUZXh0IHZhbHVlPXtsb2NhdGlvbn0gc2l6ZT1cInNtXCIgY29sb3I9XCJzZWNvbmRhcnlcIiAvPlxuICAgICAgICA8L1Jvdz5cbiAgICAgIDwvQ29sPlxuICAgIDwvUm93PlxuXG4gICAgPFJvdyBnYXA9ezJ9PlxuICAgICAgPENhcHRpb24gdmFsdWU9XCJCb3JuXCIgLz5cbiAgICAgIDxUZXh0IHZhbHVlPXtiaXJ0aGRhdGV9IHNpemU9XCJzbVwiIGNvbG9yPVwic2Vjb25kYXJ5XCIgLz5cbiAgICAgIDxUZXh0IHZhbHVlPVwi4oCiXCIgc2l6ZT1cInNtXCIgY29sb3I9XCJ0ZXJ0aWFyeVwiIC8-XG4gICAgICA8VGV4dFxuICAgICAgICB2YWx1ZT17YCR7b3JpZ2luLmNpdHl9LCAke29yaWdpbi5zdGF0ZX1gfVxuICAgICAgICBzaXplPVwic21cIlxuICAgICAgICBjb2xvcj1cInNlY29uZGFyeVwiXG4gICAgICAvPlxuICAgIDwvUm93PlxuXG4gICAgPFJvdyBnYXA9ezJ9IHdyYXA9XCJ3cmFwXCI-XG4gICAgICA8QmFkZ2VcbiAgICAgICAgbGFiZWw9e2DimIDvuI8gJHthc3Ryb2xvZ2ljYWxfbm90ZXMuc3VuX3NpZ259YH1cbiAgICAgICAgdmFyaWFudD1cInNvZnRcIlxuICAgICAgICBjb2xvcj1cImluZm9cIlxuICAgICAgLz5cbiAgICAgIDxCYWRnZVxuICAgICAgICBsYWJlbD17YPCfjJkgJHthc3Ryb2xvZ2ljYWxfbm90ZXMubW9vbl9zaWdufWB9XG4gICAgICAgIHZhcmlhbnQ9XCJzb2Z0XCJcbiAgICAgICAgY29sb3I9XCJpbmZvXCJcbiAgICAgIC8-XG4gICAgICA8QmFkZ2VcbiAgICAgICAgbGFiZWw9e2Dwn5KWICR7YXN0cm9sb2dpY2FsX25vdGVzLnZlbnVzX3NpZ259YH1cbiAgICAgICAgdmFyaWFudD1cInNvZnRcIlxuICAgICAgICBjb2xvcj1cImluZm9cIlxuICAgICAgLz5cbiAgICAgIDxCYWRnZVxuICAgICAgICBsYWJlbD17YPCflKUgJHthc3Ryb2xvZ2ljYWxfbm90ZXMubWFyc19zaWdufWB9XG4gICAgICAgIHZhcmlhbnQ9XCJzb2Z0XCJcbiAgICAgICAgY29sb3I9XCJpbmZvXCJcbiAgICAgIC8-XG4gICAgPC9Sb3c-XG5cblxuXG4gIDwvQ29sPlxuPC9DYXJkPiIsImRlZmF1bHRTdGF0ZSI6eyJuYW1lIjoiWmFyYSBQYXRlbCIsImFnZSI6MjgsIm9jY3VwYXRpb24iOiJQZXJzb25hbCBUcmFpbmVyICYgV2VsbG5lc3MgQ29hY2giLCJsb2NhdGlvbiI6IkdyZWVucG9pbnQsIEJyb29rbHluIiwiYmlydGhkYXRlIjoiQXByaWwgMiwgMTk5NiIsIm9yaWdpbiI6eyJjaXR5IjoiTG9zIEFuZ2VsZXMiLCJzdGF0ZSI6IkNBIiwiY291bnRyeSI6IlVTIn0sImFzdHJvbG9naWNhbF9ub3RlcyI6eyJzdW5fc2lnbiI6IkFSSUVTIiwibW9vbl9zaWduIjoiVklSR08iLCJ2ZW51c19zaWduIjoiVEFVUlVTIiwibWFyc19zaWduIjoiQVJJRVMifSwic2hvcnRfYmlvIjoiWmFyYSBpcyBhIGhpZ2gtZW5lcmd5IHBlcnNvbmFsIHRyYWluZXIgd2hvIG1vdmVkIGZyb20gTEEgdG8gR3JlZW5wb2ludCB0d28geWVhcnMgYWdvLCBodW5ncnkgdG8gY29tcGV0ZSBpbiBOWUMncyBjdXR0aHJvYXQgZml0bmVzcyBzY2VuZS4gV2l0aCBhbiBBcmllcyBTdW4gYW5kIEFzY2VuZGFudCwgc2hlJ3MgYSBuYXR1cmFsLWJvcm4gbGVhZGVyIHdobyBpbnNwaXJlcyBoZXIgY2xpZW50cyB0aHJvdWdoIHRvdWdoLWxvdmUgY29hY2hpbmcgYW5kIGdlbnVpbmUgY2FyZS4gSGVyIFZpcmdvIE1vb24gbWVhbnMgc2hlJ3Mgb2JzZXNzZWQgd2l0aCB0aGUgZGV0YWlsc-KAlHRyYWNraW5nIG1hY3Jvcywgb3B0aW1pemluZyB3b3Jrb3V0cywgYW5kIHBlcmZlY3RpbmcgZm9ybS4gSW4gbG92ZSwgaGVyIFRhdXJ1cyBWZW51cyBjcmF2ZXMgc3RhYmlsaXR5IGFuZCBzZW5zdWFsaXR5LCB0aG91Z2ggaGVyIGZpZXJ5IEFyaWVzIE1hcnMgY2FuIG1ha2UgaGVyIGltcGF0aWVudCB3aGVuIHJvbWFuY2UgbW92ZXMgdG9vIHNsb3dseS4gU2hlJ3MgbG9va2luZyBmb3Igc29tZW9uZSB3aG8gY2FuIG1hdGNoIGhlciBpbnRlbnNpdHkgd2hpbGUgYWxzbyBoZWxwaW5nIGhlciBzbG93IGRvd24gYW5kIGVuam95IHRoZSBtb21lbnQuIn0sInN0YXRlcyI6W10sInNjaGVtYSI6ImltcG9ydCB7IHogfSBmcm9tIFwiem9kXCJcblxuY29uc3QgQXN0cm9Ob3RlcyA9IHouc3RyaWN0T2JqZWN0KHtcbiAgc3VuX3NpZ246IHouc3RyaW5nKCksXG4gIG1vb25fc2lnbjogei5zdHJpbmcoKSxcbiAgdmVudXNfc2lnbjogei5zdHJpbmcoKSxcbiAgbWFyc19zaWduOiB6LnN0cmluZygpLFxufSlcblxuY29uc3QgT3JpZ2luID0gei5zdHJpY3RPYmplY3Qoe1xuICBjaXR5OiB6LnN0cmluZygpLFxuICBzdGF0ZTogei5zdHJpbmcoKSxcbiAgY291bnRyeTogei5zdHJpbmcoKSxcbn0pXG5cbmNvbnN0IFdpZGdldFN0YXRlID0gei5zdHJpY3RPYmplY3Qoe1xuICBuYW1lOiB6LnN0cmluZygpLFxuICBhZ2U6IHoubnVtYmVyKCksXG4gIG9jY3VwYXRpb246IHouc3RyaW5nKCksXG4gIGxvY2F0aW9uOiB6LnN0cmluZygpLFxuICBiaXJ0aGRhdGU6IHouc3RyaW5nKCksXG4gIG9yaWdpbjogT3JpZ2luLFxuICBhc3Ryb2xvZ2ljYWxfbm90ZXM6IEFzdHJvTm90ZXMsXG4gIHNob3J0X2Jpbzogei5zdHJpbmcoKSxcbn0pXG5cbmV4cG9ydCBkZWZhdWx0IFdpZGdldFN0YXRlIiwianNvblNjaGVtYSI6eyIkc2NoZW1hIjoiaHR0cHM6Ly9qc29uLXNjaGVtYS5vcmcvZHJhZnQvMjAyMC0xMi9zY2hlbWEiLCJ0eXBlIjoib2JqZWN0IiwicHJvcGVydGllcyI6eyJuYW1lIjp7InR5cGUiOiJzdHJpbmcifSwiYWdlIjp7InR5cGUiOiJudW1iZXIifSwib2NjdXBhdGlvbiI6eyJ0eXBlIjoic3RyaW5nIn0sImxvY2F0aW9uIjp7InR5cGUiOiJzdHJpbmcifSwiYmlydGhkYXRlIjp7InR5cGUiOiJzdHJpbmcifSwib3JpZ2luIjp7InR5cGUiOiJvYmplY3QiLCJwcm9wZXJ0aWVzIjp7ImNpdHkiOnsidHlwZSI6InN0cmluZyJ9LCJzdGF0ZSI6eyJ0eXBlIjoic3RyaW5nIn0sImNvdW50cnkiOnsidHlwZSI6InN0cmluZyJ9fSwicmVxdWlyZWQiOlsiY2l0eSIsInN0YXRlIiwiY291bnRyeSJdLCJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2V9LCJhc3Ryb2xvZ2ljYWxfbm90ZXMiOnsidHlwZSI6Im9iamVjdCIsInByb3BlcnRpZXMiOnsic3VuX3NpZ24iOnsidHlwZSI6InN0cmluZyJ9LCJtb29uX3NpZ24iOnsidHlwZSI6InN0cmluZyJ9LCJ2ZW51c19zaWduIjp7InR5cGUiOiJzdHJpbmcifSwibWFyc19zaWduIjp7InR5cGUiOiJzdHJpbmcifX0sInJlcXVpcmVkIjpbInN1bl9zaWduIiwibW9vbl9zaWduIiwidmVudXNfc2lnbiIsIm1hcnNfc2lnbiJdLCJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2V9LCJzaG9ydF9iaW8iOnsidHlwZSI6InN0cmluZyJ9fSwicmVxdWlyZWQiOlsibmFtZSIsImFnZSIsIm9jY3VwYXRpb24iLCJsb2NhdGlvbiIsImJpcnRoZGF0ZSIsIm9yaWdpbiIsImFzdHJvbG9naWNhbF9ub3RlcyIsInNob3J0X2JpbyJdLCJhZGRpdGlvbmFsUHJvcGVydGllcyI6ZmFsc2V9LCJzY2hlbWFNb2RlIjoiem9kIiwic2NoZW1hVmFsaWRpdHkiOiJ2YWxpZCIsInZpZXdWYWxpZGl0eSI6InZhbGlkIiwiZGVmYXVsdFN0YXRlVmFsaWRpdHkiOiJ2YWxpZCJ9"
+}

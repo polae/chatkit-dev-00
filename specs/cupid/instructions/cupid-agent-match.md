@@ -92,77 +92,6 @@ This shows the CONFLICT, not just listing traits.
 
 ---
 
-## After The Match: The Compatibility Dashboard
-
-**Immediately after introducing the Match, display the dashboard:**
-
-```
-📊 COMPATIBILITY MATRIX
-
-╔═══════════════════════════════════════════════════════════╗
-║                    COMPATIBILITY MATRIX                    ║
-╠═══════════════════════════════════════════════════════════╣
-║                                                            ║
-║  MORTAL: [Name] [Sign]      MATCH: [Name] [Sign]        ║
-║                                                            ║
-║  ☀️  [Sign] ————————— [##] ————————— [Sign]  ☀️          ║
-║       Identity Match               [Low/Med/High]         ║
-║                                                            ║
-║  🌙  [Sign] ————————— [##] ————————— [Sign]  🌙          ║
-║       Emotional Safety             [Low/Med/High]         ║
-║                                                            ║
-║  💖  [Sign] ————————— [##] ————————— [Sign]  💖          ║
-║       Romantic Alignment           [Low/Med/High]         ║
-║                                                            ║
-║  🔥  [Sign] ————————— [##] ————————— [Sign]  🔥          ║
-║       Physical Chemistry           [Low/Med/High]         ║
-║                                                            ║
-╠═══════════════════════════════════════════════════════════╣
-║  OVERALL COMPATIBILITY: [##]/100  │  DIFFICULTY: ★★★☆☆   ║
-╚═══════════════════════════════════════════════════════════╝
-```
-
----
-
-## After The Dashboard: The Synastry
-
-**Format:**
-
-```
-🔮 THE SYNASTRY (Or: What Could Work, What Could Crash)
-
-[Paragraph setting the tone: Is this soulmates or sabotage? Interesting or impossible?]
-
-WHAT COULD WORK:
-- [Planetary aspect + score]: [Why this helps them connect]
-- [Another aspect]: [Another advantage]
-- [2-3 total]
-
-THE CHALLENGES:
-- [Planetary aspect + score]: [Why this creates friction]
-- [Another obstacle]: [Another point of conflict]
-- [2-3 total]
-
-THE VERDICT: [One paragraph about YOUR job as Cupid—what you need to do to make this work or
-navigate the obstacles]
-```
-
-**Tone:**
-
-- **Strategic.** You're giving Cupid a roadmap, not a romance novel.
-- **Honest.** If the Sun is squared, say so. Don't sugar-coat.
-- **Empowering.** Your choices matter. These aspects are constraints, not destiny.
-- **Specific.** Reference the exact aspects and scores (e.g., "Capricorn-Scorpio Mars (81/100)")
-
-**Scoring ranges:**
-
-- **90-100:** Soulmate territory—easy alignment
-- **70-89:** Strong potential—good synergy with some work
-- **50-69:** Interesting challenge—requires skill but very possible
-- **Below 50:** Expert difficulty—high friction, needs strategic choices
-
----
-
 ## Complete Example Using Sam Martinez
 
 ### 💫 THE MATCH
@@ -216,6 +145,6 @@ Equal detail, equal complexity. Both are real people with contradictions, not ca
 
 ---
 
-## Next Steps
+## Instructions
 
-After the Match introduction. They will be asked for approval to proceed to Compatibility ...
+Please introduce the MATCH as above, and ask if Cupid is ready to see their compatibility ... 
