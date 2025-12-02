@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Story Structure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.75rem;
+            top: 1rem;
+            bottom: 1rem;
+            width: 3px;
+            background: linear-gradient(180deg, var(--pink), var(--red));
+            border-radius: 2px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.6s ease backwards;
+        }
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+        .timeline-dot {
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--bg-primary);
+            border: 3px solid var(--pink);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-dot {
+            background: var(--pink);
+            transform: scale(1.2);
+        }
+        .timeline-content {
+            background: var(--bg-surface);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--pink);
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-content {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .timeline-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .timeline-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .timeline-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-top: 0.75rem;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .timeline {
+                padding-left: 2rem;
+            }
+            .timeline-content {
+                padding: 1rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Story Structure</h1>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-title">THE MATCH</div>
+                    <div class="timeline-subtitle">Setup</div>
+                    <div class="timeline-description">You meet your Mortal and their potential Match. I'll show you their charts, histories, contradictions. Then the Compatibility Matrix—what could work, what could crash, what your job is. This is where you learn the odds. The stars have opinions. So do I.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-title">SCENE 1: The Meet-Cute</div>
+                    <div class="timeline-subtitle">First encounter</div>
+                    <div class="timeline-description">Where and how they first meet. First impressions. Initial attraction—or initial disaster.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-title">SCENE 2: The Date Begins</div>
+                    <div class="timeline-subtitle">Chemistry unfolds</div>
+                    <div class="timeline-description">Arrival. Greeting. Initial chemistry. Small talk that needs to become something more. Romantic attraction meets physical chemistry.</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-title">SCENE 3: The Turning Point</div>
+                    <div class="timeline-subtitle">Vulnerability</div>
+                    <div class="timeline-description">Real conversation. The moment where connection either crystallizes or dissolves. Can they handle each other's truth?</div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <div class="timeline-title">THE DATE ENDS & CUPID'S EVALUATION</div>
+                    <div class="timeline-subtitle">Final reckoning</div>
+                    <div class="timeline-description">Goodbye choreography. The walk to the subway. The moment face to face. Does someone go in for the kiss? Physical chemistry meets accumulated trust. I calculate the final score, predict their future, and start building your astrological profile.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

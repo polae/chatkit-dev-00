@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 1</title>
+
+    <!-- Google Fonts: Lexend Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend+Peta:wght@700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Light mode (default) */
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Accent Spectrum */
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+
+            /* Typography */
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-emphasis: 'Lexend Peta', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            transition: background-color 200ms ease, color 200ms ease;
+        }
+
+        .slide-content {
+            max-width: 900px;
+            text-align: center;
+            animation: fadeIn 600ms ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(36px, 8vw, 64px);
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .slide-subtitle {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: clamp(18px, 4vw, 28px);
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        /* Fleuron */
+        .fleuron {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .fleuron-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: dotAppear 0.5s ease-out both;
+        }
+
+        .fleuron-dot:nth-child(1) { background: var(--red); animation-delay: 200ms; }
+        .fleuron-dot:nth-child(2) { background: var(--orange); animation-delay: 250ms; }
+        .fleuron-dot:nth-child(3) { background: var(--yellow); animation-delay: 300ms; }
+        .fleuron-dot:nth-child(4) { background: var(--pink); animation-delay: 350ms; }
+        .fleuron-dot:nth-child(5) { background: var(--green); animation-delay: 400ms; }
+        .fleuron-dot:nth-child(6) { background: var(--blue); animation-delay: 450ms; }
+        .fleuron-dot:nth-child(7) { background: var(--purple); animation-delay: 500ms; }
+
+        @keyframes dotAppear {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-content">
+        <h1 class="slide-title">Welcome to Humorist</h1>
+        <p class="slide-subtitle">Intelligent humor meets approachable warmth.<br>Smart but never pretentious, colorful but never garish.</p>
+        <div class="fleuron" role="presentation" aria-hidden="true">
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent if in iframe
+        try {
+            if (window.parent && window.parent !== window) {
+                const parentDark = window.parent.document.documentElement.classList.contains('dark');
+                if (parentDark) {
+                    document.documentElement.classList.add('dark');
+                }
+                // Listen for theme changes in parent
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.attributeName === 'class') {
+                            const parentDark = window.parent.document.documentElement.classList.contains('dark');
+                            document.documentElement.classList.toggle('dark', parentDark);
+                        }
+                    });
+                });
+                observer.observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {
+            // Cross-origin restriction - ignore
+        }
+    </script>
+</body>
+</html>

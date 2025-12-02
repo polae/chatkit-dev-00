@@ -223,6 +223,26 @@
         <shadow>var(--shadow-elevated)</shadow>
       </animation>
 
+      <animation name="container-slide" duration="300ms" easing="ease">
+        <description>Containers slide right on hover with accent-colored offset shadow</description>
+        <transform>translateX(8px)</transform>
+        <shadow>-4px 4px 0 var(--accent-color)</shadow>
+        <usage>Content cards, panels, timeline items, table containers. The accent color should match the component's theme (e.g., pink for default, yellow for sun-themed, purple for moon-themed).</usage>
+        <css-example>
+          .card {
+            background: var(--bg-surface);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+          }
+          .card:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+          }
+        </css-example>
+      </animation>
+
       <animation name="fleuron-appear" duration="600ms" easing="cubic-bezier(0.4, 0, 0.2, 1)">
         <description>Dots appear sequentially with stagger</description>
         <stagger>50ms</stagger>
@@ -300,9 +320,15 @@
         <colors>Each agent has assigned accent color</colors>
       </indicator>
       <hover>
-        <transform>translateY(-4px)</transform>
-        <shadow>var(--shadow-elevated)</shadow>
-        <border-color>var(--border-color-hover)</border-color>
+        <option name="lift" description="Traditional card lift (homepage style)">
+          <transform>translateY(-4px)</transform>
+          <shadow>var(--shadow-elevated)</shadow>
+          <border-color>var(--border-color-hover)</border-color>
+        </option>
+        <option name="slide" description="Slide with accent shadow (content/slide style)">
+          <transform>translateX(8px)</transform>
+          <shadow>-4px 4px 0 var(--accent-color)</shadow>
+        </option>
       </hover>
     </agent-cards>
 

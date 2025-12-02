@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules of Engagement</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--pink);
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .rule-card {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideInLeft 0.6s ease-out backwards;
+        }
+        .rule-card:nth-child(1) { animation-delay: 0.1s; }
+        .rule-card:nth-child(2) { animation-delay: 0.2s; }
+        .rule-card:nth-child(3) { animation-delay: 0.3s; }
+        .rule-card:nth-child(4) { animation-delay: 0.4s; }
+        .rule-card:nth-child(5) { animation-delay: 0.5s; }
+        .rule-card:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .rule-icon-wrapper {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .rule-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        .rule-icon {
+            font-size: 2rem;
+        }
+        .rule-content {
+            flex: 1;
+        }
+        .rule-text {
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .rule-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1rem;
+            }
+            .rule-icon-wrapper {
+                flex-direction: row;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rules of Engagement</h1>
+        <p class="subtitle">Five principles for the cosmic matchmaker</p>
+
+        <div class="rules-list">
+            <div class="rule-card">
+                <div class="rule-icon-wrapper">
+                    <div class="rule-number">1</div>
+                    <div class="rule-icon">🤝</div>
+                </div>
+                <div class="rule-content">
+                    <p class="rule-text">I'll always ask before advancing.</p>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-icon-wrapper">
+                    <div class="rule-number">2</div>
+                    <div class="rule-icon">⚖️</div>
+                </div>
+                <div class="rule-content">
+                    <p class="rule-text">Your choices have consequences.</p>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-icon-wrapper">
+                    <div class="rule-number">3</div>
+                    <div class="rule-icon">✨</div>
+                </div>
+                <div class="rule-content">
+                    <p class="rule-text">Every ending is valid.</p>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-icon-wrapper">
+                    <div class="rule-number">4</div>
+                    <div class="rule-icon">🌟</div>
+                </div>
+                <div class="rule-content">
+                    <p class="rule-text">The stars incline, they do not compel.</p>
+                </div>
+            </div>
+
+            <div class="rule-card">
+                <div class="rule-icon-wrapper">
+                    <div class="rule-number">5</div>
+                    <div class="rule-icon">💋</div>
+                </div>
+                <div class="rule-content">
+                    <p class="rule-text">This is PG-13. A kiss is the boldest physical move.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Choices Work</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        .options-format {
+            background: var(--bg-surface);
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            animation: fadeInUp 0.6s ease backwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .options-format:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .format-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        .format-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .format-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .format-item:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .format-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .format-content {
+            flex: 1;
+        }
+        .format-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        .format-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .quote-card {
+            background: var(--bg-surface);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease backwards 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .quote-card:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+
+        .quote {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.4;
+            font-style: italic;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            .options-format {
+                padding: 1.5rem;
+            }
+            .quote {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>How Choices Work</h1>
+        <div class="subtitle">Cupid's Options Format</div>
+
+        <div class="options-format">
+            <div class="format-title">Every Option Includes</div>
+            <div class="format-grid">
+                <div class="format-item">
+                    <div class="format-icon">🎯</div>
+                    <div class="format-content">
+                        <div class="format-label">A Clear Strategy</div>
+                        <div class="format-desc">What this choice is really about</div>
+                    </div>
+                </div>
+
+                <div class="format-item">
+                    <div class="format-icon">✨</div>
+                    <div class="format-content">
+                        <div class="format-label">Potential Benefits</div>
+                        <div class="format-desc">What you might gain from this approach</div>
+                    </div>
+                </div>
+
+                <div class="format-item">
+                    <div class="format-icon">⚠️</div>
+                    <div class="format-content">
+                        <div class="format-label">Potential Risks</div>
+                        <div class="format-desc">What could go wrong, and why</div>
+                    </div>
+                </div>
+
+                <div class="format-item">
+                    <div class="format-icon">⭐</div>
+                    <div class="format-content">
+                        <div class="format-label">Astrological Context</div>
+                        <div class="format-desc">Which planetary energies this choice activates</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-card">
+            <div class="quote">
+                There are no obviously correct answers. Just different bets.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

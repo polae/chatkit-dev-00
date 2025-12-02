@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide 2</title>
+
+    <!-- Google Fonts: Lexend Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend+Peta:wght@700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; overflow: hidden; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px;
+            transition: background-color 200ms ease, color 200ms ease;
+        }
+
+        .slide-content {
+            max-width: 900px;
+            text-align: center;
+            animation: fadeIn 600ms ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(36px, 8vw, 64px);
+            letter-spacing: -0.02em;
+            margin-bottom: 32px;
+            line-height: 1.1;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .feature {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .feature-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-bottom: 12px;
+        }
+
+        .feature:nth-child(1) .feature-dot { background: var(--red); }
+        .feature:nth-child(2) .feature-dot { background: var(--orange); }
+        .feature:nth-child(3) .feature-dot { background: var(--blue); }
+
+        .feature-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-content">
+        <h1 class="slide-title">The Aesthetic</h1>
+        <div class="feature-grid">
+            <div class="feature">
+                <div class="feature-dot"></div>
+                <h3 class="feature-title">Witty Warmth</h3>
+                <p class="feature-desc">Publication-meets-app-hub aesthetic with editorial sophistication.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-dot"></div>
+                <h3 class="feature-title">Solarized Palette</h3>
+                <p class="feature-desc">Warm cream backgrounds with a rainbow spectrum of soft accents.</p>
+            </div>
+            <div class="feature">
+                <div class="feature-dot"></div>
+                <h3 class="feature-title">Lexend Typography</h3>
+                <p class="feature-desc">Wide geometric sans-serif conveys friendly confidence.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        try {
+            if (window.parent && window.parent !== window) {
+                const parentDark = window.parent.document.documentElement.classList.contains('dark');
+                if (parentDark) document.documentElement.classList.add('dark');
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.attributeName === 'class') {
+                            const parentDark = window.parent.document.documentElement.classList.contains('dark');
+                            document.documentElement.classList.toggle('dark', parentDark);
+                        }
+                    });
+                });
+                observer.observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

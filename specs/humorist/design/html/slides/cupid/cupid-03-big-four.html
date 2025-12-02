@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Big Four</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 900px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .subtitle-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.6s ease-out both;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        .card:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .card.sun:hover { box-shadow: -4px 4px 0 var(--yellow); }
+        .card.moon:hover { box-shadow: -4px 4px 0 var(--purple); }
+        .card.venus:hover { box-shadow: -4px 4px 0 var(--pink); }
+        .card.mars:hover { box-shadow: -4px 4px 0 var(--red); }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .card-divider {
+            width: 40px;
+            height: 3px;
+            background: var(--pink);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .card-role {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            font-weight: 300;
+            opacity: 0.85;
+        }
+
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>The Big Four</h1>
+
+        <p class="subtitle-text">We track four planetary placements. Only four. This isn't a full natal chart reading—it's the big four that impel how and whom we love.</p>
+
+        <div class="grid">
+            <div class="card sun">
+                <span class="card-icon">☀️</span>
+                <h2>Sun</h2>
+                <div class="card-divider"></div>
+                <p class="card-role">The Outer Self</p>
+                <p class="card-desc">Identity, ego, and core values. How they move through the world.</p>
+            </div>
+
+            <div class="card moon">
+                <span class="card-icon">🌙</span>
+                <h2>Moon</h2>
+                <div class="card-divider"></div>
+                <p class="card-role">The Inner Self</p>
+                <p class="card-desc">Emotions, needs, and private truth. How they feel safe.</p>
+            </div>
+
+            <div class="card venus">
+                <span class="card-icon">💖</span>
+                <h2>Venus</h2>
+                <div class="card-divider"></div>
+                <p class="card-role">The Love Self</p>
+                <p class="card-desc">Romance style and affection. What they want in partnership.</p>
+            </div>
+
+            <div class="card mars">
+                <span class="card-icon">🔥</span>
+                <h2>Mars</h2>
+                <div class="card-divider"></div>
+                <p class="card-role">The Desire Self</p>
+                <p class="card-desc">Passion and pursuit. How they fight and want.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

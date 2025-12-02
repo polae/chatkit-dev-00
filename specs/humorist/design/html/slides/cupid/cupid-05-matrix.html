@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Compatibility Matrix</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 2rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+        }
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+        .matrix-table {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease backwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .matrix-table:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        thead {
+            background: var(--bg-surface);
+            border-bottom: 2px solid var(--pink);
+        }
+        th {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+        tbody tr {
+            border-bottom: 1px solid var(--bg-primary);
+            transition: all 0.3s ease;
+        }
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+        tbody tr:hover {
+            background: var(--bg-primary);
+            transform: scale(1.01);
+        }
+        td {
+            padding: 1.25rem 1.5rem;
+        }
+        .dimension-cell {
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.1rem;
+        }
+        .dimension-icon {
+            font-size: 1.5rem;
+        }
+        .meaning-cell {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        .meta-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            animation: fadeInUp 0.6s ease backwards 0.2s;
+        }
+        .meta-card {
+            background: var(--bg-surface);
+            padding: 1.75rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        .meta-card:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .meta-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        .meta-content {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        .stars {
+            color: var(--yellow);
+            font-size: 1.25rem;
+            letter-spacing: 0.15rem;
+            margin-top: 0.5rem;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            th, td {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            .dimension-cell {
+                font-size: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .meta-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Compatibility Matrix</h1>
+
+        <div class="matrix-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimension</th>
+                        <th>What It Means</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="dimension-cell">
+                                <span class="dimension-icon">☀️</span>
+                                <span>Identity Match</span>
+                            </div>
+                        </td>
+                        <td class="meaning-cell">
+                            Do their core selves click?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dimension-cell">
+                                <span class="dimension-icon">🌙</span>
+                                <span>Emotional Safety</span>
+                            </div>
+                        </td>
+                        <td class="meaning-cell">
+                            Can they be vulnerable together?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dimension-cell">
+                                <span class="dimension-icon">💖</span>
+                                <span>Romantic Alignment</span>
+                            </div>
+                        </td>
+                        <td class="meaning-cell">
+                            Do they love the same way?
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="dimension-cell">
+                                <span class="dimension-icon">🔥</span>
+                                <span>Physical Chemistry</span>
+                            </div>
+                        </td>
+                        <td class="meaning-cell">
+                            Is there passion?
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="meta-cards">
+            <div class="meta-card">
+                <div class="meta-title">Overall Compatibility</div>
+                <div class="meta-content">
+                    A holistic score combining all four dimensions to predict long-term potential.
+                </div>
+            </div>
+
+            <div class="meta-card">
+                <div class="meta-title">Difficulty Rating</div>
+                <div class="meta-content">
+                    How hard will this relationship be to maintain?
+                </div>
+                <div class="stars">★ to ★★★★★</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

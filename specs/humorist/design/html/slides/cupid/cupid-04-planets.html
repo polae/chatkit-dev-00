@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sun & Moon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 1000px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .panels {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .panel {
+            background: var(--bg-surface);
+            padding: 1.75rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            animation: fadeInUp 0.6s ease-out both;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel:nth-child(1) { animation-delay: 0.2s; }
+        .panel:nth-child(2) { animation-delay: 0.3s; }
+        .panel:nth-child(3) { animation-delay: 0.4s; }
+        .panel:nth-child(4) { animation-delay: 0.5s; }
+
+        .panel:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        .panel.sun:hover { box-shadow: -4px 4px 0 var(--yellow); }
+        .panel.moon:hover { box-shadow: -4px 4px 0 var(--purple); }
+        .panel.venus:hover { box-shadow: -4px 4px 0 var(--pink); }
+        .panel.mars:hover { box-shadow: -4px 4px 0 var(--red); }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .panel-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .panel-title {
+            flex: 1;
+        }
+
+        .panel-title h2 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.125rem;
+            color: var(--text-primary);
+        }
+
+        .panel-title .subtitle {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .panel-divider {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--pink), transparent);
+            margin-bottom: 1rem;
+            border-radius: 2px;
+        }
+
+        .panel.sun .panel-divider {
+            background: linear-gradient(90deg, var(--yellow), transparent);
+        }
+
+        .panel.moon .panel-divider {
+            background: linear-gradient(90deg, var(--purple), transparent);
+        }
+
+        .panel.venus .panel-divider {
+            background: linear-gradient(90deg, var(--pink), transparent);
+        }
+
+        .panel.mars .panel-divider {
+            background: linear-gradient(90deg, var(--red), transparent);
+        }
+
+        .panel-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .panel-description {
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+
+        .panel-description strong {
+            font-weight: 700;
+        }
+
+        .panel-insight {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .panels {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>The Planets</h1>
+
+        <div class="panels">
+            <div class="panel sun">
+                <div class="panel-header">
+                    <span class="panel-icon">☀️</span>
+                    <div class="panel-title">
+                        <h2>Sun</h2>
+                        <p class="subtitle">The Outer Self</p>
+                    </div>
+                </div>
+                <div class="panel-divider"></div>
+                <div class="panel-content">
+                    <div class="panel-description">Their Sun tells you who they <strong>are</strong>—their identity, what they want from life, how they present to the world.</div>
+                    <div class="panel-insight">When two Suns align, conversation flows naturally. When they clash, they approach existence from fundamentally different angles.</div>
+                </div>
+            </div>
+
+            <div class="panel moon">
+                <div class="panel-header">
+                    <span class="panel-icon">🌙</span>
+                    <div class="panel-title">
+                        <h2>Moon</h2>
+                        <p class="subtitle">The Inner Self</p>
+                    </div>
+                </div>
+                <div class="panel-divider"></div>
+                <div class="panel-content">
+                    <div class="panel-description">Their Moon tells you who they are <strong>in private</strong>—their emotional language, needs, and what makes them feel secure.</div>
+                    <div class="panel-insight">Moon compatibility determines whether they can be vulnerable together. Without it, intimacy stays surface-level.</div>
+                </div>
+            </div>
+
+            <div class="panel venus">
+                <div class="panel-header">
+                    <span class="panel-icon">💖</span>
+                    <div class="panel-title">
+                        <h2>Venus</h2>
+                        <p class="subtitle">The Love Self</p>
+                    </div>
+                </div>
+                <div class="panel-divider"></div>
+                <div class="panel-content">
+                    <div class="panel-description">Their Venus tells you how they <strong>love</strong>—grand gestures or quiet devotion, fiery passion or steady comfort.</div>
+                    <div class="panel-insight">Venus compatibility determines if they speak the same romantic language, or spend the whole relationship in translation.</div>
+                </div>
+            </div>
+
+            <div class="panel mars">
+                <div class="panel-header">
+                    <span class="panel-icon">🔥</span>
+                    <div class="panel-title">
+                        <h2>Mars</h2>
+                        <p class="subtitle">The Desire Self</p>
+                    </div>
+                </div>
+                <div class="panel-divider"></div>
+                <div class="panel-content">
+                    <div class="panel-description">Their Mars tells you how they <strong>want</strong>—how they pursue, how they handle friction, what drives them.</div>
+                    <div class="panel-insight">Mars compatibility determines physical chemistry and whether disagreements become growth or dealbreakers.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

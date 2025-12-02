@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            line-height: 1.6;
+            position: relative;
+            overflow: hidden;
+        }
+        .background-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image:
+                radial-gradient(circle at 20% 30%, var(--pink) 0%, transparent 30%),
+                radial-gradient(circle at 80% 70%, var(--purple) 0%, transparent 30%);
+            pointer-events: none;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        h1 {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--pink);
+            animation: scaleIn 0.8s ease-out;
+        }
+        .hero-icon {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 3rem;
+            position: relative;
+            animation: floatIn 1s ease-out;
+        }
+        .target-icon {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            position: relative;
+        }
+        .bow-icon {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 3rem;
+            animation: shoot 2s ease-in-out infinite;
+        }
+        .story-section {
+            background: var(--bg-surface);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: slideInUp 0.8s ease-out 0.3s backwards;
+        }
+        .story-text {
+            font-size: 1.4rem;
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .story-text:last-child {
+            margin-bottom: 0;
+        }
+        .highlight {
+            color: var(--pink);
+            font-weight: 500;
+        }
+        .fleuron {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin: 2rem 0;
+            animation: fadeIn 1s ease-out 0.6s backwards;
+        }
+        .fleuron-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: colorCycle 3s ease-in-out infinite;
+        }
+        .fleuron-dot:nth-child(1) {
+            background: var(--red);
+            animation-delay: 0s;
+        }
+        .fleuron-dot:nth-child(2) {
+            background: var(--orange);
+            animation-delay: 0.1s;
+        }
+        .fleuron-dot:nth-child(3) {
+            background: var(--yellow);
+            animation-delay: 0.2s;
+        }
+        .fleuron-dot:nth-child(4) {
+            background: var(--green);
+            animation-delay: 0.3s;
+        }
+        .fleuron-dot:nth-child(5) {
+            background: var(--blue);
+            animation-delay: 0.4s;
+        }
+        .fleuron-dot:nth-child(6) {
+            background: var(--purple);
+            animation-delay: 0.5s;
+        }
+        .fleuron-dot:nth-child(7) {
+            background: var(--pink);
+            animation-delay: 0.6s;
+        }
+        .signature {
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+            animation: slideInUp 0.8s ease-out 0.6s backwards;
+        }
+        .signature-quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .signature-emoji {
+            font-size: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes shoot {
+            0%, 100% {
+                transform: translate(0, 0) rotate(-45deg);
+            }
+            50% {
+                transform: translate(10px, -10px) rotate(-45deg);
+            }
+        }
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        @keyframes colorCycle {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            .hero-icon {
+                width: 120px;
+                height: 120px;
+            }
+            .target-icon {
+                font-size: 5rem;
+            }
+            .bow-icon {
+                font-size: 2.5rem;
+            }
+            .story-section {
+                padding: 2rem;
+            }
+            .story-text {
+                font-size: 1.2rem;
+            }
+            .signature {
+                padding: 2rem;
+            }
+            .signature-quote {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-decoration"></div>
+
+    <div class="container">
+        <h1>Ready?</h1>
+
+        <div class="hero-icon">
+            <div class="target-icon">
+                🎯
+                <div class="bow-icon">🏹</div>
+            </div>
+        </div>
+
+        <div class="story-section">
+            <p class="story-text">
+                Somewhere in <span class="highlight">Brooklyn</span>, a graphic designer is about to meet a history teacher...
+            </p>
+            <p class="story-text">
+                The <span class="highlight">cosmos</span> has opinions about what happens next. So do I.
+            </p>
+            <p class="story-text">
+                But <span class="highlight">you're the one with the bow.</span>
+            </p>
+        </div>
+
+        <div class="fleuron">
+            <div class="fleuron-dot"></div>
+            <div class="fleuron-dot"></div>
+            <div class="fleuron-dot"></div>
+            <div class="fleuron-dot"></div>
+            <div class="fleuron-dot"></div>
+            <div class="fleuron-dot"></div>
+            <div class="fleuron-dot"></div>
+        </div>
+
+        <div class="signature">
+            <p class="signature-quote">
+                "The stars incline, they do not compel. But a skilled Cupid knows when to shoot."
+            </p>
+            <div class="signature-emoji">🏹✨</div>
+        </div>
+    </div>
+
+    <script>
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pacing: Brief Is Beautiful</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--pink);
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        .time-section {
+            background: var(--bg-surface);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: scaleIn 0.6s ease-out 0.2s backwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .time-section:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .clock-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: tick 1s ease-in-out infinite;
+        }
+        .time-range {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .time-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        .loop-section {
+            background: var(--bg-surface);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .loop-section:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .loop-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        .loop-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .loop-step {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            animation: slideInRight 0.6s ease-out backwards;
+        }
+        .loop-step:nth-child(1) { animation-delay: 0.3s; }
+        .loop-step:nth-child(2) { animation-delay: 0.4s; }
+        .loop-step:nth-child(3) { animation-delay: 0.5s; }
+        .loop-step:nth-child(4) { animation-delay: 0.6s; }
+        .loop-step:nth-child(5) { animation-delay: 0.7s; }
+        .loop-step:nth-child(6) { animation-delay: 0.8s; }
+        .step-number {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .step-content {
+            flex: 1;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+        .step-arrow {
+            flex-shrink: 0;
+            color: var(--pink);
+            font-size: 1.5rem;
+        }
+        .promise-section {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border-left: 4px solid var(--pink);
+            animation: slideInUp 0.6s ease-out 0.9s backwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .promise-section:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .promise-text {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes tick {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .time-range {
+                font-size: 2rem;
+            }
+            .loop-step {
+                flex-direction: column;
+                text-align: center;
+            }
+            .step-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>The Pacing</h1>
+        <p class="subtitle">Brief Is Beautiful</p>
+
+        <div class="time-section">
+            <div class="clock-icon">⏱️</div>
+            <div class="time-range">15-25 minutes</div>
+            <div class="time-label">per game</div>
+        </div>
+
+        <div class="loop-section">
+            <div class="loop-title">The structure repeats:</div>
+            <div class="loop-flow">
+                <div class="loop-step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">Brief narration</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="loop-step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">Dialogue</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="loop-step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">Your options</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="loop-step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">Decision</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="loop-step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">Resolution</div>
+                    <div class="step-arrow">→</div>
+                </div>
+                <div class="loop-step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">My question</div>
+                    <div class="step-arrow">↻</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="promise-section">
+            <p class="promise-text">"I won't dump walls of text on you."</p>
+        </div>
+    </div>
+
+    <script>
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

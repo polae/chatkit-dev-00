@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupid's Own Chart: The Meta-Layer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--pink);
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        .hero-section {
+            background: var(--bg-surface);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            animation: scaleIn 0.6s ease-out 0.2s backwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-section:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .user-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        .user-avatar {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .chart-ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 3px dashed var(--text-secondary);
+            opacity: 0.3;
+            animation: rotate 20s linear infinite;
+        }
+        .hero-quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .insight-card {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 2rem;
+            animation: slideInUp 0.6s ease-out backwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .insight-card:nth-child(1) { animation-delay: 0.3s; }
+        .insight-card:nth-child(2) { animation-delay: 0.4s; }
+        .insight-card:nth-child(3) { animation-delay: 0.5s; }
+        .insight-card:nth-child(4) { animation-delay: 0.6s; }
+
+        .insight-card:hover {
+            transform: translateX(8px);
+            box-shadow: -4px 4px 0 var(--pink);
+        }
+        .insight-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .insight-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .insight-arrow {
+            color: var(--pink);
+            margin: 0 0.5rem;
+        }
+        .insight-result {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .final-note {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            border-left: 4px solid var(--pink);
+            animation: slideInUp 0.6s ease-out 0.7s backwards;
+        }
+        .final-note p {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .hero-section {
+                padding: 2rem;
+            }
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cupid's Own Chart</h1>
+        <p class="subtitle">The Meta-Layer</p>
+
+        <div class="hero-section">
+            <div class="user-icon">
+                <div class="chart-ring"></div>
+                <div class="user-avatar">🏹</div>
+            </div>
+            <p class="hero-quote">"You don't know your own signs yet."</p>
+        </div>
+
+        <div class="insights-grid">
+            <div class="insight-card">
+                <div class="insight-icon">🔥</div>
+                <div class="insight-title">Aggressive choices</div>
+                <div class="insight-arrow">→</div>
+                <div class="insight-result">Aries energy</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-icon">⚖️</div>
+                <div class="insight-title">Harmony-focused</div>
+                <div class="insight-arrow">→</div>
+                <div class="insight-result">Libra energy</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-icon">💧</div>
+                <div class="insight-title">Emotionally-driven</div>
+                <div class="insight-arrow">→</div>
+                <div class="insight-result">Water signs</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-icon">💨</div>
+                <div class="insight-title">Logic-first</div>
+                <div class="insight-arrow">→</div>
+                <div class="insight-result">Air signs</div>
+            </div>
+        </div>
+
+        <div class="final-note">
+            <p><strong>After ten games, you get your full Cupid astrological chart</strong></p>
+        </div>
+    </div>
+
+    <script>
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>
