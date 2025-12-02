@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility - Compact Layout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Colors */
+            --base: #DA6800;
+            --current: #6CC2FF;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            color: var(--text-primary);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Two Column Layout */
+        .two-columns {
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            animation: fadeSlideIn 0.5s ease-out 0.3s forwards;
+        }
+
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .column-left {
+            flex: 1.4;
+            align-items: flex-start;
+        }
+
+        .column-right {
+            flex: 1;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* Scene Number */
+        .scene-number {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Scene Name */
+        .scene-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        /* Bars Container */
+        .bars-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .bar-label {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            width: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 24px;
+            background: var(--bg-surface);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            min-width: 0;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 12px;
+            width: 0;
+            animation: fillBar 0.8s ease-out forwards;
+        }
+
+        .bar-fill.current {
+            background: var(--current);
+            box-shadow: 0 0 12px rgba(108, 194, 255, 0.4);
+            animation-delay: 0.6s;
+        }
+
+        .bar-fill.base {
+            background: var(--base);
+            animation-delay: 0.7s;
+        }
+
+        @keyframes fillBar {
+            to {
+                width: var(--fill-width);
+            }
+        }
+
+        .bar-value {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            min-width: 40px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        /* Current Number Badge - Round */
+        .current-badge {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: rgba(108, 194, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            padding: 1rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.5s forwards;
+        }
+
+        html.dark .current-badge {
+            background: rgba(108, 194, 255, 0.2);
+        }
+
+        .current-number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--current);
+            line-height: 1;
+        }
+
+        .current-label {
+            font-family: var(--font-display);
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.15rem;
+        }
+
+        /* Planet Badges Row */
+        .planet-badges {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: flex-start;
+            flex-wrap: nowrap;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.6s forwards;
+            width: 100%;
+        }
+
+        .planet-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.4rem 0.7rem;
+            background: var(--bg-surface);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .planet-icon {
+            font-size: 1rem;
+        }
+
+        .planet-value {
+            font-family: var(--font-display);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+            .bar-fill {
+                width: var(--fill-width) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Compatibility</h1>
+
+        <div class="two-columns">
+            <!-- Left Column: Scene #1, Now bar, Base bar, Pills -->
+            <div class="column column-left">
+                <span class="scene-number">Scene #1</span>
+                
+                <div class="bars-container">
+                    <div class="bar-row">
+                        <span class="bar-label">Now</span>
+                        <div class="bar-track">
+                            <div class="bar-fill current" style="--fill-width: 52%;"></div>
+                        </div>
+                        <span class="bar-value">52%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-label">Base</span>
+                        <div class="bar-track">
+                            <div class="bar-fill base" style="--fill-width: 69%;"></div>
+                        </div>
+                        <span class="bar-value">69%</span>
+                    </div>
+                </div>
+
+                <div class="planet-badges">
+                    <div class="planet-badge">
+                        <span class="planet-icon">☀️</span>
+                        <span class="planet-value">72</span>
+                    </div>
+                    <div class="planet-badge">
+                        <span class="planet-icon">🌙</span>
+                        <span class="planet-value">65</span>
+                    </div>
+                    <div class="planet-badge">
+                        <span class="planet-icon">💖</span>
+                        <span class="planet-value">84</span>
+                    </div>
+                    <div class="planet-badge">
+                        <span class="planet-icon">🔥</span>
+                        <span class="planet-value">58</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Meet-Cute, 52 Now Badge -->
+            <div class="column column-right">
+                <span class="scene-name">Meet-Cute</span>
+                
+                <div class="current-badge">
+                    <div class="current-number">52</div>
+                    <div class="current-label">Now</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>
+
