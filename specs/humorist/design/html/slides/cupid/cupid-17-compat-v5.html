@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Rings - Animated Sequential</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Ring Colors */
+            --sun: #FFC922;
+            --moon: #9B85B7;
+            --venus: #E7B5A0;
+            --mars: #D74E39;
+            --base: #DA6800;
+            --current: #6CC2FF;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--text-primary);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            animation: fadeIn 0.6s ease-out 0.1s both;
+        }
+
+        .widget-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .rings-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .rings-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            opacity: 0.12;
+        }
+
+        .ring {
+            fill: none;
+            stroke-linecap: round;
+        }
+
+        /* Sequential draw animations */
+        .ring-sun {
+            stroke-dasharray: 314.2;
+            stroke-dashoffset: 314.2;
+            animation: drawRing 0.8s ease-out 0.2s forwards;
+        }
+
+        .ring-moon {
+            stroke-dasharray: 414.7;
+            stroke-dashoffset: 414.7;
+            animation: drawRing 0.8s ease-out 0.4s forwards;
+        }
+
+        .ring-venus {
+            stroke-dasharray: 515.2;
+            stroke-dashoffset: 515.2;
+            animation: drawRing 0.8s ease-out 0.6s forwards;
+        }
+
+        .ring-mars {
+            stroke-dasharray: 615.8;
+            stroke-dashoffset: 615.8;
+            animation: drawRing 0.8s ease-out 0.8s forwards;
+        }
+
+        .ring-base {
+            stroke-dasharray: 716.3;
+            stroke-dashoffset: 716.3;
+            animation: drawRing 0.8s ease-out 1.0s forwards;
+        }
+
+        .ring-current {
+            stroke-dasharray: 816.8;
+            stroke-dashoffset: 816.8;
+            animation: drawRing 0.8s ease-out 1.2s forwards, pulse 2s ease-in-out 2s infinite;
+        }
+
+        @keyframes drawRing {
+            to {
+                stroke-dashoffset: var(--target-offset);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            opacity: 0;
+            animation: fadeSlideIn 0.4s ease-out forwards;
+        }
+
+        .legend-item:nth-child(1) { animation-delay: 0.3s; }
+        .legend-item:nth-child(2) { animation-delay: 0.5s; }
+        .legend-item:nth-child(3) { animation-delay: 0.7s; }
+        .legend-item:nth-child(4) { animation-delay: 0.9s; }
+        .legend-item:nth-child(5) { animation-delay: 1.1s; }
+        .legend-item:nth-child(6) { animation-delay: 1.3s; }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            min-width: 70px;
+        }
+
+        .legend-value {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .legend-divider {
+            height: 1px;
+            background: var(--text-muted);
+            opacity: 0.3;
+            margin: 0.5rem 0;
+        }
+
+        .legend-item.primary .legend-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 600px) {
+            .widget-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .rings-container {
+                width: 260px;
+                height: 260px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Compatibility</h1>
+        <p class="subtitle">Animated Sequential</p>
+
+        <div class="widget-container">
+            <div class="rings-container">
+                <svg class="rings-svg" viewBox="0 0 300 300">
+                    <!-- Ring backgrounds -->
+                    <circle class="ring-bg" cx="150" cy="150" r="138" stroke="var(--current)" stroke-width="14"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="120" stroke="var(--base)" stroke-width="14"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="102" stroke="var(--mars)" stroke-width="14"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="84" stroke="var(--venus)" stroke-width="14"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="66" stroke="var(--moon)" stroke-width="14"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="48" stroke="var(--sun)" stroke-width="14"/>
+
+                    <!-- Animated rings - innermost to outermost -->
+                    <!-- Sun: 72% -->
+                    <circle class="ring ring-sun" cx="150" cy="150" r="48"
+                            stroke="var(--sun)" stroke-width="14"
+                            style="--target-offset: 84.4;"/>
+
+                    <!-- Moon: 65% -->
+                    <circle class="ring ring-moon" cx="150" cy="150" r="66"
+                            stroke="var(--moon)" stroke-width="14"
+                            style="--target-offset: 145.1;"/>
+
+                    <!-- Venus: 84% -->
+                    <circle class="ring ring-venus" cx="150" cy="150" r="84"
+                            stroke="var(--venus)" stroke-width="14"
+                            style="--target-offset: 84.4;"/>
+
+                    <!-- Mars: 58% -->
+                    <circle class="ring ring-mars" cx="150" cy="150" r="102"
+                            stroke="var(--mars)" stroke-width="14"
+                            style="--target-offset: 269;"/>
+
+                    <!-- Base: 69% -->
+                    <circle class="ring ring-base" cx="150" cy="150" r="120"
+                            stroke="var(--base)" stroke-width="14"
+                            style="--target-offset: 233.5;"/>
+
+                    <!-- Current: 52% -->
+                    <circle class="ring ring-current" cx="150" cy="150" r="138"
+                            stroke="var(--current)" stroke-width="14"
+                            style="--target-offset: 416;"/>
+                </svg>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item primary">
+                    <div class="legend-dot" style="background: var(--current);"></div>
+                    <span class="legend-label">Current</span>
+                    <span class="legend-value">52%</span>
+                </div>
+                <div class="legend-item primary">
+                    <div class="legend-dot" style="background: var(--base);"></div>
+                    <span class="legend-label">Base</span>
+                    <span class="legend-value">69%</span>
+                </div>
+                <div class="legend-divider"></div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--mars);"></div>
+                    <span class="legend-label">Mars</span>
+                    <span class="legend-value">58%</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--venus);"></div>
+                    <span class="legend-label">Venus</span>
+                    <span class="legend-value">84%</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--moon);"></div>
+                    <span class="legend-label">Moon</span>
+                    <span class="legend-value">65%</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--sun);"></div>
+                    <span class="legend-label">Sun</span>
+                    <span class="legend-value">72%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

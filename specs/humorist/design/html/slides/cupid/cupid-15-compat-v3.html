@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Rings - Center Score Horizontal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Ring Colors */
+            --sun: #FFC922;
+            --moon: #9B85B7;
+            --venus: #E7B5A0;
+            --mars: #D74E39;
+            --base: #DA6800;
+            --current: #6CC2FF;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 800px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .widget {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .rings-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
+
+        .rings-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            opacity: 0.15;
+        }
+
+        .ring {
+            fill: none;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease-out;
+        }
+
+        .center-score {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-number {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+
+        .primary-labels {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+        }
+
+        .primary-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .label-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+        }
+
+        .label-text {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .label-value {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-left: 0.25rem;
+        }
+
+        .planet-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .planet-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            background: var(--bg-surface);
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .planet-icon {
+            font-size: 1rem;
+        }
+
+        .planet-value {
+            font-family: var(--font-display);
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .rings-container {
+                width: 260px;
+                height: 260px;
+            }
+            .score-number {
+                font-size: 3rem;
+            }
+            .primary-labels {
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Compatibility</h1>
+        <p class="subtitle">Center Score - Horizontal</p>
+
+        <div class="widget">
+            <div class="rings-container">
+                <svg class="rings-svg" viewBox="0 0 320 320">
+                    <!-- Ring backgrounds -->
+                    <circle class="ring-bg" cx="160" cy="160" r="150" stroke="var(--current)" stroke-width="12"/>
+                    <circle class="ring-bg" cx="160" cy="160" r="132" stroke="var(--base)" stroke-width="12"/>
+                    <circle class="ring-bg" cx="160" cy="160" r="114" stroke="var(--mars)" stroke-width="12"/>
+                    <circle class="ring-bg" cx="160" cy="160" r="96" stroke="var(--venus)" stroke-width="12"/>
+                    <circle class="ring-bg" cx="160" cy="160" r="78" stroke="var(--moon)" stroke-width="12"/>
+                    <circle class="ring-bg" cx="160" cy="160" r="60" stroke="var(--sun)" stroke-width="12"/>
+
+                    <!-- Active rings -->
+                    <!-- Current: 52% -->
+                    <circle class="ring" cx="160" cy="160" r="150"
+                            stroke="var(--current)" stroke-width="12"
+                            stroke-dasharray="942.5" stroke-dashoffset="452.4"/>
+
+                    <!-- Base: 69% -->
+                    <circle class="ring" cx="160" cy="160" r="132"
+                            stroke="var(--base)" stroke-width="12"
+                            stroke-dasharray="829.4" stroke-dashoffset="257.1"/>
+
+                    <!-- Mars: 58% -->
+                    <circle class="ring" cx="160" cy="160" r="114"
+                            stroke="var(--mars)" stroke-width="12"
+                            stroke-dasharray="716.3" stroke-dashoffset="300.8"/>
+
+                    <!-- Venus: 84% -->
+                    <circle class="ring" cx="160" cy="160" r="96"
+                            stroke="var(--venus)" stroke-width="12"
+                            stroke-dasharray="603.2" stroke-dashoffset="96.5"/>
+
+                    <!-- Moon: 65% -->
+                    <circle class="ring" cx="160" cy="160" r="78"
+                            stroke="var(--moon)" stroke-width="12"
+                            stroke-dasharray="490.1" stroke-dashoffset="171.5"/>
+
+                    <!-- Sun: 72% -->
+                    <circle class="ring" cx="160" cy="160" r="60"
+                            stroke="var(--sun)" stroke-width="12"
+                            stroke-dasharray="377" stroke-dashoffset="105.6"/>
+                </svg>
+
+                <div class="center-score">
+                    <div class="score-number">69</div>
+                    <div class="score-label">Match</div>
+                </div>
+            </div>
+
+            <div class="primary-labels">
+                <div class="primary-label">
+                    <div class="label-dot" style="background: var(--base);"></div>
+                    <span class="label-text">Base</span>
+                    <span class="label-value">69%</span>
+                </div>
+                <div class="primary-label">
+                    <div class="label-dot" style="background: var(--current);"></div>
+                    <span class="label-text">Current</span>
+                    <span class="label-value">52%</span>
+                </div>
+            </div>
+
+            <div class="planet-row">
+                <div class="planet-badge">
+                    <span class="planet-icon">☀️</span>
+                    <span class="planet-value">72</span>
+                </div>
+                <div class="planet-badge">
+                    <span class="planet-icon">🌙</span>
+                    <span class="planet-value">65</span>
+                </div>
+                <div class="planet-badge">
+                    <span class="planet-icon">💖</span>
+                    <span class="planet-value">84</span>
+                </div>
+                <div class="planet-badge">
+                    <span class="planet-icon">🔥</span>
+                    <span class="planet-value">58</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

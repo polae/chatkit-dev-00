@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Rings - Classic Bold</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Ring Colors */
+            --sun: #FFC922;
+            --moon: #9B85B7;
+            --venus: #E7B5A0;
+            --mars: #D74E39;
+            --base: #DA6800;
+            --current: #6CC2FF;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 900px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .widget-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .rings-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .rings-svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .ring-bg {
+            fill: none;
+            opacity: 0.2;
+        }
+
+        .ring {
+            fill: none;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease-out;
+        }
+
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-surface);
+            border-radius: 8px;
+            transition: transform 0.2s ease;
+        }
+
+        .legend-item:hover {
+            transform: translateX(4px);
+        }
+
+        .legend-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .legend-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            min-width: 70px;
+            font-weight: 400;
+        }
+
+        .legend-value {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .legend-item.primary {
+            background: var(--bg-surface);
+            border: 1px solid var(--text-muted);
+        }
+
+        .legend-item.primary .legend-label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .widget-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .rings-container {
+                width: 260px;
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Compatibility</h1>
+        <p class="subtitle">Classic Bold</p>
+
+        <div class="widget-container">
+            <div class="rings-container">
+                <svg class="rings-svg" viewBox="0 0 300 300">
+                    <!-- Ring backgrounds (full circles) - Bold 16px strokes, tighter spacing -->
+                    <circle class="ring-bg" cx="150" cy="150" r="138" stroke="var(--current)" stroke-width="16"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="118" stroke="var(--base)" stroke-width="16"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="98" stroke="var(--mars)" stroke-width="16"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="78" stroke="var(--venus)" stroke-width="16"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="58" stroke="var(--moon)" stroke-width="16"/>
+                    <circle class="ring-bg" cx="150" cy="150" r="38" stroke="var(--sun)" stroke-width="16"/>
+
+                    <!-- Active rings (arcs based on percentage) -->
+                    <!-- Current: 52% - outermost -->
+                    <circle class="ring" cx="150" cy="150" r="138"
+                            stroke="var(--current)" stroke-width="16"
+                            stroke-dasharray="867.1" stroke-dashoffset="416.2"/>
+
+                    <!-- Base: 69% -->
+                    <circle class="ring" cx="150" cy="150" r="118"
+                            stroke="var(--base)" stroke-width="16"
+                            stroke-dasharray="741.4" stroke-dashoffset="229.8"/>
+
+                    <!-- Mars: 58% -->
+                    <circle class="ring" cx="150" cy="150" r="98"
+                            stroke="var(--mars)" stroke-width="16"
+                            stroke-dasharray="615.8" stroke-dashoffset="258.6"/>
+
+                    <!-- Venus: 84% -->
+                    <circle class="ring" cx="150" cy="150" r="78"
+                            stroke="var(--venus)" stroke-width="16"
+                            stroke-dasharray="490.1" stroke-dashoffset="78.4"/>
+
+                    <!-- Moon: 65% -->
+                    <circle class="ring" cx="150" cy="150" r="58"
+                            stroke="var(--moon)" stroke-width="16"
+                            stroke-dasharray="364.4" stroke-dashoffset="127.5"/>
+
+                    <!-- Sun: 72% - innermost -->
+                    <circle class="ring" cx="150" cy="150" r="38"
+                            stroke="var(--sun)" stroke-width="16"
+                            stroke-dasharray="238.8" stroke-dashoffset="66.9"/>
+                </svg>
+            </div>
+
+            <div class="legend">
+                <div class="legend-item primary">
+                    <div class="legend-dot" style="background: var(--current);"></div>
+                    <span class="legend-label">Current</span>
+                    <span class="legend-value">52%</span>
+                </div>
+                <div class="legend-item primary">
+                    <div class="legend-dot" style="background: var(--base);"></div>
+                    <span class="legend-label">Base</span>
+                    <span class="legend-value">69%</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--mars);"></div>
+                    <span class="legend-label">Mars</span>
+                    <span class="legend-value">58%</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--venus);"></div>
+                    <span class="legend-label">Venus</span>
+                    <span class="legend-value">84%</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--moon);"></div>
+                    <span class="legend-label">Moon</span>
+                    <span class="legend-value">65%</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--sun);"></div>
+                    <span class="legend-label">Sun</span>
+                    <span class="legend-value">72%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>
