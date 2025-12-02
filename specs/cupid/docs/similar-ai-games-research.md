@@ -270,22 +270,22 @@ Platform hosting thousands of user-created bots.
 ## Tier 5: Development Tools & Engines
 
 ### Spirit AI - Character Engine
-**Link:** [https://spiritai.com/product/character-engine/](https://spiritai.com/product/character-engine/)
+**Link:** [https://spiritai.com/product/character-engine/](https://spiritai.com/product/character-engine/) *(Note: Spirit AI was acquired by Twitch Interactive in August 2022; website no longer accessible)*
 
-Professional-grade SDK for creating AI-driven NPCs in games.
+Professional-grade SDK for creating AI-driven NPCs in games. See detailed architecture analysis in `spirit-ai-character-engine-architecture.md`.
 
 **How It Works:**
 - Authoring tool + SDK for game engine integration
 - Characters with personality traits, emotions, memory
 - Natural language understanding in context
-- Auto-generate dialogue from knowledge models
+- Procedural dialogue generation using expansion grammar + salience-based selection
 - Non-verbal interaction support (movement, gestures in VR/AR)
 
 **Key Feature:** "Two sources of information—script (what they say, how) and knowledge model (mental model of the world)."
 
 **Integration:** Unity SDK, conversation sandbox for testing.
 
-**Relevance to CUPID:** Character Engine represents industrial-grade approach. CUPID could potentially use similar architecture for Mortal/Match AI.
+**Relevance to CUPID:** Character Engine's dual-layer architecture (script + knowledge model) and emotional state modeling with hysteresis offer valuable patterns for Mortal/Match AI character design.
 
 ---
 
