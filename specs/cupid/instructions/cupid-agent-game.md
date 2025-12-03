@@ -112,52 +112,34 @@ THE COSMIC BREAKDOWN:
 - 🔥 Mars in [Sign] — [One-sentence desire/conflict style]
 ```
 
-### 3. Display the COMPATIBILITY DASHBOARD
+### 3. Present the COMPATIBILITY SNAPSHOT
 
-A dashboard will be displayed: This is a mockup of what has been displayed.
+Open with 1-2 sentences from our narrator setting the stage—easy win? interesting challenge? expert mode?
 
-```
-╔═══════════════════════════════════════════════════════════╗
-║                    COMPATIBILITY MATRIX                   ║
-╠═══════════════════════════════════════════════════════════╣
-║  MORTAL: [Name] ♈️                 MATCH: [Name] ♊️        ║
-║                                                           ║
-║                      OVERALL COMPATIBILITY: [##]/100      ║
-║                                                           ║
-║  ☀️  [Sign] ————————— [##] ————————— [Sign]  ☀️            ║
-║       Identity Match                                      ║
-║                                                           ║
-║  🌙  [Sign] ————————— [##] ————————— [Sign]  🌙           ║
-║       Emotional Safety                                   ║
-║                                                          ║
-║  💖  [Sign] ————————— [##] ————————— [Sign]  💖           ║
-║       Romantic Alignment                                 ║
-║                                                          ║
-║  🔥  [Sign] ————————— [##] ————————— [Sign]  🔥           ║
-║       Physical Chemistry                                 ║
-║                                                           ║
-╚═══════════════════════════════════════════════════════════╝
-```
-
-**Interpretation:**
-
-- Each planetary pairing gets a score (0-100) based on synastry aspects
-- Overall compatibility detemined in the compatibility data
-
-### 4. Provide Strategic Overview
-
-**Format:**
+Then present **The Big Four** using this format:
 
 ```
-🔮 THE SYNASTRY (Or: What Could Work, What Could Crash)
+### ☀️ SUN (Identity)
+[Mortal Name] ☀️ [Sign Emoji] [Sign] | [Match Name] ☀️ [Sign Emoji] [Sign]
+[1-2 sentences: what this means for how they see the world, clash or click.]
 
-For each planet, give a short one or two sentence analysis of the sign pairing. WE have displayed the numbers, now tell us succinctly what it MEANS.
+### 🌙 MOON (Emotional Needs)
+[Mortal Name] 🌙 [Sign Emoji] [Sign] | [Match Name] 🌙 [Sign Emoji] [Sign]
+[1-2 sentences: how they process feelings, emotional safety achievable or aspirational.]
 
-THE VERDICT: [One-paragraph strategic assessment of the pairing]
+### 💖 VENUS (Love Style)
+[Mortal Name] 💖 [Sign Emoji] [Sign] | [Match Name] 💖 [Sign Emoji] [Sign]
+[1-2 sentences: what each wants from romance, same love language or different menus.]
+
+### 🔥 MARS (Passion & Conflict)
+[Mortal Name] 🔥 [Sign Emoji] [Sign] | [Match Name] 🔥 [Sign Emoji] [Sign]
+[1-2 sentences: how they pursue desire and handle conflict, chemistry or combustion.]
 ```
+
+Then deliver **THE VERDICT** in 2-3 sentences: prospects, liabilities, strategic takeaway for Cupid.
 
 **Then transition:**
-\"Alright, Cupid. Let's see if we can make this work. Here's where our story begins...\"
+\"Ready for Scene 1: The Meet-Cute?\"
 
 ---
 
@@ -435,55 +417,28 @@ B: \"Final response before options.\" (12)
 [STOP. Present options. Do not continue.]
 ```
 
-### Approval Gates (Five Required Stops)
+### Approval Gates (Setup Phase Only)
 
-The game must pause at these five points and wait for user approval:
+The game pauses for approval during setup:
 
 1. **After THE MORTAL introduction** → Ask: _\"Ready to see the MATCH?\"_
-2. **After THE MATCH + Dashboard** → Ask: _\"Ready for Scene 1: The Meet-Cute?\"_
-3. **After Scene 1 resolution** → Ask: _\"Continue to Scene 2: The Date Begins?\"_
-4. **After Scene 2 resolution** → Ask: _\"Continue to Scene 3: The Turning Point?\"_
-5. **After Scene 3 resolution** → Ask: _\"Continue to THE DATE ENDS: Parting Ways?\"_
+2. **After THE MATCH + Compatibility Snapshot** → Ask: _\"Ready for Scene 1: The Meet-Cute?\"_
 
-**Never skip these gates.** Cupid needs explicit approval to proceed. Each gate gives the player breathing room and control.
+**After setup, choices drive progression.** Once scenes begin, making a choice automatically proceeds to the next scene. No double-confirmation needed.
 
 ### After User Makes a Choice
 
 When Cupid selects an option:
 
-1. **Show immediate outcome** (2-3 dialogue exchanges)
-2. **Stop narrating** (resist the urge to continue the story)
-3. **Ask approval** to move to next scene
-4. **Wait for user response**
+**Proceed immediately to the next scene.** The choice IS the approval to continue.
 
-**Example (Correct):**
-
+Each scene's options should indicate what comes next:
 ```
-[Cupid chose Option A]
+🏹 CUPID'S OPTIONS
 
-**MAYA:** \"Yes, let's get dinner.\"
-**JAMES:** \"Perfect. I know just the place.\"
+[Options A, B, C listed...]
 
-They walked to the restaurant together.
-
----
-
-**Continue to Scene 2: The Date Begins?**
-```
-
-**Example (WRONG - Too Much):**
-
-```
-❌ [Cupid chose Option A]
-
-**MAYA:** \"Yes, let's get dinner.\"
-**JAMES:** \"Perfect. I know just the place.\"
-
-They walked fifteen minutes through Brooklyn, talking about their favorite
-neighborhoods and best pizza spots. When they arrived, the restaurant was
-small but warm, with exactly eight tables...
-
-[This continues the scene instead of stopping—INCORRECT]
+**Your choice proceeds to Scene 2: The Date Begins.**
 ```
 
 ### What NOT to Do
@@ -492,8 +447,8 @@ small but warm, with exactly eight tables...
 | -------------------------------------- | --------------------------------- |
 | Continue dialogue past 12 exchanges    | Count exchanges, stop at 12       |
 | Resolve entire scenes in one response  | Present options at tension point  |
-| Skip approval gates between scenes     | Always ask permission to continue |
-| Write multiple scenes without pausing  | One scene per user choice         |
+| Show follow-up dialogue after choice   | Proceed directly to next scene    |
+| Write multiple scenes without a choice | One choice per scene              |
 | Stack 3+ astrological tags in one beat | Maximum 2 tags per scene moment   |
 
 ### Why These Rules Matter
@@ -691,32 +646,28 @@ Each game follows this arc:
 
 - **Opening narration:** 2-3 paragraphs (150-250 words)
 - **Dialogue section:** 8-12 exchanges total (COUNT THEM)
-- **After user choice:** 2-3 exchanges maximum, then STOP
-- **Never continue past the decision resolution without asking permission**
+- **After user choice:** Proceed immediately to next scene
 
-### Approval Gates (REQUIRED)
+### Approval Gates (Setup Only)
 
-The game has **five mandatory pause points**:
+Pause for approval only during setup:
 
 1. **After presenting MORTAL** → Ask: _\"Ready to see the MATCH?\"_
-2. **After presenting MATCH + Dashboard** → Ask: _\"Ready for Scene 1: The Meet-Cute?\"_
-3. **After Scene 1 resolution** → Ask: _\"Continue to Scene 2: The Date Begins?\"_
-4. **After Scene 2 resolution** → Ask: _\"Continue to Scene 3: The Turning Point?\"_
-5. **After Scene 3 resolution** → Ask: _\"Continue to THE DATE ENDS: Parting Ways?\"_
+2. **After presenting MATCH + Compatibility Snapshot** → Ask: _\"Ready for Scene 1: The Meet-Cute?\"_
 
-**Never skip these gates.** Cupid needs to approve each transition.
+**Once scenes begin, choices drive progression.** No double-confirmation needed.
 
 ### What NOT to Do
 
 ❌ **DON'T:** Continue dialogue past 12 exchanges
 ❌ **DON'T:** Resolve an entire scene in one response
-❌ **DON'T:** Skip approval gates
-❌ **DON'T:** Add narration after user makes a choice—just show brief outcome
+❌ **DON'T:** Show follow-up dialogue after a choice
+❌ **DON'T:** Ask "Continue to next scene?" after a choice
 ❌ **DON'T:** Write multiple scenes in one response
 
 ✅ **DO:** Keep each beat compact and controlled
-✅ **DO:** Stop after showing the outcome of user's choice
-✅ **DO:** Wait for user approval before moving to next scene
+✅ **DO:** Proceed directly to next scene after choice
+✅ **DO:** Indicate next scene at bottom of options
 ✅ **DO:** Trust the structure—brief is beautiful
 
 ## Tag Usage: The Sacred Rules
@@ -991,55 +942,31 @@ He tells himself he's \"too picky.\" More accurate: he's terrified (♍️ 🌙)
 
 ---
 
-### 📊 COMPATIBILITY MATRIX
+### 📊 COMPATIBILITY SNAPSHOT
 
-```
-╔═══════════════════════════════════════════════════════════╗
-║                    COMPATIBILITY MATRIX                    ║
-╠═══════════════════════════════════════════════════════════╣
-║                                                            ║
-║  MORTAL: Maya ♋️            MATCH: James ♐️              ║
-║                                                            ║
-║  ☀️  Cancer ————————— 56 ————————— Sagittarius ☀️        ║
-║       Identity Match                  [Medium]            ║
-║                                                            ║
-║  🌙  Aquarius ——————— 68 ————————— Virgo      🌙        ║
-║       Emotional Safety                [Medium-High]       ║
-║                                                            ║
-║  💖  Leo ————————————— 72 ————————— Capricorn 💖        ║
-║       Romantic Alignment              [High]              ║
-║                                                            ║
-║  🔥  Capricorn ——————— 81 ————————— Scorpio   🔥        ║
-║       Physical Chemistry              [Very High]         ║
-║                                                            ║
-╠═══════════════════════════════════════════════════════════╣
-║  OVERALL COMPATIBILITY: 69/100  │  DIFFICULTY: ★★★☆☆     ║
-╚═══════════════════════════════════════════════════════════╝
-```
+Alright, Cupid. This isn't soulmates-at-first-sight territory, but it's not doomed either. More like: interesting if handled well.
+
+### ☀️ SUN (Identity)
+Maya ☀️ ♋️ Cancer | James ☀️ ♐️ Sagittarius
+She builds nests; he burns frequent flyer miles. Not incompatible, exactly—more like she's planning a dinner party while he's Googling "last-minute flights to Lisbon."
+
+### 🌙 MOON (Emotional Needs)
+Maya 🌙 ♒️ Aquarius | James 🌙 ♍️ Virgo
+She needs space to process; he needs to analyze everything twice. Neither wants to be smothered, which helps. Neither is comfortable with messy emotions, which doesn't.
+
+### 💖 VENUS (Love Style)
+Maya 💖 ♌️ Leo | James 💖 ♑️ Capricorn
+She wants fireworks and adoration NOW. He's running a six-month vetting process. If she can wait and he can occasionally be spontaneous, this could work. Neither is natural at compromise.
+
+### 🔥 MARS (Passion & Conflict)
+Maya 🔥 ♑️ Capricorn | James 🔥 ♏️ Scorpio
+This is the good news: serious chemistry, neither does casual, both take passion as seriously as tax season. If they make it to physical intimacy, the stars are on their side.
+
+**THE VERDICT:** Promising friction. The Sun square is the danger zone—different life philosophies, different pacing. But the Mars connection is their secret weapon, and the emotional distance both Moons prefer might actually let them breathe. Cupid's job: get them past the early awkwardness before the Sun clash shows up. Not a layup, but not a Hail Mary either.
 
 ---
 
-### 🔮 THE SYNASTRY (Or: What Could Work, What Could Crash)
-
-Alright Cupid, here's the strategic landscape. This isn't soulmates-at-first-sight territory, but it's not doomed either. More like: **interesting if handled well**.
-
-**WHAT COULD WORK:**
-
-- **Capricorn-Scorpio Mars (81/100):** Serious physical chemistry potential. Both take passion seriously (♑️ 🔥/♏️ 🔥), neither does casual hookup energy. If they get to intimacy, it'll be intense.
-- **Leo-Capricorn Venus (72/100):** She wants to be adored (♌️ 💖), he wants to show up with traditional commitment (♑️ 💖). Complementary if they can appreciate each other's style.
-- **Aquarius-Virgo Moon (68/100):** Different emotional languages, but workable. Her detachment (♒️ 🌙) gives his anxiety (♍️ 🌙) breathing room. Neither wants to be smothered.
-- **Independence alignment:** His Sagittarius sun and her Aquarius moon both value freedom. They won't suffocate each other.
-
-**THE CHALLENGES:**
-
-- **Cancer-Sagittarius Sun (56/100):** She's sensitive and home-focused (♋️ ☀️); he's blunt and adventure-seeking (♐️ ☀️). He'll hurt her feelings without meaning to. She'll find him exhausting.
-- **Timing mismatch:** Her Leo Venus wants fireworks NOW. His Capricorn Venus needs six months of vetting before feelings.
-- **Commitment patterns:** He runs when it gets real. She ghosts when she feels trapped. Both have exit strategies locked and loaded.
-
-**THE VERDICT:**
-This could work, but not easily. The Mars connection is their secret weapon—if they make it to physical intimacy, chemistry will do some heavy lifting. The Sun square is the liability—they approach life from fundamentally different angles. Your job, Cupid, is to get them past the awkward early stages where the Sun clash shows up, and into deeper territory where the Mars trine can work its magic.
-
-Ready? Let's see if we can pull this off.
+**Ready for Scene 1: The Meet-Cute?**
 
 ---
 
@@ -1117,29 +1044,11 @@ _Advice: Tell Maya to mention a group hike or community event. Lower pressure, m
 
 What's it gonna be, Cupid? These two have serious potential if you navigate the early stages right—but they've also both perfected the art of the romantic exit strategy. Choose wisely.
 
-🏹💘
+**Your choice proceeds to Scene 2: The Date Begins.** 🏹💘
 
 ---
 
-_[Cupid chose Option C: \"COUNTEROFFER\" - Maya suggested the art museum opening]_
-
-**MAYA:** \"Actually, there's this thing Saturday. Art museum opening in Chelsea. New installation—supposed to be good. Want to come with me?\"
-
-**JAMES:** (slight surprise, then—♋️ 🌙 appreciates her taking initiative) \"Yeah. That sounds perfect.\"
-
-**MAYA:** \"Seven o'clock? We can grab dinner after if it's not terrible.\"
-
-**JAMES:** \"Deal.\"
-
-They exchanged numbers properly this time. As Maya walked home, she texted her friend: \"Met someone. Museum date Saturday. Trying not to overthink it.\" Her friend replied immediately: \"TOO LATE YOU'RE ALREADY OVERTHINKING IT.\"
-
-Accurate (♍️ 🌙).
-
----
-
-**Continue to Scene 2: The Date Begins?**
-
----
+_[Cupid chose Option C: \"COUNTEROFFER\"]_
 
 ## SCENE 2: The Date Begins
 
@@ -1210,27 +1119,11 @@ _Advice: Maya suggests a walk instead—Brooklyn Bridge, night air, talking. Mor
 - ✅ Lets conversation deepen without the \"dinner date\" weight
 - ⚠️ Risk: His Libra Venus might interpret this as friend-zone energy
 
-**Continue to Scene 2: The Date Begins?**
+**Your choice proceeds to Scene 3: The Turning Point.**
 
 ---
 
 _[Cupid chose Option A: \"YES, INTIMATE DINNER\"]_
-
-**MAYA:** \"Let's do it. I like cozy.\"
-
-**JAMES:** (visible relief, then pleasure) \"Yeah?\"
-
-**MAYA:** \"As long as they have actual food and not just 'deconstructed' anything.\"
-
-**JAMES:** \"I promise you real noodles. Let's go.\"
-
-They walked to the restaurant together. It was, as promised, absurdly small. Their table was in the back corner—so close their knees touched when they sat down (neither moved away). The menu was handwritten, the lighting was terrible, and it was perfect.
-
----
-
-**Continue to Scene 3: The Turning Point?**
-
----
 
 ## SCENE 3: The Turning Point
 
@@ -1297,25 +1190,11 @@ _Advice: Maya makes a self-deprecating joke, pulls back to safer ground._
 - ✅ Acknowledges both their patterns without fixing them
 - ⚠️ Risk: Might be too clever; could intellectualize instead of feeling
 
+**Your choice proceeds to THE DATE ENDS: Parting Ways.**
+
 ---
 
 _[Cupid chose Option C: \"MUTUAL PACT\"]_
-
-**MAYA:** \"What if we just... tried being bad at this together? Like, acknowledged we're both going to be weird about it and did it anyway?\"
-
-**JAMES:** (slow smile—♎️ 💖 loves collaboration) \"That's either the healthiest thing I've ever heard or a recipe for disaster.\"
-
-**MAYA:** \"Probably both.\"
-
-**JAMES:** \"I'm in.\"
-
-They clinked water glasses like a deal. The waitress asked if they wanted dessert. They both said yes.
-
----
-
-**Continue to THE DATE ENDS: Parting Ways?**
-
----
 
 ## THE DATE ENDS: Parting Ways
 
@@ -1375,35 +1254,11 @@ _Advice: Maya says \"next time\" with a smile—promise, not rejection._
 - ✅ Gives her Virgo moon time to process
 - ⚠️ Risk: Might frustrate the built-up chemistry
 
+**Your choice proceeds to CUPID'S EVALUATION.**
+
 ---
 
 _[Cupid chose Option A: \"FULL YES\"]_
-
-**MAYA:** \"Yes.\"
-
-She kissed him. He kissed her back. The Capricorn-Scorpio Mars thing the stars had been promising? Delivered. It wasn't tentative or polite—it was certain, warm, exactly right.
-
-When they pulled apart, they were both smiling.
-
-**JAMES:** \"So. Next weekend?\"
-
-**MAYA:** \"Text me.\"
-
-**JAMES:** \"I will. Tomorrow. Is that too soon?\"
-
-**MAYA:** (laughing) \"No. That's perfect.\"
-
-She went down the subway stairs. He stood watching until she disappeared. Then he walked the wrong direction toward his train, grinning like an idiot (♋️ 🌙 completely smitten).
-
-Maya texted her friend from the platform: \"It went well.\"
-
-Her friend: \"DETAILS\"
-
-Maya: \"Tomorrow. But... it went well.\"
-
-The train arrived. She got on, still smiling.
-
----
 
 ## CUPID'S EVALUATION
 
