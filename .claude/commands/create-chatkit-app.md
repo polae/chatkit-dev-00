@@ -30,6 +30,6 @@ Please ask any clarifying questions before you write your plan.
 
 You will write a plan to:
 
-`specs/<appname>-plan.md
+`specs/<appname>/<appname>-plan.md`
 
 Once we have reviwed the plan and made finalizing chnages, please implment the app following best practices, as cleanly and elegantly as possible.

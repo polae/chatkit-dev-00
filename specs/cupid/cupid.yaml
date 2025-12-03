@@ -1,0 +1,35 @@
+## Cupid Spec YAML
+
+name: cupid
+description: A romantic matchmaking game for Cupid with ChatKit and AgentKit
+
+agent:
+  workflow_id: wf_6930706d7b5c8190b1ceaea9d3975c740fae062528ba44d5
+  workflow_source: ./cupid-workflow.md
+
+backend:
+  tools: none # No custom tools needed - pure conversation
+  state: in-memory # Session state per thread
+
+frontend:
+  type: use the cupid-simple interface with  specified widgets from this specs folder
+  widgets: []
+  features:
+    - widget
+    - markdown rendering
+    - conversation history
+notes: |
+
+  USe cupid-simple as your guide. Study it carefully. This is a "deluxe" version of the cupid-simple app. pay attention to how it passes state and the data as metadata. 
+
+  And the onley prompt option should be Play with prompt "Play"
+
+  In the workflow, I have put references to instructions and data files or loaded them from files. We can do that similiarly to cupid-simplein the actual app; we'll develop more robust data and we'll swap in state variables, but for now, let's just read from flat files. WE do want to keep the data and instructions in flat files for now, so that we can easily edit the instructions.
+
+  We have built out on Agent Builder a much more detailed version of the app cupid-simple. 
+
+  please make sure that when you are implentting the app, you include an instructions/folder (as we do in the spece with the exact same instructions) so that we can easily edit and change the instructions in the app. 
+
+  Here is a visual representation of the app workflowfrom Agent Builder for your reference:
+
+  '/Users/johnsteven/GITHUB/CHATKIT/chatkit-dev-00/specs/cupid/cupid-agent-builder.png'
