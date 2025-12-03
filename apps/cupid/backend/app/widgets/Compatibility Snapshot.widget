@@ -1,0 +1,301 @@
+{
+  "version": "1.0",
+  "name": "Compatibility Snapshot",
+  "template": "{\"type\":\"Card\",\"size\":\"lg\",\"children\":[{\"type\":\"Col\",\"gap\":3,\"children\":[{\"type\":\"Row\",\"align\":\"baseline\",\"gap\":2,\"children\":[{\"type\":\"Text\",\"value\":{{ ((\"Scene #\" ~ scene.number)) | tojson }},\"size\":\"sm\",\"weight\":\"semibold\"},{\"type\":\"Text\",\"value\":{{ (scene.name) | tojson }},\"size\":\"sm\",\"color\":\"secondary\"}]},{\"type\":\"Col\",\"align\":\"center\",\"gap\":1,\"children\":[{\"type\":\"Caption\",\"value\":\"Compatibility\",\"color\":\"secondary\"},{\"type\":\"Row\",\"gap\":2,\"align\":\"center\",\"children\":[{\"type\":\"Title\",\"value\":{{ ((compatibility)) | tojson }},\"size\":\"3xl\"},{\"type\":\"Badge\",\"label\":{{ (((\"▲\" if delta.direction == \"up\" else \"▼\") ~ \" \" ~ delta.value)) | tojson }},\"color\":{% if delta.direction == \"up\" %}\"success\"{% else %}\"danger\"{% endif %},\"variant\":\"soft\"}]},{\"type\":\"Caption\",\"value\":\"Now\",\"color\":\"tertiary\"}]},{\"type\":\"Divider\"},{\"type\":\"Col\",\"gap\":2,\"children\":[{%- set _c -%}{%-for item in bars -%},{\"type\":\"Row\",\"key\":{{ (item.label) | tojson }},\"gap\":2,\"align\":\"center\",\"children\":[{\"type\":\"Caption\",\"value\":{{ (item.label) | tojson }}},{\"type\":\"Box\",\"flex\":\"auto\",\"height\":10,\"radius\":\"xl\",\"background\":\"surface-secondary\",\"children\":[{\"type\":\"Box\",\"height\":\"100%\",\"width\":{{ ((item.percent ~ \"%\")) | tojson }},\"radius\":\"xl\",\"background\":{{ (item.color) | tojson }}}]},{\"type\":\"Caption\",\"value\":{{ ((item.percent ~ \"%\")) | tojson }}}]}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]},{\"type\":\"Row\",\"gap\":1,\"wrap\":\"wrap\",\"children\":[{%- set _c -%}{%-for p in pills -%},{\"type\":\"Row\",\"key\":{{ (p.id) | tojson }},\"children\":[{\"type\":\"Badge\",\"label\":{{ ((p.icon ~ \" \" ~ p.value)) | tojson }},\"variant\":\"soft\"}]}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}]}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "scene": {
+        "type": "object",
+        "properties": {
+          "number": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "number",
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "compatibility": {
+        "type": "number"
+      },
+      "delta": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "up",
+              "down"
+            ]
+          }
+        },
+        "required": [
+          "value",
+          "direction"
+        ],
+        "additionalProperties": false
+      },
+      "bars": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "label": {
+              "type": "string"
+            },
+            "percent": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "blue-500",
+                "orange-500"
+              ]
+            }
+          },
+          "required": [
+            "label",
+            "percent",
+            "color"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "pills": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "icon": {
+              "type": "string"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "id",
+            "icon",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "scene",
+      "compatibility",
+      "delta",
+      "bars",
+      "pills"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "Card",
+    "size": "lg",
+    "children": [
+      {
+        "type": "Col",
+        "gap": 3,
+        "children": [
+          {
+            "type": "Row",
+            "align": "baseline",
+            "gap": 2,
+            "children": [
+              {
+                "type": "Text",
+                "value": "Scene #1",
+                "size": "sm",
+                "weight": "semibold"
+              },
+              {
+                "type": "Text",
+                "value": "Meet-Cute",
+                "size": "sm",
+                "color": "secondary"
+              }
+            ]
+          },
+          {
+            "type": "Col",
+            "align": "center",
+            "gap": 1,
+            "children": [
+              {
+                "type": "Caption",
+                "value": "Compatibility",
+                "color": "secondary"
+              },
+              {
+                "type": "Row",
+                "gap": 2,
+                "align": "center",
+                "children": [
+                  {
+                    "type": "Title",
+                    "value": "52",
+                    "size": "3xl"
+                  },
+                  {
+                    "type": "Badge",
+                    "label": "▲ 7",
+                    "color": "success",
+                    "variant": "soft"
+                  }
+                ]
+              },
+              {
+                "type": "Caption",
+                "value": "Now",
+                "color": "tertiary"
+              }
+            ]
+          },
+          {
+            "type": "Divider"
+          },
+          {
+            "type": "Col",
+            "gap": 2,
+            "children": [
+              {
+                "type": "Row",
+                "key": "Now",
+                "gap": 2,
+                "align": "center",
+                "children": [
+                  {
+                    "type": "Caption",
+                    "value": "Now"
+                  },
+                  {
+                    "type": "Box",
+                    "flex": "auto",
+                    "height": 10,
+                    "radius": "xl",
+                    "background": "surface-secondary",
+                    "children": [
+                      {
+                        "type": "Box",
+                        "height": "100%",
+                        "width": "52%",
+                        "radius": "xl",
+                        "background": "blue-500"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Caption",
+                    "value": "52%"
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "key": "Base",
+                "gap": 2,
+                "align": "center",
+                "children": [
+                  {
+                    "type": "Caption",
+                    "value": "Base"
+                  },
+                  {
+                    "type": "Box",
+                    "flex": "auto",
+                    "height": 10,
+                    "radius": "xl",
+                    "background": "surface-secondary",
+                    "children": [
+                      {
+                        "type": "Box",
+                        "height": "100%",
+                        "width": "69%",
+                        "radius": "xl",
+                        "background": "orange-500"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Caption",
+                    "value": "69%"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Row",
+            "gap": 1,
+            "wrap": "wrap",
+            "children": [
+              {
+                "type": "Row",
+                "key": "sun",
+                "children": [
+                  {
+                    "type": "Badge",
+                    "label": "☀️ 72",
+                    "variant": "soft"
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "key": "moon",
+                "children": [
+                  {
+                    "type": "Badge",
+                    "label": "🌙 65",
+                    "variant": "soft"
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "key": "heart",
+                "children": [
+                  {
+                    "type": "Badge",
+                    "label": "💖 84",
+                    "variant": "soft"
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "key": "fire",
+                "children": [
+                  {
+                    "type": "Badge",
+                    "label": "🔥 58",
+                    "variant": "soft"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6IjI1MzAyM2IyLTdhNjgtNGFlMi1iMjI2LTkxOTYwMjk1ZjAzYyIsIm5hbWUiOiJDb21wYXRpYmlsaXR5IFNuYXBzaG90IiwidmlldyI6IjxDYXJkIHNpemU9XCJsZ1wiPlxuICA8Q29sIGdhcD17M30-XG4gICAgPFJvdyBhbGlnbj1cImJhc2VsaW5lXCIgZ2FwPXsyfT5cbiAgICAgIDxUZXh0IHZhbHVlPXtgU2NlbmUgIyR7c2NlbmUubnVtYmVyfWB9IHNpemU9XCJzbVwiIHdlaWdodD1cInNlbWlib2xkXCIgLz5cbiAgICAgIDxUZXh0IHZhbHVlPXtzY2VuZS5uYW1lfSBzaXplPVwic21cIiBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG4gICAgPC9Sb3c-XG5cbiAgICA8Q29sIGFsaWduPVwiY2VudGVyXCIgZ2FwPXsxfT5cbiAgICAgIDxDYXB0aW9uIHZhbHVlPVwiQ29tcGF0aWJpbGl0eVwiIGNvbG9yPVwic2Vjb25kYXJ5XCIgLz5cbiAgICAgIDxSb3cgZ2FwPXsyfSBhbGlnbj1cImNlbnRlclwiPlxuICAgICAgICA8VGl0bGUgdmFsdWU9e2Ake2NvbXBhdGliaWxpdHl9YH0gc2l6ZT1cIjN4bFwiIC8-XG4gICAgICAgIDxCYWRnZVxuICAgICAgICAgIGxhYmVsPXtgJHtkZWx0YS5kaXJlY3Rpb24gPT09IFwidXBcIiA_IFwi4payXCIgOiBcIuKWvFwifSAke2RlbHRhLnZhbHVlfWB9XG4gICAgICAgICAgY29sb3I9e2RlbHRhLmRpcmVjdGlvbiA9PT0gXCJ1cFwiID8gXCJzdWNjZXNzXCIgOiBcImRhbmdlclwifVxuICAgICAgICAgIHZhcmlhbnQ9XCJzb2Z0XCJcbiAgICAgICAgLz5cbiAgICAgIDwvUm93PlxuICAgICAgPENhcHRpb24gdmFsdWU9XCJOb3dcIiBjb2xvcj1cInRlcnRpYXJ5XCIgLz5cbiAgICA8L0NvbD5cblxuICAgIDxEaXZpZGVyIC8-XG5cbiAgICA8Q29sIGdhcD17Mn0-XG4gICAgICB7YmFycy5tYXAoKGl0ZW0pID0-IChcbiAgICAgICAgPFJvdyBrZXk9e2l0ZW0ubGFiZWx9IGdhcD17Mn0gYWxpZ249XCJjZW50ZXJcIj5cbiAgICAgICAgICA8Q2FwdGlvbiB2YWx1ZT17aXRlbS5sYWJlbH0gLz5cbiAgICAgICAgICA8Qm94XG4gICAgICAgICAgICBmbGV4PVwiYXV0b1wiXG4gICAgICAgICAgICBoZWlnaHQ9ezEwfVxuICAgICAgICAgICAgcmFkaXVzPVwieGxcIlxuICAgICAgICAgICAgYmFja2dyb3VuZD1cInN1cmZhY2Utc2Vjb25kYXJ5XCJcbiAgICAgICAgICA-XG4gICAgICAgICAgICA8Qm94XG4gICAgICAgICAgICAgIGhlaWdodD1cIjEwMCVcIlxuICAgICAgICAgICAgICB3aWR0aD17YCR7aXRlbS5wZXJjZW50fSVgfVxuICAgICAgICAgICAgICByYWRpdXM9XCJ4bFwiXG4gICAgICAgICAgICAgIGJhY2tncm91bmQ9e2l0ZW0uY29sb3J9XG4gICAgICAgICAgICAvPlxuICAgICAgICAgIDwvQm94PlxuICAgICAgICAgIDxDYXB0aW9uIHZhbHVlPXtgJHtpdGVtLnBlcmNlbnR9JWB9IC8-XG4gICAgICAgIDwvUm93PlxuICAgICAgKSl9XG4gICAgPC9Db2w-XG5cbiAgICA8Um93IGdhcD17MX0gd3JhcD1cIndyYXBcIj5cbiAgICAgIHtwaWxscy5tYXAoKHApID0-IChcbiAgICAgICAgPFJvdyBrZXk9e3AuaWR9PlxuICAgICAgICAgIDxCYWRnZSBsYWJlbD17YCR7cC5pY29ufSAke3AudmFsdWV9YH0gdmFyaWFudD1cInNvZnRcIiAvPlxuICAgICAgICA8L1Jvdz5cbiAgICAgICkpfVxuICAgIDwvUm93PlxuICA8L0NvbD5cbjwvQ2FyZD4iLCJkZWZhdWx0U3RhdGUiOnsic2NlbmUiOnsibnVtYmVyIjoxLCJuYW1lIjoiTWVldC1DdXRlIn0sImNvbXBhdGliaWxpdHkiOjUyLCJkZWx0YSI6eyJ2YWx1ZSI6NywiZGlyZWN0aW9uIjoidXAifSwiYmFycyI6W3sibGFiZWwiOiJOb3ciLCJwZXJjZW50Ijo1MiwiY29sb3IiOiJibHVlLTUwMCJ9LHsibGFiZWwiOiJCYXNlIiwicGVyY2VudCI6NjksImNvbG9yIjoib3JhbmdlLTUwMCJ9XSwicGlsbHMiOlt7ImlkIjoic3VuIiwiaWNvbiI6IuKYgO-4jyIsInZhbHVlIjo3Mn0seyJpZCI6Im1vb24iLCJpY29uIjoi8J-MmSIsInZhbHVlIjo2NX0seyJpZCI6ImhlYXJ0IiwiaWNvbiI6IvCfkpYiLCJ2YWx1ZSI6ODR9LHsiaWQiOiJmaXJlIiwiaWNvbiI6IvCflKUiLCJ2YWx1ZSI6NTh9XX0sInN0YXRlcyI6W10sInNjaGVtYSI6ImltcG9ydCB7IHogfSBmcm9tIFwiem9kXCJcblxuY29uc3QgQmFyID0gei5zdHJpY3RPYmplY3Qoe1xuICBsYWJlbDogei5zdHJpbmcoKSxcbiAgcGVyY2VudDogei5udW1iZXIoKS5taW4oMCkubWF4KDEwMCksXG4gIGNvbG9yOiB6LmVudW0oW1wiYmx1ZS01MDBcIiwgXCJvcmFuZ2UtNTAwXCJdKSxcbn0pXG5cbmNvbnN0IFBpbGwgPSB6LnN0cmljdE9iamVjdCh7XG4gIGlkOiB6LnN0cmluZygpLFxuICBpY29uOiB6LnN0cmluZygpLFxuICB2YWx1ZTogei5udW1iZXIoKSxcbn0pXG5cbmNvbnN0IERlbHRhID0gei5zdHJpY3RPYmplY3Qoe1xuICB2YWx1ZTogei5udW1iZXIoKSxcbiAgZGlyZWN0aW9uOiB6LmVudW0oW1widXBcIiwgXCJkb3duXCJdKSxcbn0pXG5cbmNvbnN0IFdpZGdldFN0YXRlID0gei5zdHJpY3RPYmplY3Qoe1xuICBzY2VuZTogei5zdHJpY3RPYmplY3Qoe1xuICAgIG51bWJlcjogei5udW1iZXIoKSxcbiAgICBuYW1lOiB6LnN0cmluZygpLFxuICB9KSxcbiAgY29tcGF0aWJpbGl0eTogei5udW1iZXIoKSxcbiAgZGVsdGE6IERlbHRhLFxuICBiYXJzOiB6LmFycmF5KEJhciksXG4gIHBpbGxzOiB6LmFycmF5KFBpbGwpLFxufSlcblxuZXhwb3J0IGRlZmF1bHQgV2lkZ2V0U3RhdGUiLCJqc29uU2NoZW1hIjp7fSwic2NoZW1hTW9kZSI6InpvZCIsInNjaGVtYVZhbGlkaXR5IjoidmFsaWQiLCJ2aWV3VmFsaWRpdHkiOiJ2YWxpZCIsImRlZmF1bHRTdGF0ZVZhbGlkaXR5IjoidmFsaWQifQ"
+}

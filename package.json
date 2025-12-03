@@ -7,7 +7,8 @@
     "news-guide": "npm --prefix examples/news-guide install && npm --prefix examples/news-guide start",
     "metro-map": "npm --prefix examples/metro-map install && npm --prefix examples/metro-map start",
     "simple-chat": "npm --prefix apps/simple-chat install && npm --prefix apps/simple-chat start",
-    "cupid-simple": "npm --prefix apps/cupid-simple install && npm --prefix apps/cupid-simple start"
+    "cupid-simple": "npm --prefix apps/cupid-simple install && npm --prefix apps/cupid-simple start",
+    "cupid": "npm --prefix apps/cupid install && npm --prefix apps/cupid start"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"

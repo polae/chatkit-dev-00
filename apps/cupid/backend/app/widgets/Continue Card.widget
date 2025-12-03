@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "name": "Continue Card",
+  "template": "{\"type\":\"Card\",\"size\":\"lg\",\"children\":[{\"type\":\"Col\",\"gap\":3,\"children\":[{\"type\":\"Markdown\",\"value\":{{ (confirmation_message) | tojson }}},{\"type\":\"Button\",\"label\":\"Continue\",\"block\":true,\"style\":\"primary\",\"onClickAction\":{\"type\":\"continue\"}}]}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "confirmation_message": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "confirmation_message"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "Card",
+    "size": "lg",
+    "children": [
+      {
+        "type": "Col",
+        "gap": 3,
+        "children": [
+          {
+            "type": "Markdown",
+            "value": "Please confirm to proceed."
+          },
+          {
+            "type": "Button",
+            "label": "Continue",
+            "block": true,
+            "style": "primary",
+            "onClickAction": {
+              "type": "continue"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6ImVhOGYzOTlkLTljNzgtNDVmOS05OTFhLTdmZjQ2M2M3OTY4MyIsIm5hbWUiOiJDb250aW51ZSBDYXJkIiwidmlldyI6IjxDYXJkIHNpemU9XCJsZ1wiPlxuICA8Q29sIGdhcD17M30-XG4gICAgPE1hcmtkb3duIHZhbHVlPXtjb25maXJtYXRpb25fbWVzc2FnZX0gLz5cbiAgICA8QnV0dG9uXG4gICAgICBsYWJlbD1cIkNvbnRpbnVlXCJcbiAgICAgIGJsb2NrXG4gICAgICBzdHlsZT1cInByaW1hcnlcIlxuICAgICAgb25DbGlja0FjdGlvbj17eyB0eXBlOiBcImNvbnRpbnVlXCIgfX1cbiAgICAvPlxuICA8L0NvbD5cbjwvQ2FyZD4iLCJkZWZhdWx0U3RhdGUiOnsiY29uZmlybWF0aW9uX21lc3NhZ2UiOiJQbGVhc2UgY29uZmlybSB0byBwcm9jZWVkLiJ9LCJzdGF0ZXMiOltdLCJzY2hlbWEiOiJpbXBvcnQgeyB6IH0gZnJvbSBcInpvZFwiXG5cbmNvbnN0IFdpZGdldFN0YXRlID0gei5zdHJpY3RPYmplY3Qoe1xuICBjb25maXJtYXRpb25fbWVzc2FnZTogei5zdHJpbmcoKSxcbn0pXG5cbmV4cG9ydCBkZWZhdWx0IFdpZGdldFN0YXRlIiwianNvblNjaGVtYSI6e30sInNjaGVtYU1vZGUiOiJ6b2QiLCJzY2hlbWFWYWxpZGl0eSI6InZhbGlkIiwidmlld1ZhbGlkaXR5IjoidmFsaWQiLCJkZWZhdWx0U3RhdGVWYWxpZGl0eSI6InZhbGlkIn0"
+}
