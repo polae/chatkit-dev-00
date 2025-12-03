@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUPID: A Player's Guide</title>
+    <title>Cupid Widgets</title>
 
     <!-- Google Fonts: Lexend Family -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -300,10 +300,10 @@
                 <circle cx="144" cy="254" r="48" fill="#FFC922"/>
                 <circle cx="368" cy="366" r="48" fill="#8AA47D"/>
             </svg>
-            <span class="navbar-title">Cupid</span>
+            <span class="navbar-title">Cupid Widgets</span>
         </div>
         <div class="navbar-center">
-            <span class="slide-indicator" id="slide-indicator">1 / 12</span>
+            <span class="slide-indicator" id="slide-indicator">1 / 23</span>
         </div>
         <div class="navbar-right">
             <button class="theme-toggle" aria-label="Toggle theme" id="theme-toggle-btn">
@@ -322,20 +322,21 @@
                     <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>
                 </svg>
             </button>
+            <a href="./cupid-slides.html" class="navbar-link">Slides</a>
             <a href="./humorist-homepage.html" class="navbar-link">Home</a>
         </div>
     </nav>
 
     <div class="slide-container">
-        <button class="nav-btn nav-btn-prev" id="btn-prev" aria-label="Previous slide">
+        <button class="nav-btn nav-btn-prev" id="btn-prev" aria-label="Previous widget">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
         </button>
 
-        <iframe id="slide-frame" class="slide-frame" src="slides/cupid/cupid-01-title.html"></iframe>
+        <iframe id="slide-frame" class="slide-frame" src="widgets/widget-01-compat-rings-clean.html"></iframe>
 
-        <button class="nav-btn nav-btn-next" id="btn-next" aria-label="Next slide">
+        <button class="nav-btn nav-btn-next" id="btn-next" aria-label="Next widget">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
@@ -344,21 +345,32 @@
 
     <script>
         // ============================================
-        // CUPID PLAYER GUIDE SLIDES
+        // CUPID WIDGETS
         // ============================================
         const slides = [
-            'slides/cupid/cupid-01-title.html',
-            'slides/cupid/cupid-02-what-is.html',
-            'slides/cupid/cupid-03-big-four.html',
-            'slides/cupid/cupid-04-planets.html',
-            'slides/cupid/cupid-05-matrix.html',
-            'slides/cupid/cupid-06-story.html',
-            'slides/cupid/cupid-07-choices.html',
-            'slides/cupid/cupid-08-scoring.html',
-            'slides/cupid/cupid-09-meta.html',
-            'slides/cupid/cupid-10-pacing.html',
-            'slides/cupid/cupid-11-rules.html',
-            'slides/cupid/cupid-12-ready.html',
+            'widgets/widget-01-compat-rings-clean.html',
+            'widgets/widget-02-compat-rings-bold.html',
+            'widgets/widget-03-compat-center-horiz.html',
+            'widgets/widget-04-compat-center-radial.html',
+            'widgets/widget-05-compat-animated-seq.html',
+            'widgets/widget-06-compat-animated-glow.html',
+            'widgets/widget-07-compat-two-ring.html',
+            'widgets/widget-08-compat-bars.html',
+            'widgets/widget-09-compat-v9.html',
+            'widgets/widget-10-profile-v1.html',
+            'widgets/widget-11-profile-v2.html',
+            'widgets/widget-12-eval-bars.html',
+            'widgets/widget-13-eval-pie.html',
+            'widgets/widget-14-eval-radar.html',
+            'widgets/widget-15-eval-split.html',
+            'widgets/widget-16-eval-gauge.html',
+            'widgets/widget-17-eval-grid.html',
+            'widgets/widget-18-eval-verdict.html',
+            'widgets/widget-19-eval-report.html',
+            'widgets/widget-20-eval-target.html',
+            'widgets/widget-21-eval-before-after.html',
+            'widgets/widget-22-eval-dial.html',
+            'widgets/widget-23-eval-receipt.html',
         ];
 
         // ============================================

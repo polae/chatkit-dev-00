@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planet Compatibility Bars</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Planet Colors */
+            --yellow: #FFC922;
+            --purple: #9B85B7;
+            --pink: #E7B5A0;
+            --red: #D74E39;
+            --orange: #DA6800;
+            --blue: #6CC2FF;
+            --green: #8AA47D;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 520px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--text-primary);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .widget {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Overall Score - Hero */
+        .overall-hero {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out 0.2s forwards;
+        }
+
+        .overall-number {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--pink), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .overall-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 0.25rem;
+        }
+
+        /* Planet Bar Rows */
+        .planet-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .planet-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .planet-row:nth-child(1) { animation-delay: 0.4s; }
+        .planet-row:nth-child(2) { animation-delay: 0.5s; }
+        .planet-row:nth-child(3) { animation-delay: 0.6s; }
+        .planet-row:nth-child(4) { animation-delay: 0.7s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .planet-left {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            min-width: 80px;
+        }
+
+        .planet-emoji {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .zodiac-sign {
+            font-size: 1.25rem;
+            line-height: 1;
+        }
+
+        .planet-bar-track {
+            flex: 1;
+            height: 32px;
+            background: var(--bg-surface);
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .planet-bar-fill {
+            height: 100%;
+            border-radius: 16px;
+            width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: fillBar 0.8s ease-out forwards;
+        }
+
+        .planet-row:nth-child(1) .planet-bar-fill { animation-delay: 0.6s; }
+        .planet-row:nth-child(2) .planet-bar-fill { animation-delay: 0.7s; }
+        .planet-row:nth-child(3) .planet-bar-fill { animation-delay: 0.8s; }
+        .planet-row:nth-child(4) .planet-bar-fill { animation-delay: 0.9s; }
+
+        .planet-bar-fill.sun {
+            background: var(--yellow);
+            box-shadow: 0 0 16px rgba(255, 201, 34, 0.4);
+        }
+
+        .planet-bar-fill.moon {
+            background: var(--purple);
+            box-shadow: 0 0 16px rgba(155, 133, 183, 0.4);
+        }
+
+        .planet-bar-fill.venus {
+            background: var(--pink);
+            box-shadow: 0 0 16px rgba(231, 181, 160, 0.4);
+        }
+
+        .planet-bar-fill.mars {
+            background: var(--red);
+            box-shadow: 0 0 16px rgba(215, 78, 57, 0.4);
+        }
+
+        @keyframes fillBar {
+            to {
+                width: var(--fill-width);
+            }
+        }
+
+        .planet-score {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .planet-right {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            min-width: 80px;
+            justify-content: flex-end;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out 1.1s forwards;
+            padding-top: 0.5rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .legend-label {
+            font-family: var(--font-display);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.7rem;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+            .planet-bar-fill {
+                width: var(--fill-width) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Planet Compatibility</h1>
+        <p class="subtitle">Zara & Sam</p>
+
+        <div class="widget">
+            <!-- Overall Score -->
+            <div class="overall-hero">
+                <div class="overall-number">69</div>
+                <div class="overall-label">Overall Match</div>
+            </div>
+
+            <!-- Planet Bars -->
+            <div class="planet-bars">
+                <!-- Sun -->
+                <div class="planet-row">
+                    <div class="planet-left">
+                        <span class="planet-emoji">☀️</span>
+                        <span class="zodiac-sign">♈</span>
+                    </div>
+                    <div class="planet-bar-track">
+                        <div class="planet-bar-fill sun" style="--fill-width: 56%;">
+                            <span class="planet-score">56</span>
+                        </div>
+                    </div>
+                    <div class="planet-right">
+                        <span class="zodiac-sign">♊</span>
+                        <span class="planet-emoji">☀️</span>
+                    </div>
+                </div>
+
+                <!-- Moon -->
+                <div class="planet-row">
+                    <div class="planet-left">
+                        <span class="planet-emoji">🌙</span>
+                        <span class="zodiac-sign">♍</span>
+                    </div>
+                    <div class="planet-bar-track">
+                        <div class="planet-bar-fill moon" style="--fill-width: 72%;">
+                            <span class="planet-score">72</span>
+                        </div>
+                    </div>
+                    <div class="planet-right">
+                        <span class="zodiac-sign">♒</span>
+                        <span class="planet-emoji">🌙</span>
+                    </div>
+                </div>
+
+                <!-- Venus -->
+                <div class="planet-row">
+                    <div class="planet-left">
+                        <span class="planet-emoji">💖</span>
+                        <span class="zodiac-sign">♉</span>
+                    </div>
+                    <div class="planet-bar-track">
+                        <div class="planet-bar-fill venus" style="--fill-width: 78%;">
+                            <span class="planet-score">78</span>
+                        </div>
+                    </div>
+                    <div class="planet-right">
+                        <span class="zodiac-sign">♊</span>
+                        <span class="planet-emoji">💖</span>
+                    </div>
+                </div>
+
+                <!-- Mars -->
+                <div class="planet-row">
+                    <div class="planet-left">
+                        <span class="planet-emoji">🔥</span>
+                        <span class="zodiac-sign">♈</span>
+                    </div>
+                    <div class="planet-bar-track">
+                        <div class="planet-bar-fill mars" style="--fill-width: 74%;">
+                            <span class="planet-score">74</span>
+                        </div>
+                    </div>
+                    <div class="planet-right">
+                        <span class="zodiac-sign">♉</span>
+                        <span class="planet-emoji">🔥</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="zodiac-sign">♈</span>
+                    <span class="legend-label">Zara</span>
+                </div>
+                <div class="legend-item">
+                    <span class="zodiac-sign">♊</span>
+                    <span class="legend-label">Sam</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

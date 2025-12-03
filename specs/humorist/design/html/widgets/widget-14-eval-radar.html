@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Radar Chart</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Accent Colors */
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 500px;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .radar-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .radar-chart {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .radar-grid {
+            stroke: var(--text-muted);
+            stroke-width: 1;
+            fill: none;
+            opacity: 0.3;
+        }
+
+        .radar-axis {
+            stroke: var(--text-muted);
+            stroke-width: 1;
+            opacity: 0.3;
+        }
+
+        .radar-polygon {
+            fill: var(--pink);
+            fill-opacity: 0.4;
+            stroke: var(--pink);
+            stroke-width: 2;
+            stroke-opacity: 0.8;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.4s forwards;
+        }
+
+        html.dark .radar-polygon {
+            fill-opacity: 0.3;
+        }
+
+        .radar-point {
+            fill: var(--pink);
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.6s forwards;
+        }
+
+        .axis-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            fill: var(--text-primary);
+            text-anchor: middle;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out 0.3s forwards;
+        }
+
+        .axis-emoji {
+            font-size: 1.5rem;
+        }
+
+        .axis-score {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            fill: var(--pink);
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .legend-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: var(--bg-surface);
+            border-radius: 8px;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .legend-row:nth-child(1) { animation-delay: 0.5s; }
+        .legend-row:nth-child(2) { animation-delay: 0.6s; }
+        .legend-row:nth-child(3) { animation-delay: 0.7s; }
+        .legend-row:nth-child(4) { animation-delay: 0.8s; }
+
+        .legend-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .legend-emoji {
+            font-size: 1.2rem;
+        }
+
+        .legend-value {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Compatibility Breakdown</h1>
+
+        <div class="radar-container">
+            <!-- Radar Chart SVG -->
+            <div class="radar-chart">
+                <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Grid circles -->
+                    <circle class="radar-grid" cx="200" cy="200" r="150" />
+                    <circle class="radar-grid" cx="200" cy="200" r="112.5" />
+                    <circle class="radar-grid" cx="200" cy="200" r="75" />
+                    <circle class="radar-grid" cx="200" cy="200" r="37.5" />
+
+                    <!-- Axes -->
+                    <line class="radar-axis" x1="200" y1="200" x2="200" y2="50" />
+                    <line class="radar-axis" x1="200" y1="200" x2="350" y2="200" />
+                    <line class="radar-axis" x1="200" y1="200" x2="200" y2="350" />
+                    <line class="radar-axis" x1="200" y1="200" x2="50" y2="200" />
+
+                    <!-- Data polygon -->
+                    <polygon class="radar-polygon" points="200,116 317,200 189,200 125,200" />
+
+                    <!-- Data points -->
+                    <circle class="radar-point" cx="200" cy="116" r="5" />
+                    <circle class="radar-point" cx="317" cy="200" r="5" />
+                    <circle class="radar-point" cx="189" cy="200" r="5" />
+                    <circle class="radar-point" cx="125" cy="200" r="5" />
+
+                    <!-- Labels -->
+                    <text class="axis-label" x="200" y="30">
+                        <tspan class="axis-emoji">☀️</tspan>
+                    </text>
+                    <text class="axis-label axis-score" x="200" y="100" font-size="0.8rem">56</text>
+
+                    <text class="axis-label" x="370" y="205">
+                        <tspan class="axis-emoji">💖</tspan>
+                    </text>
+                    <text class="axis-label axis-score" x="332" y="205" font-size="0.8rem">78</text>
+
+                    <text class="axis-label" x="200" y="385">
+                        <tspan class="axis-emoji">🔥</tspan>
+                    </text>
+                    <text class="axis-label axis-score" x="200" y="310" font-size="0.8rem">74</text>
+
+                    <text class="axis-label" x="30" y="205">
+                        <tspan class="axis-emoji">🌙</tspan>
+                    </text>
+                    <text class="axis-label axis-score" x="110" y="205" font-size="0.8rem">72</text>
+                </svg>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend">
+                <div class="legend-row">
+                    <div class="legend-label">
+                        <span class="legend-emoji">☀️</span>
+                        <span>Sun Compatibility</span>
+                    </div>
+                    <span class="legend-value">56%</span>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-label">
+                        <span class="legend-emoji">🌙</span>
+                        <span>Moon Compatibility</span>
+                    </div>
+                    <span class="legend-value">72%</span>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-label">
+                        <span class="legend-emoji">💖</span>
+                        <span>Venus Compatibility</span>
+                    </div>
+                    <span class="legend-value">78%</span>
+                </div>
+                <div class="legend-row">
+                    <div class="legend-label">
+                        <span class="legend-emoji">🔥</span>
+                        <span>Mars Compatibility</span>
+                    </div>
+                    <span class="legend-value">74%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

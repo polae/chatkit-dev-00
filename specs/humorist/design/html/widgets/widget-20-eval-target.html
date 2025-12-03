@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget 20 - Cupid Target Evaluation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700;900&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lexend', sans-serif;
+      background: #FDF6E3;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    html.dark body {
+      background: #1a1a1a;
+      color: #FDF6E3;
+    }
+
+    .widget {
+      max-width: 500px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    html.dark .widget {
+      background: #2a2a2a;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .title {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #D74E39;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    html.dark .title {
+      color: #E7B5A0;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #666;
+      font-weight: 500;
+    }
+
+    html.dark .subtitle {
+      color: #999;
+    }
+
+    .target-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      margin: 0 auto 2rem;
+      max-width: 360px;
+    }
+
+    .target {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Target rings */
+    .ring {
+      fill: none;
+      stroke-width: 50;
+      opacity: 0.9;
+    }
+
+    .ring-disaster {
+      stroke: #D74E39;
+    }
+
+    .ring-awkward {
+      stroke: #DA6800;
+    }
+
+    .ring-friendly {
+      stroke: #FFC922;
+    }
+
+    .ring-strong {
+      stroke: #9B85B7;
+    }
+
+    .ring-true-love {
+      stroke: #E7B5A0;
+    }
+
+    html.dark .ring {
+      opacity: 0.85;
+    }
+
+    /* Arrow */
+    .arrow-group {
+      transform-origin: center;
+    }
+
+    .arrow-shaft {
+      fill: #1a1a1a;
+    }
+
+    .arrow-tip {
+      fill: #D74E39;
+    }
+
+    .arrow-feathers {
+      fill: #E7B5A0;
+    }
+
+    html.dark .arrow-shaft {
+      fill: #FDF6E3;
+    }
+
+    html.dark .arrow-tip {
+      fill: #E7B5A0;
+    }
+
+    html.dark .arrow-feathers {
+      fill: #D74E39;
+    }
+
+    .score-display {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .score-number {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 4rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #D74E39 0%, #E7B5A0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    html.dark .score-number {
+      background: linear-gradient(135deg, #E7B5A0 0%, #9B85B7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .score-label {
+      font-size: 0.85rem;
+      color: #666;
+      font-weight: 500;
+      margin-top: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    html.dark .score-label {
+      color: #999;
+    }
+
+    .verdict {
+      text-align: center;
+      padding: 1.25rem 1.5rem;
+      background: #F8F0E0;
+      border-radius: 16px;
+      border: 2px solid #9B85B7;
+    }
+
+    html.dark .verdict {
+      background: #333;
+      border-color: #E7B5A0;
+    }
+
+    .verdict-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .verdict-text {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #9B85B7;
+      letter-spacing: -0.01em;
+    }
+
+    html.dark .verdict-text {
+      color: #E7B5A0;
+    }
+
+    .legend {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #F0E8D8;
+    }
+
+    html.dark .legend {
+      border-top-color: #3a3a3a;
+    }
+
+    .legend-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    html.dark .legend-title {
+      color: #999;
+    }
+
+    .legend-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .legend-item span {
+      color: #666;
+    }
+
+    html.dark .legend-item span {
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <div class="header">
+      <div class="title">CUPID'S AIM</div>
+      <div class="subtitle">Your matchmaking precision</div>
+    </div>
+
+    <div class="target-container">
+      <svg class="target" viewBox="0 0 400 400">
+        <!-- Target rings (from outer to inner) -->
+        <circle class="ring ring-disaster" cx="200" cy="200" r="175" />
+        <circle class="ring ring-awkward" cx="200" cy="200" r="140" />
+        <circle class="ring ring-friendly" cx="200" cy="200" r="105" />
+        <circle class="ring ring-strong" cx="200" cy="200" r="70" />
+        <circle class="ring ring-true-love" cx="200" cy="200" r="35" />
+
+        <!-- Crosshairs -->
+        <line x1="200" y1="0" x2="200" y2="400" stroke="#1a1a1a" stroke-width="1" opacity="0.2" />
+        <line x1="0" y1="200" x2="400" y2="200" stroke="#1a1a1a" stroke-width="1" opacity="0.2" />
+
+        <!-- Arrow (rotated 45 degrees, positioned for 81 score = Strong Start ring) -->
+        <!-- Score 81 = Strong Start (75-89) = radius ~90 -->
+        <g class="arrow-group" transform="translate(200, 200) rotate(-45)">
+          <!-- Arrow positioned at radius 90 (Strong Start ring) -->
+          <g transform="translate(90, 0)">
+            <!-- Arrow tip -->
+            <path class="arrow-tip" d="M 0,-8 L 12,0 L 0,8 Z" />
+            <!-- Arrow shaft -->
+            <rect class="arrow-shaft" x="-80" y="-2" width="80" height="4" />
+            <!-- Arrow feathers -->
+            <path class="arrow-feathers" d="M -75,-6 L -85,-8 L -75,-4 M -75,6 L -85,8 L -75,4" stroke-width="1.5" />
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="score-display">
+      <div class="score-number">81</div>
+      <div class="score-label">Final Score</div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-emoji">💫</div>
+      <div class="verdict-text">Strong Start</div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-title">Score Zones</div>
+      <div class="legend-items">
+        <div class="legend-item">
+          <div class="legend-color" style="background: #E7B5A0;"></div>
+          <span>90-100: True Love</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #9B85B7;"></div>
+          <span>75-89: Strong Start</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #FFC922;"></div>
+          <span>60-74: Friendly</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #DA6800;"></div>
+          <span>40-59: Awkward</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background: #D74E39;"></div>
+          <span>0-39: Disaster</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle dark mode for demo (click anywhere)
+    document.body.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>

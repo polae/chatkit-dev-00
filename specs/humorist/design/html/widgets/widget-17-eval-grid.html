@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupid Evaluation - Compact Grid</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Accent Colors */
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+
+            /* Element Colors */
+            --fire: #D74E39;
+            --earth: #8AA47D;
+            --air: #6CC2FF;
+            --water: #9B85B7;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 420px;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        /* Grid Container */
+        .grid-container {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 340px;
+        }
+
+        /* Header Row */
+        .grid-header {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: center;
+            padding: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.4s forwards;
+        }
+
+        .grid-header.empty {
+            /* Empty cell for top-left */
+        }
+
+        /* Planet Labels */
+        .planet-row-label {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .planet-row-label:nth-child(4) { animation-delay: 0.5s; }
+        .planet-row-label:nth-child(7) { animation-delay: 0.6s; }
+        .planet-row-label:nth-child(10) { animation-delay: 0.7s; }
+        .planet-row-label:nth-child(13) { animation-delay: 0.8s; }
+
+        /* Sign Cells */
+        .sign-cell {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+            border: 2px solid transparent;
+        }
+
+        /* Element-based coloring */
+        .sign-cell.fire {
+            border-color: var(--fire);
+            background: rgba(215, 78, 57, 0.1);
+        }
+
+        .sign-cell.earth {
+            border-color: var(--earth);
+            background: rgba(138, 164, 125, 0.1);
+        }
+
+        .sign-cell.air {
+            border-color: var(--air);
+            background: rgba(108, 194, 255, 0.1);
+        }
+
+        .sign-cell.water {
+            border-color: var(--water);
+            background: rgba(155, 133, 183, 0.1);
+        }
+
+        html.dark .sign-cell.fire {
+            background: rgba(215, 78, 57, 0.15);
+        }
+
+        html.dark .sign-cell.earth {
+            background: rgba(138, 164, 125, 0.15);
+        }
+
+        html.dark .sign-cell.air {
+            background: rgba(108, 194, 255, 0.15);
+        }
+
+        html.dark .sign-cell.water {
+            background: rgba(155, 133, 183, 0.15);
+        }
+
+        /* Staggered animation delays for cells */
+        .sign-cell:nth-child(5) { animation-delay: 0.5s; }
+        .sign-cell:nth-child(6) { animation-delay: 0.55s; }
+        .sign-cell:nth-child(8) { animation-delay: 0.6s; }
+        .sign-cell:nth-child(9) { animation-delay: 0.65s; }
+        .sign-cell:nth-child(11) { animation-delay: 0.7s; }
+        .sign-cell:nth-child(12) { animation-delay: 0.75s; }
+        .sign-cell:nth-child(14) { animation-delay: 0.8s; }
+        .sign-cell:nth-child(15) { animation-delay: 0.85s; }
+
+        /* Overall Score Badge */
+        .overall-badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 1rem 1.5rem;
+            background: rgba(108, 194, 255, 0.15);
+            border-radius: 50px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 1.0s forwards;
+        }
+
+        html.dark .overall-badge {
+            background: rgba(108, 194, 255, 0.2);
+        }
+
+        .overall-number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--blue);
+            line-height: 1;
+        }
+
+        .overall-label {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Cupid Evaluation</h1>
+
+        <div class="grid-container">
+            <!-- Comparison Grid -->
+            <div class="comparison-grid">
+                <!-- Header Row -->
+                <div class="grid-header empty"></div>
+                <div class="grid-header">Zara</div>
+                <div class="grid-header">Sam</div>
+
+                <!-- Sun Row -->
+                <div class="planet-row-label">☀️</div>
+                <div class="sign-cell fire">♈</div>
+                <div class="sign-cell air">♊</div>
+
+                <!-- Moon Row -->
+                <div class="planet-row-label">🌙</div>
+                <div class="sign-cell earth">♍</div>
+                <div class="sign-cell air">♒</div>
+
+                <!-- Venus Row -->
+                <div class="planet-row-label">💖</div>
+                <div class="sign-cell earth">♉</div>
+                <div class="sign-cell air">♊</div>
+
+                <!-- Mars Row -->
+                <div class="planet-row-label">🔥</div>
+                <div class="sign-cell fire">♈</div>
+                <div class="sign-cell earth">♉</div>
+            </div>
+
+            <!-- Overall Score Badge -->
+            <div class="overall-badge">
+                <div class="overall-number">69</div>
+                <div class="overall-label">Overall</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

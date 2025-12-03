@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget 23 - Cupid Evaluation Receipt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700;800&family=Lexend:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lexend', sans-serif;
+      background-color: #FDF6E3;
+      color: #1a1a1a;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    html.dark body {
+      background-color: #1a1a1a;
+      color: #FDF6E3;
+    }
+
+    .receipt-container {
+      max-width: 400px;
+      width: 100%;
+      background: white;
+      border-radius: 0;
+      padding: 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      position: relative;
+    }
+
+    html.dark .receipt-container {
+      background: #f5f5f5;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Perforated edge effect */
+    .receipt-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 12px;
+      background:
+        linear-gradient(45deg, transparent 33.33%, white 33.33%, white 66.66%, transparent 66.66%),
+        linear-gradient(-45deg, transparent 33.33%, white 33.33%, white 66.66%, transparent 66.66%);
+      background-size: 8px 12px;
+      background-position: 0 0, 4px 0;
+    }
+
+    html.dark .receipt-container::before {
+      background:
+        linear-gradient(45deg, transparent 33.33%, #f5f5f5 33.33%, #f5f5f5 66.66%, transparent 66.66%),
+        linear-gradient(-45deg, transparent 33.33%, #f5f5f5 33.33%, #f5f5f5 66.66%, transparent 66.66%);
+      background-size: 8px 12px;
+      background-position: 0 0, 4px 0;
+    }
+
+    .receipt-content {
+      padding: 40px 32px 32px;
+    }
+
+    .receipt-header {
+      text-align: center;
+      border-bottom: 2px dashed #1a1a1a;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    html.dark .receipt-header {
+      border-bottom-color: #666;
+    }
+
+    .receipt-title {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: #D74E39;
+      margin-bottom: 4px;
+    }
+
+    .receipt-subtitle {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .receipt-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #999;
+      margin-top: 8px;
+    }
+
+    .receipt-body {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .receipt-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    html.dark .receipt-line {
+      border-bottom-color: #ccc;
+    }
+
+    .receipt-line:last-child {
+      border-bottom: none;
+    }
+
+    .line-label {
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    html.dark .line-label {
+      color: #333;
+    }
+
+    .line-value {
+      font-size: 16px;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+
+    html.dark .line-value {
+      color: #1a1a1a;
+    }
+
+    .line-value.positive {
+      color: #8AA47D;
+    }
+
+    .receipt-divider {
+      border: none;
+      border-top: 2px dashed #1a1a1a;
+      margin: 20px 0;
+    }
+
+    html.dark .receipt-divider {
+      border-top-color: #666;
+    }
+
+    .receipt-total {
+      background: #1a1a1a;
+      margin: 0 -32px;
+      padding: 24px 32px;
+      color: white;
+    }
+
+    html.dark .receipt-total {
+      background: #333;
+    }
+
+    .total-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .total-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+    }
+
+    .total-value {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: #6CC2FF;
+    }
+
+    .verdict-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .verdict-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.7;
+    }
+
+    .verdict-value {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #FFC922;
+    }
+
+    .receipt-footer {
+      text-align: center;
+      padding: 20px 32px 0;
+      color: #999;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    html.dark .receipt-footer {
+      color: #666;
+    }
+
+    .footer-message {
+      margin-bottom: 8px;
+    }
+
+    .footer-id {
+      opacity: 0.6;
+    }
+
+    .mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    html.dark .mode-toggle {
+      background: #FDF6E3;
+      color: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <button class="mode-toggle" onclick="document.documentElement.classList.toggle('dark')">
+    Toggle Dark Mode
+  </button>
+
+  <div class="receipt-container">
+    <div class="receipt-content">
+      <div class="receipt-header">
+        <div class="receipt-title">CUPID & CO.</div>
+        <div class="receipt-subtitle">Love Calculator Division</div>
+        <div class="receipt-date">2025-12-02 14:23:17</div>
+      </div>
+
+      <div class="receipt-body">
+        <div class="receipt-line">
+          <span class="line-label">Base Compatibility</span>
+          <span class="line-value">69</span>
+        </div>
+
+        <div class="receipt-line">
+          <span class="line-label">Cupid's Influence</span>
+          <span class="line-value positive">+12</span>
+        </div>
+      </div>
+
+      <hr class="receipt-divider">
+
+      <div class="receipt-total">
+        <div class="total-line">
+          <span class="total-label">Final Score</span>
+          <span class="total-value">81</span>
+        </div>
+
+        <div class="verdict-line">
+          <span class="verdict-label">Verdict</span>
+          <span class="verdict-value">Strong Start 💫</span>
+        </div>
+      </div>
+
+      <div class="receipt-footer">
+        <div class="footer-message">Thank you for playing Cupid!</div>
+        <div class="footer-id">Game ID: CUP-2025-1202-4729</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

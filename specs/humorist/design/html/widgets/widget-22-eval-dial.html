@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget 22 - Cupid Evaluation Dial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700;800&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lexend', sans-serif;
+      background-color: #FDF6E3;
+      color: #1a1a1a;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    html.dark body {
+      background-color: #1a1a1a;
+      color: #FDF6E3;
+    }
+
+    .eval-dial-container {
+      max-width: 500px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    html.dark .eval-dial-container {
+      background: #2a2a2a;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    }
+
+    .eval-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .eval-title {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: #D74E39;
+      margin-bottom: 8px;
+    }
+
+    html.dark .eval-title {
+      color: #E7B5A0;
+    }
+
+    .eval-subtitle {
+      font-size: 14px;
+      color: #666;
+    }
+
+    html.dark .eval-subtitle {
+      color: #999;
+    }
+
+    .dial-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto 40px;
+    }
+
+    .dial-svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .gauge-bg {
+      fill: none;
+      stroke: #e0e0e0;
+      stroke-width: 20;
+    }
+
+    html.dark .gauge-bg {
+      stroke: #3a3a3a;
+    }
+
+    .gauge-disaster {
+      fill: none;
+      stroke: #D74E39;
+      stroke-width: 20;
+      stroke-linecap: round;
+    }
+
+    .gauge-awkward {
+      fill: none;
+      stroke: #DA6800;
+      stroke-width: 20;
+      stroke-linecap: round;
+    }
+
+    .gauge-friendly {
+      fill: none;
+      stroke: #FFC922;
+      stroke-width: 20;
+      stroke-linecap: round;
+    }
+
+    .gauge-strong {
+      fill: none;
+      stroke: #6CC2FF;
+      stroke-width: 20;
+      stroke-linecap: round;
+    }
+
+    .gauge-love {
+      fill: none;
+      stroke: #8AA47D;
+      stroke-width: 20;
+      stroke-linecap: round;
+    }
+
+    .needle {
+      stroke: #1a1a1a;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    html.dark .needle {
+      stroke: #FDF6E3;
+    }
+
+    .needle-circle {
+      fill: #D74E39;
+    }
+
+    html.dark .needle-circle {
+      fill: #E7B5A0;
+    }
+
+    .dial-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding: 0 20px;
+    }
+
+    .dial-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .dial-label-left {
+      color: #D74E39;
+      text-align: left;
+    }
+
+    .dial-label-right {
+      color: #8AA47D;
+      text-align: right;
+    }
+
+    .score-display {
+      text-align: center;
+      padding: 24px;
+      background: #FDF6E3;
+      border-radius: 16px;
+      margin-bottom: 24px;
+    }
+
+    html.dark .score-display {
+      background: #1a1a1a;
+    }
+
+    .score-number {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: #6CC2FF;
+      margin-bottom: 8px;
+    }
+
+    .score-label {
+      font-size: 14px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    html.dark .score-label {
+      color: #999;
+    }
+
+    .verdict {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #6CC2FF 0%, #9B85B7 100%);
+      border-radius: 16px;
+      color: white;
+    }
+
+    .verdict-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.9;
+      margin-bottom: 4px;
+    }
+
+    .verdict-text {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+    }
+
+    .mode-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Lexend', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    html.dark .mode-toggle {
+      background: #FDF6E3;
+      color: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <button class="mode-toggle" onclick="document.documentElement.classList.toggle('dark')">
+    Toggle Dark Mode
+  </button>
+
+  <div class="eval-dial-container">
+    <div class="eval-header">
+      <div class="eval-title">Cupid's Verdict</div>
+      <div class="eval-subtitle">Final Compatibility Assessment</div>
+    </div>
+
+    <div class="dial-wrapper">
+      <svg class="dial-svg" viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background arc -->
+        <path class="gauge-bg" d="M 30 150 A 120 120 0 0 1 270 150" />
+
+        <!-- Colored segments -->
+        <!-- Disaster: 0-39 (0° to 70.2°) -->
+        <path class="gauge-disaster" d="M 30 150 A 120 120 0 0 1 87 68" />
+
+        <!-- Awkward: 40-59 (70.2° to 106.2°) -->
+        <path class="gauge-awkward" d="M 87 68 A 120 120 0 0 1 133 43" />
+
+        <!-- Friendly: 60-74 (106.2° to 133.2°) -->
+        <path class="gauge-friendly" d="M 133 43 A 120 120 0 0 1 167 43" />
+
+        <!-- Strong Start: 75-89 (133.2° to 160.2°) -->
+        <path class="gauge-strong" d="M 167 43 A 120 120 0 0 1 213 68" />
+
+        <!-- True Love: 90-100 (160.2° to 180°) -->
+        <path class="gauge-love" d="M 213 68 A 120 120 0 0 1 270 150" />
+
+        <!-- Needle - pointing to 81 (145.8°) -->
+        <!-- 81 score = 145.8° from horizontal -->
+        <line class="needle" x1="150" y1="150" x2="196" y2="57" />
+        <circle class="needle-circle" cx="150" cy="150" r="8" />
+      </svg>
+
+      <div class="dial-labels">
+        <div class="dial-label dial-label-left">💔 Disaster</div>
+        <div class="dial-label dial-label-right">True Love ❤️</div>
+      </div>
+    </div>
+
+    <div class="score-display">
+      <div class="score-number">81</div>
+      <div class="score-label">Final Score</div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-label">Verdict</div>
+      <div class="verdict-text">Strong Start 💫</div>
+    </div>
+  </div>
+
+  <script>
+    // Dynamic needle positioning based on score
+    function updateNeedle(score) {
+      // Convert score (0-100) to angle (0° to 180°)
+      const angle = (score / 100) * 180;
+      const radians = (angle * Math.PI) / 180;
+
+      // Calculate needle endpoint (120px radius from center at 150,150)
+      const centerX = 150;
+      const centerY = 150;
+      const radius = 105;
+
+      const endX = centerX + radius * Math.cos(Math.PI - radians);
+      const endY = centerY - radius * Math.sin(Math.PI - radians);
+
+      const needle = document.querySelector('.needle');
+      needle.setAttribute('x2', endX);
+      needle.setAttribute('y2', endY);
+    }
+
+    // Initialize with score of 81
+    updateNeedle(81);
+  </script>
+</body>
+</html>

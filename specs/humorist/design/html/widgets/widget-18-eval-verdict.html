@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupid Evaluation - Verdict</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700;900&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #FDF6E3;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        html.dark body {
+            background-color: #1a1a1a;
+            color: #FDF6E3;
+        }
+
+        .verdict-container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .emoji {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .verdict-text {
+            font-family: 'Lexend Giga', sans-serif;
+            font-weight: 900;
+            font-size: 4rem;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            color: #D74E39;
+        }
+
+        html.dark .verdict-text {
+            color: #E7B5A0;
+        }
+
+        .final-score {
+            font-family: 'Lexend Giga', sans-serif;
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        html.dark .final-score {
+            color: #FDF6E3;
+        }
+
+        .score-breakdown {
+            font-family: 'Lexend', sans-serif;
+            font-weight: 400;
+            font-size: 1rem;
+            color: #666;
+            opacity: 0.7;
+        }
+
+        html.dark .score-breakdown {
+            color: #999;
+        }
+
+        @media (max-width: 640px) {
+            .emoji {
+                font-size: 3.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .verdict-text {
+                font-size: 2.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .final-score {
+                font-size: 2rem;
+            }
+
+            .score-breakdown {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="verdict-container">
+        <span class="emoji">💫</span>
+        <h1 class="verdict-text">STRONG START</h1>
+        <div class="final-score">81/100</div>
+        <div class="score-breakdown">Base 69 + Cupid +12</div>
+    </div>
+
+    <script>
+        // Dark mode toggle for demo purposes
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' || e.key === 'D') {
+                document.documentElement.classList.toggle('dark');
+            }
+        });
+
+        // You can customize these values via JavaScript
+        const verdictData = {
+            baseScore: 69,
+            cupidInfluence: 12,
+            finalScore: 81,
+            verdict: "Strong Start",
+            emoji: "💫"
+        };
+
+        // Scoring tiers (for reference in implementation)
+        const scoreTiers = [
+            { min: 90, max: 100, verdict: "True Love", emoji: "❤️" },
+            { min: 75, max: 89, verdict: "Strong Start", emoji: "💫" },
+            { min: 60, max: 74, verdict: "Friendly Connection", emoji: "🤝" },
+            { min: 40, max: 59, verdict: "Awkward but Polite", emoji: "😬" },
+            { min: 0, max: 39, verdict: "Disaster", emoji: "💔" }
+        ];
+    </script>
+</body>
+</html>

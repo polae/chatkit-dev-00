@@ -1,0 +1,136 @@
+{
+  "version": "1.0",
+  "name": "Choice list",
+  "template": "{\"type\":\"ListView\",\"children\":[{%- set _c -%}{%-for item in items -%},{\"type\":\"ListViewItem\",\"key\":{{ (item.key) | tojson }},\"gap\":2,\"onClickAction\":{\"type\":\"choice.select\",\"payload\":{\"key\":{{ (item.key) | tojson }},\"title\":{{ (item.title) | tojson }}}},\"children\":[{\"type\":\"Badge\",\"label\":{{ (item.key) | tojson }},\"color\":\"info\"},{\"type\":\"Text\",\"value\":{{ (item.title) | tojson }},\"size\":\"sm\"}]}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "key",
+            "title"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "items"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "ListView",
+    "children": [
+      {
+        "type": "ListViewItem",
+        "key": "A",
+        "gap": 2,
+        "onClickAction": {
+          "type": "choice.select",
+          "payload": {
+            "key": "A",
+            "title": "STAY FRONT AND CENTER — Lean Into the Spark"
+          }
+        },
+        "children": [
+          {
+            "type": "Badge",
+            "label": "A",
+            "color": "info"
+          },
+          {
+            "type": "Text",
+            "value": "STAY FRONT AND CENTER — Lean Into the Spark",
+            "size": "sm"
+          }
+        ]
+      },
+      {
+        "type": "ListViewItem",
+        "key": "B",
+        "gap": 2,
+        "onClickAction": {
+          "type": "choice.select",
+          "payload": {
+            "key": "B",
+            "title": "NEGOTIATED STAY — She Says She’ll Give Him Ten Minutes"
+          }
+        },
+        "children": [
+          {
+            "type": "Badge",
+            "label": "B",
+            "color": "info"
+          },
+          {
+            "type": "Text",
+            "value": "NEGOTIATED STAY — She Says She’ll Give Him Ten Minutes",
+            "size": "sm"
+          }
+        ]
+      },
+      {
+        "type": "ListViewItem",
+        "key": "C",
+        "gap": 2,
+        "onClickAction": {
+          "type": "choice.select",
+          "payload": {
+            "key": "C",
+            "title": "HALF EXIT — She Moves to the Back, Keeps Listening"
+          }
+        },
+        "children": [
+          {
+            "type": "Badge",
+            "label": "C",
+            "color": "info"
+          },
+          {
+            "type": "Text",
+            "value": "HALF EXIT — She Moves to the Back, Keeps Listening",
+            "size": "sm"
+          }
+        ]
+      },
+      {
+        "type": "ListViewItem",
+        "key": "D",
+        "gap": 2,
+        "onClickAction": {
+          "type": "choice.select",
+          "payload": {
+            "key": "D",
+            "title": "BAIL GRACEFULLY — She Declines, But Leaves a Door Open"
+          }
+        },
+        "children": [
+          {
+            "type": "Badge",
+            "label": "D",
+            "color": "info"
+          },
+          {
+            "type": "Text",
+            "value": "BAIL GRACEFULLY — She Declines, But Leaves a Door Open",
+            "size": "sm"
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6IjdmZDMxYzYzLTA5ZTAtNDVlNi1iMjY0LTRmZjExZDlhNTM1MCIsIm5hbWUiOiJDaG9pY2UgbGlzdCIsInZpZXciOiI8TGlzdFZpZXc-XG4gIHtpdGVtcy5tYXAoKGl0ZW0pID0-IChcbiAgICA8TGlzdFZpZXdJdGVtXG4gICAgICBrZXk9e2l0ZW0ua2V5fVxuICAgICAgZ2FwPXsyfVxuICAgICAgb25DbGlja0FjdGlvbj17e1xuICAgICAgICB0eXBlOiBcImNob2ljZS5zZWxlY3RcIixcbiAgICAgICAgcGF5bG9hZDogeyBrZXk6IGl0ZW0ua2V5LCB0aXRsZTogaXRlbS50aXRsZSB9LFxuICAgICAgfX1cbiAgICA-XG4gICAgICA8QmFkZ2UgbGFiZWw9e2l0ZW0ua2V5fSBjb2xvcj1cImluZm9cIiAvPlxuICAgICAgPFRleHQgdmFsdWU9e2l0ZW0udGl0bGV9IHNpemU9XCJzbVwiIC8-XG4gICAgPC9MaXN0Vmlld0l0ZW0-XG4gICkpfVxuPC9MaXN0Vmlldz4iLCJkZWZhdWx0U3RhdGUiOnsiaXRlbXMiOlt7ImtleSI6IkEiLCJ0aXRsZSI6IlNUQVkgRlJPTlQgQU5EIENFTlRFUiDigJQgTGVhbiBJbnRvIHRoZSBTcGFyayJ9LHsia2V5IjoiQiIsInRpdGxlIjoiTkVHT1RJQVRFRCBTVEFZIOKAlCBTaGUgU2F5cyBTaGXigJlsbCBHaXZlIEhpbSBUZW4gTWludXRlcyJ9LHsia2V5IjoiQyIsInRpdGxlIjoiSEFMRiBFWElUIOKAlCBTaGUgTW92ZXMgdG8gdGhlIEJhY2ssIEtlZXBzIExpc3RlbmluZyJ9LHsia2V5IjoiRCIsInRpdGxlIjoiQkFJTCBHUkFDRUZVTExZIOKAlCBTaGUgRGVjbGluZXMsIEJ1dCBMZWF2ZXMgYSBEb29yIE9wZW4ifV19LCJzdGF0ZXMiOltdLCJzY2hlbWEiOiJpbXBvcnQgeyB6IH0gZnJvbSBcInpvZFwiXG5cbmNvbnN0IENob2ljZSA9IHouc3RyaWN0T2JqZWN0KHtcbiAga2V5OiB6LnN0cmluZygpLFxuICB0aXRsZTogei5zdHJpbmcoKSxcbn0pXG5cbmNvbnN0IFdpZGdldFN0YXRlID0gei5zdHJpY3RPYmplY3Qoe1xuICBpdGVtczogei5hcnJheShDaG9pY2UpLFxufSlcblxuZXhwb3J0IGRlZmF1bHQgV2lkZ2V0U3RhdGUiLCJqc29uU2NoZW1hIjp7fSwic2NoZW1hTW9kZSI6InpvZCIsInNjaGVtYVZhbGlkaXR5IjoidmFsaWQiLCJ2aWV3VmFsaWRpdHkiOiJ2YWxpZCIsImRlZmF1bHRTdGF0ZVZhbGlkaXR5IjoidmFsaWQifQ"
+}

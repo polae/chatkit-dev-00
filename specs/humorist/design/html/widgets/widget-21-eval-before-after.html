@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget 21 - Cupid Before/After Evaluation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700;900&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Lexend', sans-serif;
+      background: #FDF6E3;
+      color: #1a1a1a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    html.dark body {
+      background: #1a1a1a;
+      color: #FDF6E3;
+    }
+
+    .widget {
+      max-width: 600px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    html.dark .widget {
+      background: #2a2a2a;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .title {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #D74E39;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    html.dark .title {
+      color: #E7B5A0;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #666;
+      font-weight: 500;
+    }
+
+    html.dark .subtitle {
+      color: #999;
+    }
+
+    .comparison {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+      padding: 2rem 1rem;
+    }
+
+    @media (max-width: 500px) {
+      .comparison {
+        gap: 1.5rem;
+        padding: 1.5rem 0.5rem;
+      }
+    }
+
+    .score-box {
+      flex: 1;
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.75rem;
+      color: #666;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+    }
+
+    html.dark .score-label {
+      color: #999;
+    }
+
+    .score-number {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    @media (max-width: 500px) {
+      .score-number {
+        font-size: 4rem;
+      }
+    }
+
+    .score-box.before .score-number {
+      color: #666;
+    }
+
+    html.dark .score-box.before .score-number {
+      color: #888;
+    }
+
+    .score-box.after .score-number {
+      background: linear-gradient(135deg, #D74E39 0%, #E7B5A0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    html.dark .score-box.after .score-number {
+      background: linear-gradient(135deg, #E7B5A0 0%, #9B85B7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .score-suffix {
+      font-size: 0.6em;
+      opacity: 0.7;
+    }
+
+    .arrow-connector {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .arrow-svg {
+      width: 60px;
+      height: 40px;
+    }
+
+    @media (max-width: 500px) {
+      .arrow-svg {
+        width: 48px;
+        height: 32px;
+      }
+    }
+
+    .arrow-path {
+      fill: none;
+      stroke: #D74E39;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    html.dark .arrow-path {
+      stroke: #E7B5A0;
+    }
+
+    .impact-badge {
+      background: #E7B5A0;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 100px;
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(231, 181, 160, 0.3);
+    }
+
+    html.dark .impact-badge {
+      background: #9B85B7;
+      color: #FDF6E3;
+      box-shadow: 0 4px 12px rgba(155, 133, 183, 0.3);
+    }
+
+    .impact-number {
+      font-size: 1.25em;
+    }
+
+    .breakdown {
+      background: #F8F0E0;
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    html.dark .breakdown {
+      background: #333;
+    }
+
+    .breakdown-title {
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    html.dark .breakdown-title {
+      color: #999;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    html.dark .breakdown-row {
+      border-bottom-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .breakdown-label {
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    html.dark .breakdown-label {
+      color: #FDF6E3;
+    }
+
+    .breakdown-value {
+      font-family: 'Lexend Giga', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .breakdown-value.neutral {
+      color: #666;
+    }
+
+    html.dark .breakdown-value.neutral {
+      color: #999;
+    }
+
+    .breakdown-value.positive {
+      color: #8AA47D;
+    }
+
+    .breakdown-value.total {
+      color: #D74E39;
+    }
+
+    html.dark .breakdown-value.total {
+      color: #E7B5A0;
+    }
+
+    .verdict {
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #E7B5A0 0%, #9B85B7 100%);
+      border-radius: 16px;
+      color: white;
+    }
+
+    .verdict-emoji {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .verdict-text {
+      font-family: 'Lexend Giga', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <div class="header">
+      <div class="title">THE CUPID EFFECT</div>
+      <div class="subtitle">Your impact on their connection</div>
+    </div>
+
+    <div class="comparison">
+      <div class="score-box before">
+        <div class="score-label">Base Match</div>
+        <div class="score-number">69<span class="score-suffix">/100</span></div>
+      </div>
+
+      <div class="arrow-connector">
+        <svg class="arrow-svg" viewBox="0 0 60 40">
+          <path class="arrow-path" d="M 5,20 L 45,20 M 35,10 L 45,20 L 35,30" />
+        </svg>
+        <div class="impact-badge">
+          <span class="impact-number">+12</span> CUPID'S TOUCH
+        </div>
+      </div>
+
+      <div class="score-box after">
+        <div class="score-label">Final Score</div>
+        <div class="score-number">81<span class="score-suffix">/100</span></div>
+      </div>
+    </div>
+
+    <div class="breakdown">
+      <div class="breakdown-title">Score Breakdown</div>
+      <div class="breakdown-row">
+        <span class="breakdown-label">Base Compatibility</span>
+        <span class="breakdown-value neutral">69</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-label">Cupid's Influence</span>
+        <span class="breakdown-value positive">+12</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="breakdown-label">Final Score</span>
+        <span class="breakdown-value total">81</span>
+      </div>
+    </div>
+
+    <div class="verdict">
+      <div class="verdict-emoji">💫</div>
+      <div class="verdict-text">Strong Start</div>
+    </div>
+  </div>
+
+  <script>
+    // Toggle dark mode for demo (click anywhere)
+    document.body.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+  </script>
+</body>
+</html>

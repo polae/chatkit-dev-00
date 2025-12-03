@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupid Evaluation - Report Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@700;900&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #FDF6E3;
+            color: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        html.dark body {
+            background-color: #1a1a1a;
+            color: #FDF6E3;
+        }
+
+        .report-card {
+            background-color: #fff;
+            border: 3px solid #1a1a1a;
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 8px 8px 0 rgba(26, 26, 26, 0.1);
+        }
+
+        html.dark .report-card {
+            background-color: #2a2a2a;
+            border-color: #FDF6E3;
+            box-shadow: 8px 8px 0 rgba(253, 246, 227, 0.1);
+        }
+
+        .report-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        html.dark .report-header {
+            border-bottom-color: #FDF6E3;
+        }
+
+        .report-title {
+            font-family: 'Lexend Giga', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .report-subtitle {
+            font-weight: 400;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        html.dark .report-subtitle {
+            color: #999;
+        }
+
+        .grade-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .letter-grade {
+            font-family: 'Lexend Giga', sans-serif;
+            font-weight: 900;
+            font-size: 6rem;
+            line-height: 1;
+            color: #D74E39;
+            margin-bottom: 0.5rem;
+        }
+
+        html.dark .letter-grade {
+            color: #E7B5A0;
+        }
+
+        .grade-label {
+            font-weight: 500;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #666;
+        }
+
+        html.dark .grade-label {
+            color: #999;
+        }
+
+        .score-details {
+            margin-top: 2rem;
+        }
+
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.875rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        html.dark .score-row {
+            border-bottom-color: #444;
+        }
+
+        .score-row:last-child {
+            border-bottom: none;
+            padding-top: 1.25rem;
+            margin-top: 0.5rem;
+            border-top: 2px solid #1a1a1a;
+            font-weight: 600;
+        }
+
+        html.dark .score-row:last-child {
+            border-top-color: #FDF6E3;
+        }
+
+        .score-label {
+            font-weight: 500;
+            font-size: 0.9375rem;
+        }
+
+        .score-value {
+            font-family: 'Lexend Giga', sans-serif;
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .score-row:last-child .score-value {
+            font-size: 1.5rem;
+            color: #D74E39;
+        }
+
+        html.dark .score-row:last-child .score-value {
+            color: #E7B5A0;
+        }
+
+        .positive-value {
+            color: #8AA47D;
+        }
+
+        html.dark .positive-value {
+            color: #8AA47D;
+        }
+
+        @media (max-width: 640px) {
+            .report-card {
+                padding: 2rem;
+            }
+
+            .report-title {
+                font-size: 1.25rem;
+            }
+
+            .letter-grade {
+                font-size: 4.5rem;
+            }
+
+            .score-label {
+                font-size: 0.875rem;
+            }
+
+            .score-value {
+                font-size: 1rem;
+            }
+
+            .score-row:last-child .score-value {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-card">
+        <div class="report-header">
+            <h1 class="report-title">Cupid Report Card</h1>
+            <p class="report-subtitle">Match Performance Evaluation</p>
+        </div>
+
+        <div class="grade-section">
+            <div class="letter-grade">B+</div>
+            <div class="grade-label">Performance Grade</div>
+        </div>
+
+        <div class="score-details">
+            <div class="score-row">
+                <span class="score-label">Base Compatibility</span>
+                <span class="score-value">69</span>
+            </div>
+            <div class="score-row">
+                <span class="score-label">Cupid's Influence</span>
+                <span class="score-value positive-value">+12</span>
+            </div>
+            <div class="score-row">
+                <span class="score-label">Final Score</span>
+                <span class="score-value">81/100</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dark mode toggle for demo purposes
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'd' || e.key === 'D') {
+                document.documentElement.classList.toggle('dark');
+            }
+        });
+
+        // Grade calculation function (for reference in implementation)
+        function calculateLetterGrade(score) {
+            if (score >= 97) return 'A+';
+            if (score >= 93) return 'A';
+            if (score >= 90) return 'A-';
+            if (score >= 87) return 'B+';
+            if (score >= 83) return 'B';
+            if (score >= 80) return 'B-';
+            if (score >= 77) return 'C+';
+            if (score >= 73) return 'C';
+            if (score >= 70) return 'C-';
+            if (score >= 67) return 'D+';
+            if (score >= 63) return 'D';
+            if (score >= 60) return 'D-';
+            return 'F';
+        }
+
+        // Sample data
+        const reportData = {
+            baseScore: 69,
+            cupidInfluence: 12,
+            finalScore: 81,
+            letterGrade: 'B+'
+        };
+    </script>
+</body>
+</html>

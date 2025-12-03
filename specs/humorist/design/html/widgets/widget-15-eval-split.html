@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Comparison</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Accent Colors */
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 500px;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .comparison-container {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        /* Header Row */
+        .header-row {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            align-items: center;
+            gap: 1rem;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out 0.2s forwards;
+        }
+
+        .header-name {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .header-left {
+            text-align: left;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header-center {
+            text-align: center;
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Comparison Row */
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        .comparison-row:nth-child(2) { animation-delay: 0.3s; }
+        .comparison-row:nth-child(3) { animation-delay: 0.4s; }
+        .comparison-row:nth-child(4) { animation-delay: 0.5s; }
+        .comparison-row:nth-child(5) { animation-delay: 0.6s; }
+
+        .planet-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+        }
+
+        .planet-cell-left {
+            justify-content: flex-start;
+        }
+
+        .planet-cell-right {
+            justify-content: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .planet-emoji {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .zodiac-symbol {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* Center Connection */
+        .connection {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .connection-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--row-color) 0%, var(--row-color) 40%, transparent 50%, var(--row-color) 60%, var(--row-color) 100%);
+            opacity: 0.3;
+        }
+
+        .connection-score {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            background: var(--bg-surface);
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            border: 2px solid var(--row-color);
+            z-index: 1;
+        }
+
+        /* Color variations for each row */
+        .comparison-row:nth-child(2) {
+            --row-color: var(--yellow);
+        }
+
+        .comparison-row:nth-child(3) {
+            --row-color: var(--blue);
+        }
+
+        .comparison-row:nth-child(4) {
+            --row-color: var(--pink);
+        }
+
+        .comparison-row:nth-child(5) {
+            --row-color: var(--red);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-row, .comparison-row {
+                grid-template-columns: 1fr 70px 1fr;
+                gap: 0.75rem;
+            }
+
+            .planet-cell {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .planet-emoji {
+                font-size: 1.2rem;
+            }
+
+            .zodiac-symbol {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Astrological Compatibility</h1>
+
+        <div class="comparison-container">
+            <!-- Header Row -->
+            <div class="header-row">
+                <div class="header-name header-left">Zara</div>
+                <div class="header-center">Match</div>
+                <div class="header-name header-right">Sam</div>
+            </div>
+
+            <!-- Sun Row -->
+            <div class="comparison-row">
+                <div class="planet-cell planet-cell-left">
+                    <span class="planet-emoji">☀️</span>
+                    <span class="zodiac-symbol">♈</span>
+                </div>
+                <div class="connection">
+                    <div class="connection-line"></div>
+                    <div class="connection-score">56</div>
+                </div>
+                <div class="planet-cell planet-cell-right">
+                    <span class="planet-emoji">☀️</span>
+                    <span class="zodiac-symbol">♊</span>
+                </div>
+            </div>
+
+            <!-- Moon Row -->
+            <div class="comparison-row">
+                <div class="planet-cell planet-cell-left">
+                    <span class="planet-emoji">🌙</span>
+                    <span class="zodiac-symbol">♍</span>
+                </div>
+                <div class="connection">
+                    <div class="connection-line"></div>
+                    <div class="connection-score">72</div>
+                </div>
+                <div class="planet-cell planet-cell-right">
+                    <span class="planet-emoji">🌙</span>
+                    <span class="zodiac-symbol">♒</span>
+                </div>
+            </div>
+
+            <!-- Venus Row -->
+            <div class="comparison-row">
+                <div class="planet-cell planet-cell-left">
+                    <span class="planet-emoji">💖</span>
+                    <span class="zodiac-symbol">♉</span>
+                </div>
+                <div class="connection">
+                    <div class="connection-line"></div>
+                    <div class="connection-score">78</div>
+                </div>
+                <div class="planet-cell planet-cell-right">
+                    <span class="planet-emoji">💖</span>
+                    <span class="zodiac-symbol">♊</span>
+                </div>
+            </div>
+
+            <!-- Mars Row -->
+            <div class="comparison-row">
+                <div class="planet-cell planet-cell-left">
+                    <span class="planet-emoji">🔥</span>
+                    <span class="zodiac-symbol">♈</span>
+                </div>
+                <div class="connection">
+                    <div class="connection-line"></div>
+                    <div class="connection-score">74</div>
+                </div>
+                <div class="planet-cell planet-cell-right">
+                    <span class="planet-emoji">🔥</span>
+                    <span class="zodiac-symbol">♉</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

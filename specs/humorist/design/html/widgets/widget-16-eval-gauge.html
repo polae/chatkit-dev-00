@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupid Evaluation - Stacked Gauge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Accent Colors */
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 420px;
+            width: 100%;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        /* Gauge Container */
+        .gauge-container {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        /* Overall Score at Top */
+        .overall-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .overall-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .overall-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Thermometer Container */
+        .thermometer-container {
+            display: flex;
+            align-items: stretch;
+            gap: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        /* Thermometer Track */
+        .thermometer-track {
+            width: 60px;
+            height: 320px;
+            background: var(--bg-primary);
+            border-radius: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column-reverse;
+            position: relative;
+        }
+
+        /* Stacked Segments */
+        .segment {
+            width: 100%;
+            opacity: 0;
+            height: 0;
+            animation: growSegment 0.8s ease-out forwards;
+            position: relative;
+        }
+
+        .segment.sun {
+            background: var(--yellow);
+            box-shadow: 0 0 16px rgba(255, 201, 34, 0.3);
+            animation-delay: 0.4s;
+        }
+
+        .segment.moon {
+            background: var(--purple);
+            box-shadow: 0 0 16px rgba(155, 133, 183, 0.3);
+            animation-delay: 0.5s;
+        }
+
+        .segment.venus {
+            background: var(--pink);
+            box-shadow: 0 0 16px rgba(231, 181, 160, 0.3);
+            animation-delay: 0.6s;
+        }
+
+        .segment.mars {
+            background: var(--red);
+            box-shadow: 0 0 16px rgba(215, 78, 57, 0.3);
+            animation-delay: 0.7s;
+        }
+
+        @keyframes growSegment {
+            from {
+                height: 0;
+                opacity: 0;
+            }
+            to {
+                height: var(--segment-height);
+                opacity: 1;
+            }
+        }
+
+        /* Labels Column */
+        .labels-column {
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: flex-start;
+            gap: 0;
+            flex: 1;
+        }
+
+        .planet-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .planet-label.sun {
+            animation-delay: 0.9s;
+        }
+
+        .planet-label.moon {
+            animation-delay: 1.0s;
+        }
+
+        .planet-label.venus {
+            animation-delay: 1.1s;
+        }
+
+        .planet-label.mars {
+            animation-delay: 1.2s;
+        }
+
+        .planet-icon {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .planet-name {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .planet-score {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-left: auto;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+            .segment {
+                height: var(--segment-height) !important;
+                opacity: 1 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Cupid Evaluation</h1>
+
+        <div class="gauge-container">
+            <!-- Overall Score -->
+            <div class="overall-score">
+                <div class="overall-number">69</div>
+                <div class="overall-label">Overall</div>
+            </div>
+
+            <!-- Thermometer with Labels -->
+            <div class="thermometer-container">
+                <!-- Thermometer Track -->
+                <div class="thermometer-track">
+                    <div class="segment sun" style="--segment-height: 56px;"></div>
+                    <div class="segment moon" style="--segment-height: 72px;"></div>
+                    <div class="segment venus" style="--segment-height: 78px;"></div>
+                    <div class="segment mars" style="--segment-height: 74px;"></div>
+                </div>
+
+                <!-- Planet Labels -->
+                <div class="labels-column">
+                    <div class="planet-label sun" style="height: 56px;">
+                        <span class="planet-icon">☀️</span>
+                        <span class="planet-name">Sun</span>
+                        <span class="planet-score">56</span>
+                    </div>
+                    <div class="planet-label moon" style="height: 72px;">
+                        <span class="planet-icon">🌙</span>
+                        <span class="planet-name">Moon</span>
+                        <span class="planet-score">72</span>
+                    </div>
+                    <div class="planet-label venus" style="height: 78px;">
+                        <span class="planet-icon">💖</span>
+                        <span class="planet-name">Venus</span>
+                        <span class="planet-score">78</span>
+                    </div>
+                    <div class="planet-label mars" style="height: 74px;">
+                        <span class="planet-icon">🔥</span>
+                        <span class="planet-name">Mars</span>
+                        <span class="planet-score">74</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>

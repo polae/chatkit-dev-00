@@ -66,6 +66,7 @@
         /* Two Column Layout */
         .two-columns {
             display: flex;
+            align-items: stretch;
             gap: 1.5rem;
             opacity: 0;
             animation: fadeSlideIn 0.5s ease-out 0.3s forwards;
@@ -80,12 +81,80 @@
         .column-left {
             flex: 1.4;
             align-items: flex-start;
+            display: flex;
+            flex-direction: column;
         }
 
         .column-right {
             flex: 1;
+            align-items: stretch;
+            justify-content: stretch;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Right Column Container - Rectangular with rounded borders */
+        .right-column-container {
+            background: var(--bg-surface);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between;
+            width: 100%;
+            flex: 1;
+        }
+
+        .container-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            align-self: flex-start;
+        }
+
+        .container-middle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .container-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .current-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .current-display-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .current-display-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--current);
+            line-height: 1;
+        }
+
+        .current-display-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         /* Scene Number */
@@ -212,6 +281,40 @@
             margin-top: 0.15rem;
         }
 
+        /* Delta Badge - Stock Ticker Style */
+        .delta-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            flex-shrink: 0;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.6s forwards;
+        }
+
+        .delta-badge.positive {
+            background: rgba(138, 164, 125, 0.2);
+            color: #8AA47D;
+        }
+
+        .delta-badge.negative {
+            background: rgba(215, 78, 57, 0.2);
+            color: #D74E39;
+        }
+
+        .delta-arrow {
+            font-size: 0.7rem;
+            line-height: 1;
+        }
+
+        .delta-value {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
         /* Planet Badges Row */
         .planet-badges {
             display: flex;
@@ -273,12 +376,13 @@
 </head>
 <body>
     <div class="slide">
-        <h1>Compatibility</h1>
-
         <div class="two-columns">
-            <!-- Left Column: Scene #1, Now bar, Base bar, Pills -->
+            <!-- Left Column: Scene #1, Meet-Cute, Now bar, Base bar, Pills -->
             <div class="column column-left">
-                <span class="scene-number">Scene #1</span>
+                <div style="display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.5rem;">
+                    <span class="scene-number">Scene #1</span>
+                    <span class="scene-name">Meet-Cute</span>
+                </div>
                 
                 <div class="bars-container">
                     <div class="bar-row">
@@ -317,13 +421,27 @@
                 </div>
             </div>
 
-            <!-- Right Column: Meet-Cute, 52 Now Badge -->
+            <!-- Right Column: Compatibility, 52 + Delta, Now -->
             <div class="column column-right">
-                <span class="scene-name">Meet-Cute</span>
-                
-                <div class="current-badge">
-                    <div class="current-number">52</div>
-                    <div class="current-label">Now</div>
+                <div class="right-column-container">
+                    <!-- Row 1: Compatibility (aligns with Meet-Cute) -->
+                    <div class="container-title">Compatibility</div>
+                    
+                    <!-- Row 2: 52 + Delta (aligns with bars) -->
+                    <div class="container-middle">
+                        <div class="current-display-row">
+                            <div class="current-display-number">52</div>
+                            <div class="delta-badge positive">
+                                <span class="delta-arrow">▲</span>
+                                <span class="delta-value">7</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 3: Now (aligns with pills) -->
+                    <div class="container-bottom">
+                        <div class="current-display-label">Now</div>
+                    </div>
                 </div>
             </div>
         </div>

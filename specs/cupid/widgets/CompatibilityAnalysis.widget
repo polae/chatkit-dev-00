@@ -1,0 +1,427 @@
+{
+  "version": "1.0",
+  "name": "CompatibilityAnalysis",
+  "template": "{\"type\":\"Card\",\"size\":\"lg\",\"children\":[{\"type\":\"Col\",\"gap\":1,\"children\":[{\"type\":\"Title\",\"value\":{{ (title) | tojson }},\"size\":\"md\"},{\"type\":\"Text\",\"value\":{{ (subtitle) | tojson }},\"size\":\"sm\",\"color\":\"secondary\"}]},{\"type\":\"Divider\",\"flush\":true},{\"type\":\"Col\",\"align\":\"center\",\"gap\":1,\"padding\":{\"y\":2},\"children\":[{\"type\":\"Title\",\"value\":{{ (overall) | tojson }},\"size\":\"4xl\",\"weight\":\"bold\"},{\"type\":\"Caption\",\"value\":\"Overall Match\"}]},{\"type\":\"Col\",\"gap\":2,\"children\":[{%- set _c -%}{%-for item in items -%},{\"type\":\"Row\",\"key\":{{ (item.id) | tojson }},\"gap\":2,\"align\":\"center\",\"children\":[{\"type\":\"Row\",\"width\":56,\"gap\":1,\"justify\":\"start\",\"children\":[{\"type\":\"Text\",\"value\":{{ (item.leftEmoji) | tojson }}},{\"type\":\"Text\",\"value\":{{ (item.leftZodiac) | tojson }}}]},{\"type\":\"Row\",\"flex\":\"auto\",\"align\":\"center\",\"gap\":2,\"children\":[{\"type\":\"Box\",\"flex\":1,\"height\":20,\"background\":\"surface-secondary\",\"radius\":\"full\",\"children\":[{\"type\":\"Row\",\"width\":{{ ((item.percent ~ \"%\")) | tojson }},\"height\":\"100%\",\"background\":{{ (item.color) | tojson }},\"radius\":\"full\",\"align\":\"center\",\"justify\":\"center\",\"children\":[{\"type\":\"Text\",\"value\":{{ ((item.percent)) | tojson }},\"size\":\"sm\",\"color\":\"white\"}]}]}]},{\"type\":\"Row\",\"width\":56,\"gap\":1,\"justify\":\"end\",\"children\":[{\"type\":\"Text\",\"value\":{{ (item.rightZodiac) | tojson }}},{\"type\":\"Text\",\"value\":{{ (item.rightEmoji) | tojson }}}]}]}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}]}",
+  "jsonSchema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "subtitle": {
+        "type": "string"
+      },
+      "overall": {
+        "type": "string"
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "leftEmoji": {
+              "type": "string"
+            },
+            "leftZodiac": {
+              "type": "string"
+            },
+            "rightZodiac": {
+              "type": "string"
+            },
+            "rightEmoji": {
+              "type": "string"
+            },
+            "percent": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "color": {
+              "type": "string",
+              "enum": [
+                "yellow-400",
+                "purple-500",
+                "pink-400",
+                "red-500",
+                "orange-500",
+                "blue-400",
+                "green-500"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "leftEmoji",
+            "leftZodiac",
+            "rightZodiac",
+            "rightEmoji",
+            "percent",
+            "color"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": [
+      "title",
+      "subtitle",
+      "overall",
+      "items"
+    ],
+    "additionalProperties": false
+  },
+  "outputJsonPreview": {
+    "type": "Card",
+    "size": "lg",
+    "children": [
+      {
+        "type": "Col",
+        "gap": 1,
+        "children": [
+          {
+            "type": "Title",
+            "value": "Zara & Sam",
+            "size": "md"
+          },
+          {
+            "type": "Text",
+            "value": "Compatibility",
+            "size": "sm",
+            "color": "secondary"
+          }
+        ]
+      },
+      {
+        "type": "Divider",
+        "flush": true
+      },
+      {
+        "type": "Col",
+        "align": "center",
+        "gap": 1,
+        "padding": {
+          "y": 2
+        },
+        "children": [
+          {
+            "type": "Title",
+            "value": "69",
+            "size": "4xl",
+            "weight": "bold"
+          },
+          {
+            "type": "Caption",
+            "value": "Overall Match"
+          }
+        ]
+      },
+      {
+        "type": "Col",
+        "gap": 2,
+        "children": [
+          {
+            "type": "Row",
+            "key": "sun",
+            "gap": 2,
+            "align": "center",
+            "children": [
+              {
+                "type": "Row",
+                "width": 56,
+                "gap": 1,
+                "justify": "start",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "☀️"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "♈"
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "flex": "auto",
+                "align": "center",
+                "gap": 2,
+                "children": [
+                  {
+                    "type": "Box",
+                    "flex": 1,
+                    "height": 20,
+                    "background": "surface-secondary",
+                    "radius": "full",
+                    "children": [
+                      {
+                        "type": "Row",
+                        "width": "56%",
+                        "height": "100%",
+                        "background": "yellow-400",
+                        "radius": "full",
+                        "align": "center",
+                        "justify": "center",
+                        "children": [
+                          {
+                            "type": "Text",
+                            "value": "56",
+                            "size": "sm",
+                            "color": "white"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "width": 56,
+                "gap": 1,
+                "justify": "end",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "♊"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "☀️"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Row",
+            "key": "moon",
+            "gap": 2,
+            "align": "center",
+            "children": [
+              {
+                "type": "Row",
+                "width": 56,
+                "gap": 1,
+                "justify": "start",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "🌙"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "♍"
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "flex": "auto",
+                "align": "center",
+                "gap": 2,
+                "children": [
+                  {
+                    "type": "Box",
+                    "flex": 1,
+                    "height": 20,
+                    "background": "surface-secondary",
+                    "radius": "full",
+                    "children": [
+                      {
+                        "type": "Row",
+                        "width": "72%",
+                        "height": "100%",
+                        "background": "purple-500",
+                        "radius": "full",
+                        "align": "center",
+                        "justify": "center",
+                        "children": [
+                          {
+                            "type": "Text",
+                            "value": "72",
+                            "size": "sm",
+                            "color": "white"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "width": 56,
+                "gap": 1,
+                "justify": "end",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "♒"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "🌙"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Row",
+            "key": "venus",
+            "gap": 2,
+            "align": "center",
+            "children": [
+              {
+                "type": "Row",
+                "width": 56,
+                "gap": 1,
+                "justify": "start",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "💖"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "♉"
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "flex": "auto",
+                "align": "center",
+                "gap": 2,
+                "children": [
+                  {
+                    "type": "Box",
+                    "flex": 1,
+                    "height": 20,
+                    "background": "surface-secondary",
+                    "radius": "full",
+                    "children": [
+                      {
+                        "type": "Row",
+                        "width": "78%",
+                        "height": "100%",
+                        "background": "pink-400",
+                        "radius": "full",
+                        "align": "center",
+                        "justify": "center",
+                        "children": [
+                          {
+                            "type": "Text",
+                            "value": "78",
+                            "size": "sm",
+                            "color": "white"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "width": 56,
+                "gap": 1,
+                "justify": "end",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "♊"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "💖"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "Row",
+            "key": "mars",
+            "gap": 2,
+            "align": "center",
+            "children": [
+              {
+                "type": "Row",
+                "width": 56,
+                "gap": 1,
+                "justify": "start",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "🔥"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "♈"
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "flex": "auto",
+                "align": "center",
+                "gap": 2,
+                "children": [
+                  {
+                    "type": "Box",
+                    "flex": 1,
+                    "height": 20,
+                    "background": "surface-secondary",
+                    "radius": "full",
+                    "children": [
+                      {
+                        "type": "Row",
+                        "width": "74%",
+                        "height": "100%",
+                        "background": "red-500",
+                        "radius": "full",
+                        "align": "center",
+                        "justify": "center",
+                        "children": [
+                          {
+                            "type": "Text",
+                            "value": "74",
+                            "size": "sm",
+                            "color": "white"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Row",
+                "width": 56,
+                "gap": 1,
+                "justify": "end",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "♉"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "🔥"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "encodedWidget": "eyJpZCI6Ijk2M2RlNzBkLTg1N2MtNDA0NC05MjA4LThjYmM4NGM2ODljZSIsIm5hbWUiOiJDb21wYXRpYmlsaXR5QW5hbHlzaXMiLCJ2aWV3IjoiPENhcmQgc2l6ZT1cImxnXCI-XG4gIDxDb2wgZ2FwPXsxfT5cbiAgICA8VGl0bGUgdmFsdWU9e3RpdGxlfSBzaXplPVwibWRcIiAvPlxuICAgIDxUZXh0IHZhbHVlPXtzdWJ0aXRsZX0gc2l6ZT1cInNtXCIgY29sb3I9XCJzZWNvbmRhcnlcIiAvPlxuICA8L0NvbD5cbiAgPERpdmlkZXIgZmx1c2ggLz5cbiAgPENvbCBhbGlnbj1cImNlbnRlclwiIGdhcD17MX0gcGFkZGluZz17eyB5OiAyIH19PlxuICAgIDxUaXRsZSB2YWx1ZT17b3ZlcmFsbH0gc2l6ZT1cIjR4bFwiIHdlaWdodD1cImJvbGRcIiAvPlxuICAgIDxDYXB0aW9uIHZhbHVlPVwiT3ZlcmFsbCBNYXRjaFwiIC8-XG4gIDwvQ29sPlxuICA8Q29sIGdhcD17Mn0-XG4gICAge2l0ZW1zLm1hcCgoaXRlbSkgPT4gKFxuICAgICAgPFJvdyBrZXk9e2l0ZW0uaWR9IGdhcD17Mn0gYWxpZ249XCJjZW50ZXJcIj5cbiAgICAgICAgPFJvdyB3aWR0aD17NTZ9IGdhcD17MX0ganVzdGlmeT1cInN0YXJ0XCI-XG4gICAgICAgICAgPFRleHQgdmFsdWU9e2l0ZW0ubGVmdEVtb2ppfSAvPlxuICAgICAgICAgIDxUZXh0IHZhbHVlPXtpdGVtLmxlZnRab2RpYWN9IC8-XG4gICAgICAgIDwvUm93PlxuICAgICAgICA8Um93IGZsZXg9XCJhdXRvXCIgYWxpZ249XCJjZW50ZXJcIiBnYXA9ezJ9PlxuICAgICAgICAgIDxCb3hcbiAgICAgICAgICAgIGZsZXg9ezF9XG4gICAgICAgICAgICBoZWlnaHQ9ezIwfVxuICAgICAgICAgICAgYmFja2dyb3VuZD1cInN1cmZhY2Utc2Vjb25kYXJ5XCJcbiAgICAgICAgICAgIHJhZGl1cz1cImZ1bGxcIlxuICAgICAgICAgID5cbiAgICAgICAgICAgIDxSb3dcbiAgICAgICAgICAgICAgd2lkdGg9e2Ake2l0ZW0ucGVyY2VudH0lYH1cbiAgICAgICAgICAgICAgaGVpZ2h0PVwiMTAwJVwiXG4gICAgICAgICAgICAgIGJhY2tncm91bmQ9e2l0ZW0uY29sb3J9XG4gICAgICAgICAgICAgIHJhZGl1cz1cImZ1bGxcIlxuICAgICAgICAgICAgICBhbGlnbj1cImNlbnRlclwiXG4gICAgICAgICAgICAgIGp1c3RpZnk9XCJjZW50ZXJcIlxuICAgICAgICAgICAgPlxuICAgICAgICAgICAgICA8VGV4dCB2YWx1ZT17YCR7aXRlbS5wZXJjZW50fWB9IHNpemU9XCJzbVwiIGNvbG9yPVwid2hpdGVcIiAvPlxuICAgICAgICAgICAgPC9Sb3c-XG4gICAgICAgICAgPC9Cb3g-XG4gICAgICAgIDwvUm93PlxuICAgICAgICA8Um93IHdpZHRoPXs1Nn0gZ2FwPXsxfSBqdXN0aWZ5PVwiZW5kXCI-XG4gICAgICAgICAgPFRleHQgdmFsdWU9e2l0ZW0ucmlnaHRab2RpYWN9IC8-XG4gICAgICAgICAgPFRleHQgdmFsdWU9e2l0ZW0ucmlnaHRFbW9qaX0gLz5cbiAgICAgICAgPC9Sb3c-XG4gICAgICA8L1Jvdz5cbiAgICApKX1cbiAgPC9Db2w-XG48L0NhcmQ-IiwiZGVmYXVsdFN0YXRlIjp7InRpdGxlIjoiWmFyYSAmIFNhbSIsInN1YnRpdGxlIjoiQ29tcGF0aWJpbGl0eSIsIm92ZXJhbGwiOiI2OSIsIml0ZW1zIjpbeyJpZCI6InN1biIsImxlZnRFbW9qaSI6IuKYgO-4jyIsImxlZnRab2RpYWMiOiLimYgiLCJyaWdodFpvZGlhYyI6IuKZiiIsInJpZ2h0RW1vamkiOiLimIDvuI8iLCJwZXJjZW50Ijo1NiwiY29sb3IiOiJ5ZWxsb3ctNDAwIn0seyJpZCI6Im1vb24iLCJsZWZ0RW1vamkiOiLwn4yZIiwibGVmdFpvZGlhYyI6IuKZjSIsInJpZ2h0Wm9kaWFjIjoi4pmSIiwicmlnaHRFbW9qaSI6IvCfjJkiLCJwZXJjZW50Ijo3MiwiY29sb3IiOiJwdXJwbGUtNTAwIn0seyJpZCI6InZlbnVzIiwibGVmdEVtb2ppIjoi8J-SliIsImxlZnRab2RpYWMiOiLimYkiLCJyaWdodFpvZGlhYyI6IuKZiiIsInJpZ2h0RW1vamkiOiLwn5KWIiwicGVyY2VudCI6NzgsImNvbG9yIjoicGluay00MDAifSx7ImlkIjoibWFycyIsImxlZnRFbW9qaSI6IvCflKUiLCJsZWZ0Wm9kaWFjIjoi4pmIIiwicmlnaHRab2RpYWMiOiLimYkiLCJyaWdodEVtb2ppIjoi8J-UpSIsInBlcmNlbnQiOjc0LCJjb2xvciI6InJlZC01MDAifV19LCJzdGF0ZXMiOltdLCJzY2hlbWEiOiJpbXBvcnQgeyB6IH0gZnJvbSBcInpvZFwiXG5cbmNvbnN0IEl0ZW0gPSB6LnN0cmljdE9iamVjdCh7XG4gIGlkOiB6LnN0cmluZygpLFxuICBsZWZ0RW1vamk6IHouc3RyaW5nKCksXG4gIGxlZnRab2RpYWM6IHouc3RyaW5nKCksXG4gIHJpZ2h0Wm9kaWFjOiB6LnN0cmluZygpLFxuICByaWdodEVtb2ppOiB6LnN0cmluZygpLFxuICBwZXJjZW50OiB6Lm51bWJlcigpLm1pbigwKS5tYXgoMTAwKSxcbiAgY29sb3I6IHouZW51bShbXG4gICAgXCJ5ZWxsb3ctNDAwXCIsXG4gICAgXCJwdXJwbGUtNTAwXCIsXG4gICAgXCJwaW5rLTQwMFwiLFxuICAgIFwicmVkLTUwMFwiLFxuICAgIFwib3JhbmdlLTUwMFwiLFxuICAgIFwiYmx1ZS00MDBcIixcbiAgICBcImdyZWVuLTUwMFwiLFxuICBdKSxcbn0pXG5cbmNvbnN0IFdpZGdldFN0YXRlID0gei5zdHJpY3RPYmplY3Qoe1xuICB0aXRsZTogei5zdHJpbmcoKSxcbiAgc3VidGl0bGU6IHouc3RyaW5nKCksXG4gIG92ZXJhbGw6IHouc3RyaW5nKCksXG4gIGl0ZW1zOiB6LmFycmF5KEl0ZW0pLFxufSlcblxuZXhwb3J0IGRlZmF1bHQgV2lkZ2V0U3RhdGUiLCJqc29uU2NoZW1hIjp7fSwic2NoZW1hTW9kZSI6InpvZCIsInNjaGVtYVZhbGlkaXR5IjoidmFsaWQiLCJ2aWV3VmFsaWRpdHkiOiJ2YWxpZCIsImRlZmF1bHRTdGF0ZVZhbGlkaXR5IjoidmFsaWQifQ"
+}

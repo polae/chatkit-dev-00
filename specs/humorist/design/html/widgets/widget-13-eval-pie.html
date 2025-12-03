@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Element Distribution</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+
+            /* Element Colors */
+            --fire: #D74E39;
+            --earth: #8AA47D;
+            --air: #6CC2FF;
+            --water: #9B85B7;
+
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .slide {
+            max-width: 480px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            color: var(--text-primary);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            animation: fadeInUp 0.6s ease-out 0.1s both;
+        }
+
+        .widget {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* Donut Chart */
+        .chart-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+
+        .donut-chart {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .donut-segment {
+            stroke-width: 60;
+            fill: none;
+            stroke-dasharray: var(--dash-array);
+            stroke-dashoffset: var(--dash-offset);
+            transition: stroke-width 0.3s ease;
+            animation: drawSegment 1s ease-out forwards;
+        }
+
+        @keyframes drawSegment {
+            from {
+                stroke-dashoffset: 628.32;
+            }
+            to {
+                stroke-dashoffset: var(--dash-offset);
+            }
+        }
+
+        .segment-fire {
+            stroke: var(--fire);
+            animation-delay: 0.4s;
+        }
+
+        .segment-earth {
+            stroke: var(--earth);
+            animation-delay: 0.6s;
+        }
+
+        .segment-air {
+            stroke: var(--air);
+            animation-delay: 0.8s;
+        }
+
+        .segment-water {
+            stroke: var(--water);
+            animation-delay: 1s;
+        }
+
+        .donut-segment:hover {
+            stroke-width: 65;
+            filter: brightness(1.1);
+        }
+
+        /* Center Label */
+        .chart-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .chart-center-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .chart-center-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+
+        /* Legend */
+        .element-legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-surface);
+            border-radius: 12px;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .legend-item:nth-child(1) { animation-delay: 1.2s; }
+        .legend-item:nth-child(2) { animation-delay: 1.3s; }
+        .legend-item:nth-child(3) { animation-delay: 1.4s; }
+        .legend-item:nth-child(4) { animation-delay: 1.5s; }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-color.fire { background: var(--fire); }
+        .legend-color.earth { background: var(--earth); }
+        .legend-color.air { background: var(--air); }
+        .legend-color.water { background: var(--water); }
+
+        .legend-info {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .legend-name {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .legend-count {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .legend-signs {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+            }
+            .donut-segment {
+                stroke-dashoffset: var(--dash-offset) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h1>Element Distribution</h1>
+        <p class="subtitle">Combined Chart Analysis</p>
+
+        <div class="widget">
+            <!-- Donut Chart -->
+            <div class="chart-container">
+                <svg class="donut-chart" viewBox="0 0 200 200">
+                    <!-- Fire: 2/8 = 25% = 157.08 of 628.32 circumference -->
+                    <circle
+                        class="donut-segment segment-fire"
+                        cx="100"
+                        cy="100"
+                        r="70"
+                        style="--dash-array: 157.08 471.24; --dash-offset: 0;"
+                    />
+                    <!-- Earth: 3/8 = 37.5% = 235.62 of 628.32, offset by fire -->
+                    <circle
+                        class="donut-segment segment-earth"
+                        cx="100"
+                        cy="100"
+                        r="70"
+                        style="--dash-array: 235.62 392.7; --dash-offset: -157.08;"
+                    />
+                    <!-- Air: 3/8 = 37.5% = 235.62 of 628.32, offset by fire+earth -->
+                    <circle
+                        class="donut-segment segment-air"
+                        cx="100"
+                        cy="100"
+                        r="70"
+                        style="--dash-array: 235.62 392.7; --dash-offset: -392.7;"
+                    />
+                    <!-- Water: 0/8 = 0% (invisible but kept for consistency) -->
+                    <circle
+                        class="donut-segment segment-water"
+                        cx="100"
+                        cy="100"
+                        r="70"
+                        style="--dash-array: 0 628.32; --dash-offset: -628.32;"
+                    />
+                </svg>
+
+                <div class="chart-center">
+                    <div class="chart-center-number">8</div>
+                    <div class="chart-center-label">Placements</div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="element-legend">
+                <div class="legend-item">
+                    <div class="legend-color fire"></div>
+                    <div class="legend-info">
+                        <div>
+                            <div class="legend-name">Fire</div>
+                            <div class="legend-signs">♈ ♌ ♐</div>
+                        </div>
+                        <div class="legend-count">2</div>
+                    </div>
+                </div>
+
+                <div class="legend-item">
+                    <div class="legend-color earth"></div>
+                    <div class="legend-info">
+                        <div>
+                            <div class="legend-name">Earth</div>
+                            <div class="legend-signs">♉ ♍ ♑</div>
+                        </div>
+                        <div class="legend-count">3</div>
+                    </div>
+                </div>
+
+                <div class="legend-item">
+                    <div class="legend-color air"></div>
+                    <div class="legend-info">
+                        <div>
+                            <div class="legend-name">Air</div>
+                            <div class="legend-signs">♊ ♎ ♒</div>
+                        </div>
+                        <div class="legend-count">3</div>
+                    </div>
+                </div>
+
+                <div class="legend-item">
+                    <div class="legend-color water"></div>
+                    <div class="legend-info">
+                        <div>
+                            <div class="legend-name">Water</div>
+                            <div class="legend-signs">♋ ♏ ♓</div>
+                        </div>
+                        <div class="legend-count">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inherit dark mode from parent
+        try {
+            if (window.parent && window.parent !== window) {
+                if (window.parent.document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.add('dark');
+                }
+                new MutationObserver((m) => {
+                    m.forEach((mut) => {
+                        if (mut.attributeName === 'class') {
+                            document.documentElement.classList.toggle('dark',
+                                window.parent.document.documentElement.classList.contains('dark'));
+                        }
+                    });
+                }).observe(window.parent.document.documentElement, { attributes: true });
+            }
+        } catch (e) {}
+    </script>
+</body>
+</html>
