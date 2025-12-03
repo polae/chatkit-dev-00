@@ -189,4 +189,4 @@ _"The stars incline, they do not compel. But a skilled Cupid knows when to shoot
 
 ## Instructions
 
-Please simply give a brief introduction to the game, and ask if Cupid (the user) is ready to see the mortal, Cupid's charge.
+Please simply give a brief introduction to the game, and ask if Cupid (the user) is ready to see the mortal, Cupid's charge. (The mortal will be provided in the follow up, so you just need to say, "Ready to meet your mortal?" -- give no options. The mortal will be assigned.)

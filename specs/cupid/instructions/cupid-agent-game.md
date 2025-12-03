@@ -156,9 +156,9 @@ Then deliver **THE VERDICT** in 2-3 sentences: prospects, liabilities, strategic
 
 **1. Set the scene** (2-3 paragraphs)
 
-- Specific location with observed details
-- What happened \"off-screen\" to get them here
-- Current emotional temperature
+- **First:** Show the outcome of the previous choice (what happened, how it landed)
+- **Then:** Specific location with observed details
+- **Then:** Current emotional temperature, what's at stake now
 
 **2. Jump into dialogue** (_in medias res_)
 
@@ -303,70 +303,9 @@ Then deliver **THE VERDICT** in 2-3 sentences: prospects, liabilities, strategic
 
 ---
 
-## CUPID'S EVALUATION
+## After the Date Ends
 
-**Purpose:** Assess the outcome, predict the relationship future, reveal Cupid's own astrological patterns.
-
-### Structure
-
-**1. Final Compatibility Score**
-
-```
-📊 FINAL ASSESSMENT
-
-Base Compatibility: [##]/100
-Cupid's Influence: [+/- ##]
-----------------------------
-FINAL SCORE: [##]/100
-
-Connection Quality: [Description]
-```
-
-**Scoring Ranges:**
-
-- **90-100:** True Love — Kiss happened, strong connection, high second date probability
-- **75-89:** Strong Start — Likely kiss, enthusiastic second date plans
-- **60-74:** Friendly Connection — Maybe no kiss, might become friends
-- **40-59:** Awkward but Polite — No kiss, no second date, not hostile
-- **0-39:** Disaster — Date ended early or someone left upset
-
-**2. Relationship Prediction**
-
-```
-🔮 WHAT HAPPENS NEXT
-
-[2-3 paragraphs predicting the relationship trajectory based on
-the final score and how the date went. Be specific about second
-date likelihood, long-term potential, what they learned.]
-```
-
-**3. Cupid's Astrological Profile Update**
-
-```
-🏹 CUPID'S PROFILE UPDATE
-
-Your choices this game revealed:
-
-- [Astrological tendency from decision pattern 1]
-- [Astrological tendency from decision pattern 2]
-- [Astrological tendency from decision pattern 3]
-
-Current Assessment: [One paragraph about Cupid's emerging chart,
-written as if an astrologer is analyzing their choice patterns]
-
-*[Progress: X/10 games completed toward full Cupid natal chart revelation]*
-```
-
-**How Cupid's Chart Accumulates:**
-
-Track across games:
-
-- **Aggressive vs. Cautious choices** → Reveals Mars sign
-- **Emotional vs. Logical reasoning** → Reveals Moon sign (Water vs. Air)
-- **Romantic idealism vs. Practical realism** → Reveals Venus sign
-- **Bold initiative vs. Careful planning** → Reveals Sun sign (Fire vs. Earth/Water/Air)
-
-After 10 games, Cupid gets their **full natal chart revealed** as a reward/reflection tool.
+Once the story concludes ("THE DATE HAS ENDED"), evaluation instructions will load separately.
 
 ---
 
@@ -380,20 +319,21 @@ Every scene follows this exact structure:
 
 ```
 1. NARRATION (2-3 paragraphs, 150-250 words)
+   - First: Show outcome of previous choice
+   - Then: Set the new scene location/mood
    ↓
 2. DIALOGUE (8-12 exchanges maximum)
    ↓
 3. CUPID'S OPTIONS (3-4 strategic choices)
    ↓
-4. USER CHOICE
-
+4. USER CHOICE → proceeds directly to next scene
 ```
 
 ### Maximum Lengths (Count and Enforce)
 
 | Element             | Maximum                        | Why                                         |
 | ------------------- | ------------------------------ | ------------------------------------------- |
-| Opening narration   | 2-3 paragraphs (150-250 words) | Sets scene without overwhelming             |
+| Opening narration   | 2-3 paragraphs (150-250 words) | Shows choice outcome + sets new scene       |
 | Dialogue exchanges  | 8-12 total                     | Builds tension, stops before resolving      |
 | Tags per scene beat | 2 maximum                      | Keeps astrology parenthetical, not dominant |
 
@@ -433,6 +373,7 @@ When Cupid selects an option:
 **Proceed immediately to the next scene.** The choice IS the approval to continue.
 
 Each scene's options should indicate what comes next:
+
 ```
 🏹 CUPID'S OPTIONS
 
@@ -443,13 +384,13 @@ Each scene's options should indicate what comes next:
 
 ### What NOT to Do
 
-| ❌ Don't                               | ✅ Do                             |
-| -------------------------------------- | --------------------------------- |
-| Continue dialogue past 12 exchanges    | Count exchanges, stop at 12       |
-| Resolve entire scenes in one response  | Present options at tension point  |
-| Show follow-up dialogue after choice   | Proceed directly to next scene    |
-| Write multiple scenes without a choice | One choice per scene              |
-| Stack 3+ astrological tags in one beat | Maximum 2 tags per scene moment   |
+| ❌ Don't                               | ✅ Do                            |
+| -------------------------------------- | -------------------------------- |
+| Continue dialogue past 12 exchanges    | Count exchanges, stop at 12      |
+| Resolve entire scenes in one response  | Present options at tension point |
+| Show follow-up dialogue after choice   | Proceed directly to next scene   |
+| Write multiple scenes without a choice | One choice per scene             |
+| Stack 3+ astrological tags in one beat | Maximum 2 tags per scene moment  |
 
 ### Why These Rules Matter
 
@@ -521,7 +462,7 @@ THE DATE ENDS (All four, Mars primary)
     ↓
 CUPID'S EVALUATION
     ↓
-    [Score + Prediction + Cupid's Profile Update]
+    [Instructions load separately]
 ```
 
 **Possible Early Exits:**
@@ -604,9 +545,7 @@ Each game follows this arc:
 
 ### **CUPID'S EVALUATION**
 
-- Final compatibility score (adjusted by player choices)
-- Relationship prediction
-- **Cupid's Astrological Profile Update** (player's choices reveal Cupid's own signs over time)
+_(Instructions load separately after the date ends)_
 
 **Total game length:** Brief. Elegant. One complete romantic arc from introduction to first kiss (or first disaster).
 
@@ -620,9 +559,9 @@ Each game follows this arc:
 ## SCENE X: [Scene Name]
 
 [NARRATION: 2-3 paragraphs maximum]
-- Set the location with specific details
-- Catch Cupid up on what happened \"off-screen\"
-- Establish emotional temperature
+- First: Show what happened from previous choice (the outcome)
+- Then: Set the new location with specific details
+- Establish emotional temperature, what's at stake now
 - Transition smoothly into dialogue
 
 ---
@@ -635,11 +574,12 @@ Each game follows this arc:
 ---
 
 🏹 CUPID'S OPTIONS
-[3-4 strategic choices with stakes clearly explained]
+[3-4 strategic choices]
+**Your choice proceeds to [Next Scene Name].**
 
 ---
 
-[USER CHOOSES]
+[USER CHOOSES → Next scene begins]
 ```
 
 ### Maximum Lengths (ENFORCE STRICTLY)
@@ -847,41 +787,6 @@ Alright, divine matchmaker. What's your move?
 
 **Make the stakes clear.** Each option should have genuine upsides and risks. No obviously \"correct\" answer—just different strategic bets based on the astrological terrain.
 
-## Cupid's Astrological Profile: The Meta-Layer
-
-Here's the beautiful secret: **Cupid doesn't know their own signs yet.**
-
-Over multiple games, the choices the player makes reveal Cupid's own astrological nature:
-
-- **Aggressive, initiative-heavy choices** → Aries tendencies
-- **Cautious, risk-averse choices** → Cancer tendencies
-- **Emotionally-focused choices** → Water sign tendencies
-- **Logic-driven choices** → Air sign tendencies
-
-At the end of each game, in the **CUPID'S EVALUATION** section, note:
-
-```
-### 🏹 CUPID'S PROFILE UPDATE
-
-Your choices this game revealed:
-
-- Strong ♈️ 🔥 Mars energy (3 aggressive pursuit decisions)
-- Emerging ♎️ 💖 Venus (prioritized harmony over passion twice)
-- Consistent ♒️ 🌙 Moon (emotional detachment in Scene 3)
-
-**Current Assessment:** You're shaping up as someone who acts boldly (♈️ 🔥)
-in pursuit, values fairness in love (♎️ 💖), but keeps emotional distance
-when things get deep (♒️ 🌙). Interesting.
-
-*[Progress: 3/10 games completed toward full Cupid natal chart revelation]*
-```
-
-This creates:
-
-- **Progression system** (10 games to fully reveal Cupid's chart)
-- **Self-reflection** (player learns about their own decision patterns)
-- **Replayability** (players want to see if they're consistent or evolving)
-
 ## Example Format Reference
 
 For a complete playthrough example demonstrating these principles:
@@ -947,18 +852,22 @@ He tells himself he's \"too picky.\" More accurate: he's terrified (♍️ 🌙)
 Alright, Cupid. This isn't soulmates-at-first-sight territory, but it's not doomed either. More like: interesting if handled well.
 
 ### ☀️ SUN (Identity)
+
 Maya ☀️ ♋️ Cancer | James ☀️ ♐️ Sagittarius
 She builds nests; he burns frequent flyer miles. Not incompatible, exactly—more like she's planning a dinner party while he's Googling "last-minute flights to Lisbon."
 
 ### 🌙 MOON (Emotional Needs)
+
 Maya 🌙 ♒️ Aquarius | James 🌙 ♍️ Virgo
 She needs space to process; he needs to analyze everything twice. Neither wants to be smothered, which helps. Neither is comfortable with messy emotions, which doesn't.
 
 ### 💖 VENUS (Love Style)
+
 Maya 💖 ♌️ Leo | James 💖 ♑️ Capricorn
 She wants fireworks and adoration NOW. He's running a six-month vetting process. If she can wait and he can occasionally be spontaneous, this could work. Neither is natural at compromise.
 
 ### 🔥 MARS (Passion & Conflict)
+
 Maya 🔥 ♑️ Capricorn | James 🔥 ♏️ Scorpio
 This is the good news: serious chemistry, neither does casual, both take passion as seriously as tax season. If they make it to physical intimacy, the stars are on their side.
 
@@ -974,13 +883,11 @@ This is the good news: serious chemistry, neither does casual, both take passion
 
 ### Prospect Park Farmers Market, Sunday Morning
 
-Maya arrived early (♑️ 🔥)—not intentionally, just out of habit. She's been awake since six, already worked out, showered, and reorganized her spice cabinet. Now she's buying overpriced sourdough and trying not to redesign the vendor's truly terrible logo in her head. Failing.
+Maya arrived early (♑️ 🔥)—not intentionally, just constitutionally. She's been awake since six, has already worked out, showered, and reorganized her spice cabinet by cuisine of origin. Now she's buying overpriced sourdough and trying not to mentally redesign the vendor's truly terrible logo. Failing.
 
-James showed up with a reusable tote bag and a plan to buy vegetables for the week's meal prep (♍️ 🌙), but he's gotten distracted by three different conversations about sustainable farming practices (♐️ ☀️). He's running twenty minutes behind his mental schedule and doesn't care.
+James showed up with a reusable tote bag and a plan to buy vegetables for the week's meal prep (♍️ 🌙), but he's gotten sidetracked by three different conversations about sustainable farming practices (♐️ ☀️). He's running twenty minutes behind his mental schedule. He doesn't seem to have noticed.
 
-They reach for the last bunch of heirloom tomatoes at the same time.
-
-Their hands touch. Both pull back. Eye contact.
+They reach for the last bunch of heirloom tomatoes at the same time. Their hands touch. Both pull back. Eye contact.
 
 ---
 
@@ -1054,9 +961,11 @@ _[Cupid chose Option C: \"COUNTEROFFER\"]_
 
 ### Saturday Evening, Chelsea Gallery, 7:03 PM
 
-Maya arrived at 6:57 PM (♑️ 🔥), which meant she'd been circling the block since 6:50 debating whether arriving early made her look eager or punctual. She settled on \"three minutes late is casually interested.\" James showed up at 7:03 wearing a jacket that looked like he'd thought about it (♎️ 💖), carrying two coffees.
+Maya's counteroffer landed. When she said "art museum opening," James's face did something interesting—a flash of surprise, then a slow grin that suggested he'd just revised his entire mental model of who she was. Good. They exchanged numbers properly this time. He texted the next day at 2pm, a calculated window between eager and indifferent (♍️ 🌙). She replied in three hours, equally calculated (♒️ 🌙). The dance was on.
 
-He spotted her immediately, smiled that easy smile (♊️ ☀️), and handed her one.
+She's been circling the block since 6:50, running cost-benefit analyses on punctuality versus mystique. She settled on "three minutes late is casually interested" and spent those three minutes in a coffee shop bathroom, making her hair look like she hadn't thought about it (♌️ 💖). James arrived at 7:03 wearing a jacket that had clearly required a decision. He was carrying two coffees, which was either presumptuous or charming. Possibly both.
+
+He spotted her immediately—not scanning, not looking around, just saw her and smiled. That easy Sagittarius confidence. She felt something shift in her chest that she chose not to examine. He handed her one of the coffees without asking if she wanted it.
 
 **JAMES:** \"Figured gallery wine is either great or undrinkable. Coffee felt safer.\"
 
@@ -1129,9 +1038,11 @@ _[Cupid chose Option A: \"YES, INTIMATE DINNER\"]_
 
 ### Twenty Minutes Into Dinner
 
-The food arrived. The conversation hadn't stopped since they sat down—work, siblings, neighborhoods, the correct amount of sriracha. Surface-level stuff, but easy. Too easy. Maya felt it (♍️ 🌙): they were circling something real without touching it.
+Maya said yes to the tiny Thai place. The moment she did, something in James visibly unclenched—he'd been braced for her to suggest somewhere safer, more public, less cramped. She didn't. He flagged the check at the gallery with the efficiency of someone who'd done this before (♑️ 💖), and they walked to the West Village side by side, close enough that their shoulders occasionally brushed. Neither mentioned it. Both noticed.
 
-Then James asked a question that changed the altitude.
+The restaurant was exactly as promised: eight tables, possibly a health code violation, definitely perfect. Their knees touched when they sat down. Neither moved away—a small mutual dare. They ordered too much food and fell into the usual archaeology of early dating: work, siblings, neighborhoods, the correct ratio of sriracha to pad thai. Surface conversation, but easy. Too easy. Maya recognized the pattern (♍️ 🌙): they were circling something real without quite touching it. Every time the talk drifted toward anything that mattered, one of them cracked a joke and steered away.
+
+Then James did something unexpected. He stopped steering.
 
 **JAMES:** \"So you said you're bad at dating. What does that actually mean?\"
 
@@ -1200,7 +1111,11 @@ _[Cupid chose Option C: \"MUTUAL PACT\"]_
 
 ### Outside the Restaurant, 10:47 PM
 
-They split the check (Maya insisted—♑️ 💖 independence). Now they were standing on the sidewalk, that awkward moment where the night has to end but neither wants to be the first to leave.
+Maya's proposal—"let's be bad at this together"—landed like a key turning in a lock. James's slow smile said he'd been waiting for permission to drop the performance. They clinked water glasses with mock solemnity, ordered dessert they didn't need, and talked for another hour. But different now. He told her about the teaching job he'd almost quit last year, the months of wondering if he was wasting his life (♐️ ☀️ restlessness, ♍️ 🌙 doubt). She told him about the business partner who'd ghosted her, the six months of rebuilding (♋️ ☀️ loyalty betrayed). Real things. Scared things. The kind of admissions you don't make on first dates—except they just had.
+
+The check arrived. Maya insisted on splitting it (♑️ 💖)—she's never been comfortable owing anyone anything. James didn't argue, which she noted and appreciated. They walked out into the October night and now they're standing on the sidewalk, coats buttoned, neither quite ready to say the word that ends this.
+
+Something has shifted between them. They can both feel it. The question is what to do about it.
 
 **JAMES:** \"I can walk you to the subway.\"
 
@@ -1254,53 +1169,43 @@ _Advice: Maya says \"next time\" with a smile—promise, not rejection._
 - ✅ Gives her Virgo moon time to process
 - ⚠️ Risk: Might frustrate the built-up chemistry
 
-**Your choice proceeds to CUPID'S EVALUATION.**
+**Your choice completes the story.**
 
 ---
 
 _[Cupid chose Option A: \"FULL YES\"]_
 
-## CUPID'S EVALUATION
+## The Kiss
 
-### 📊 FINAL ASSESSMENT
+Maya didn't answer with words. She stepped forward—one small step that closed the distance between them—and kissed him. Not tentative, not polite. Certain. The Capricorn-Scorpio Mars connection the stars had been promising all night finally delivered, and it was worth the wait.
 
-```
-Base Compatibility:        69/100
-Cupid's Influence:        +12
-──────────────────────────────────
-FINAL SCORE:              81/100
+James's hand found the small of her back. She leaned into it. For a long moment, neither of them was calculating anything at all.
 
-Connection Quality: STRONG START
-```
+When they pulled apart, they were both smiling like idiots. The October air felt warmer than it had any right to.
 
-**What This Means:**
-They made it through the date with genuine connection established. The kiss happened (thank you, that Capricorn-Scorpio Mars chemistry). Second date is highly likely, probably happening within the week. This isn't love at first sight, but it's the beginning of something real if they can navigate the commitment challenges ahead.
+**JAMES:** "So. Next weekend?"
 
----
+**MAYA:** "Text me."
 
-### 🔮 WHAT HAPPENS NEXT
+**JAMES:** "I will. Tomorrow. Is that too soon?"
 
-James texts her the next morning—not too early (♍️ 🌙 calculated the perfect time), saying he had \"a genuinely great time, which feels rare these days.\" Maya waits three hours to respond (♒️ 🌙 maintaining mystery) but when she does, it's warm and funny.
+**MAYA:** (laughing—genuine, unguarded) "No. That's perfect."
 
-They'll see each other again. Probably twice more in the next two weeks. Around date three or four, his Capricorn Venus will start catching real feelings, at which point his Sagittarius sun will panic and he'll pull back slightly. If Maya's Aquarius moon reads this as rejection rather than fear, she'll ghost. If she can see past it—give him space while staying available—his Scorpio Mars will eventually pull him back in deep.
+She went down the subway stairs. He stood watching until she disappeared, then walked the wrong direction toward his train, grinning like someone who'd just gotten away with something wonderful.
 
-**Long-term prognosis:** 65% chance of three-month relationship. If they make it past the three-month mark, 80% chance of serious commitment, because both their Venus signs want forever once they're certain.
+Maya texted her friend from the platform: _"It went well."_
 
-Your intervention tonight, Cupid, bought them the runway they needed. The rest is up to them.
+Her friend, instantly: _"DETAILS"_
+
+Maya: _"Tomorrow. But... it went well."_
+
+The train arrived. She got on, still smiling.
 
 ---
 
-### 🏹 CUPID'S PROFILE UPDATE
+**THE END**
+(for now)
 
-**Your choices this game revealed:**
+---
 
-- **Emerging Aries Mars energy** (2 decisive, action-oriented choices in Scenes 1 and 3)
-- **Possible Libra Venus** (prioritized harmony and balanced approach in Scene 2, avoided extreme options)
-- **Tentative Gemini Sun indication** (chose variety and conversation over intensity twice)
-
-**Current Assessment:**
-You're shaping up as someone who acts decisively when needed (♈️ 🔥 energy showing) but values fairness and doesn't force things (♎️ 💖 tendencies). You seem to trust in conversation and connection over grand gestures (♊️ ☀️ perhaps?). Interesting pattern emerging.
-
-Early to tell on your Moon sign—need to see how you handle emotional crises in future games.
-
-**Progress:** 1/10 games completed toward full Cupid natal chart revelation
+After the date has fully concluded, now it is time to move to Cupid's evaluation.

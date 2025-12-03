@@ -147,4 +147,8 @@ Equal detail, equal complexity. Both are real people with contradictions, not ca
 
 ## Instructions
 
-Please introduce the MATCH as above, and ask if Cupid is ready to see their compatibility ... 
+Please introduce the MATCH as above, and ask if Cupid is ready to see their compatibility ... show the match but NOT compatibility, yet ...
+
+The Match:
+
+{{state.match}}
