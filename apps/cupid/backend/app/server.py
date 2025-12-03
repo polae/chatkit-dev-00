@@ -36,6 +36,7 @@ from .agents.display_mortal_agent import display_mortal_agent, DisplayMortalCont
 from .agents.display_match_agent import display_match_agent, DisplayMatchContext
 from .agents.display_continue_card_agent import display_continue_card_agent, display_continue_card_agent_game
 from .agents.display_compatibility_card_agent import display_compatibility_card_agent, DisplayCompatibilityCardContext
+from .agents.compatibility_analysis_agent import compatibility_analysis_agent
 from .agents.display_choices_agent import display_choices_agent
 from .agents.game_dashboard_agent import game_dashboard_agent, GameDashboardContext
 from .agents.evaluate_scene_score_agent import evaluate_scene_score_agent
@@ -200,45 +201,34 @@ class CupidServer(ChatKitServer[RequestContext]):
         chapter = context.get("chapter", 0)
         logger.info(f"Processing chapter {chapter}")
 
+        # Yield events directly from chapter handlers (enables streaming)
         if chapter == 0:
-            # Chapter 0: Introduction + DisplayMortal + ProfileCard widget
-            await self._handle_chapter_0(thread, input_items, agent_context, context)
+            async for event in self._handle_chapter_0(thread, input_items, agent_context, context):
+                yield event
 
         elif chapter == 1:
-            # Chapter 1: Mortal narrative + DisplayMatch + ProfileCard widget
-            await self._handle_chapter_1(thread, input_items, agent_context, context)
+            async for event in self._handle_chapter_1(thread, input_items, agent_context, context):
+                yield event
 
         elif chapter == 2:
-            # Chapter 2: Match narrative + DisplayContinueCard
-            await self._handle_chapter_2(thread, input_items, agent_context, context)
+            async for event in self._handle_chapter_2(thread, input_items, agent_context, context):
+                yield event
 
         elif chapter == 3:
-            # Chapter 3: DisplayCompatibilityCard + CompatibilityAnalysis + DisplayContinueCard
-            await self._handle_chapter_3(thread, input_items, agent_context, context)
+            async for event in self._handle_chapter_3(thread, input_items, agent_context, context):
+                yield event
 
         elif chapter == 4:
-            # Chapter 4: StartCupidGame + DisplayChoices
-            await self._handle_chapter_4(thread, input_items, agent_context, context)
+            async for event in self._handle_chapter_4(thread, input_items, agent_context, context):
+                yield event
 
         elif chapter == 5:
-            # Chapter 5: Game loop - EvaluateSceneScore -> GameDashboard -> CupidGame -> HasEnded
-            await self._handle_chapter_5(thread, input_items, agent_context, context)
+            async for event in self._handle_chapter_5(thread, input_items, agent_context, context):
+                yield event
 
         else:
-            # Chapter 6+: CupidEvaluation (final)
-            await self._handle_chapter_final(thread, input_items, agent_context, context)
-
-        # Yield all queued events
-        for event in self._pending_events:
-            yield event
-        self._pending_events = []
-
-    # Event queue for yielding
-    _pending_events: list[ThreadStreamEvent] = []
-
-    def _queue_event(self, event: ThreadStreamEvent) -> None:
-        """Queue an event to be yielded."""
-        self._pending_events.append(event)
+            async for event in self._handle_chapter_final(thread, input_items, agent_context, context):
+                yield event
 
     async def _handle_chapter_0(
         self,
@@ -246,14 +236,18 @@ class CupidServer(ChatKitServer[RequestContext]):
         input_items: list,
         agent_context: CupidAgentContext,
         context: RequestContext,
-    ) -> None:
+    ) -> AsyncIterator[ThreadStreamEvent]:
         """Chapter 0: Introduction + DisplayMortal + ProfileCard widget."""
         logger.info("Chapter 0: Introduction")
 
-        # Run Introduction agent
-        result = Runner.run_streamed(introduction_agent, input_items, context=agent_context)
+        # Agent Builder pattern: accumulate conversation after each agent
+        conversation_history = list(input_items)
+
+        # Run Introduction agent - stream events directly
+        result = Runner.run_streamed(introduction_agent, conversation_history, context=agent_context)
         async for event in stream_agent_response(agent_context, result):
-            self._queue_event(event)
+            yield event
+        conversation_history.extend([item.to_input_item() for item in result.new_items])
 
         # Run DisplayMortal agent (pass minimal input - only needs context data, not conversation history)
         display_context = DisplayMortalContext(state_mortal=self.mortal_data_str)
@@ -263,7 +257,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             context=display_context,
         )
 
-        # Build and stream ProfileCard widget
+        # Build and yield ProfileCard widget
         profile_data = display_result.final_output.model_dump()
         profilecard_widget = build_profilecard_widget(profile_data)
         widget_item = WidgetItem(
@@ -273,7 +267,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             widget=profilecard_widget,
             copy_text=f"{profile_data['name']}, {int(profile_data['age'])}, {profile_data['occupation']}",
         )
-        self._queue_event(ThreadItemDoneEvent(item=widget_item))
+        yield ThreadItemDoneEvent(item=widget_item)
 
         # Increment chapter and persist
         await self._set_chapter(thread, context, 1)
@@ -284,15 +278,19 @@ class CupidServer(ChatKitServer[RequestContext]):
         input_items: list,
         agent_context: CupidAgentContext,
         context: RequestContext,
-    ) -> None:
+    ) -> AsyncIterator[ThreadStreamEvent]:
         """Chapter 1: Mortal narrative + DisplayMatch + ProfileCard widget."""
         logger.info("Chapter 1: Mortal narrative")
 
-        # Run Mortal agent with context
+        # Agent Builder pattern: accumulate conversation after each agent
+        conversation_history = list(input_items)
+
+        # Run Mortal agent with context - stream events directly
         mortal_context = MortalContext(state_mortal=self.mortal_data_str)
-        result = Runner.run_streamed(mortal_agent, input_items, context=mortal_context)
+        result = Runner.run_streamed(mortal_agent, conversation_history, context=mortal_context)
         async for event in stream_agent_response(agent_context, result):
-            self._queue_event(event)
+            yield event
+        conversation_history.extend([item.to_input_item() for item in result.new_items])
 
         # Run DisplayMatch agent (pass [] - only needs context data, not conversation history)
         display_context = DisplayMatchContext(state_match=self.match_data_str)
@@ -302,7 +300,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             context=display_context,
         )
 
-        # Build and stream ProfileCard widget for match
+        # Build and yield ProfileCard widget for match
         profile_data = display_result.final_output.model_dump()
         profilecard_widget = build_profilecard_widget(profile_data)
         widget_item = WidgetItem(
@@ -312,7 +310,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             widget=profilecard_widget,
             copy_text=f"{profile_data['name']}, {int(profile_data['age'])}, {profile_data['occupation']}",
         )
-        self._queue_event(ThreadItemDoneEvent(item=widget_item))
+        yield ThreadItemDoneEvent(item=widget_item)
 
         # Increment chapter and persist
         await self._set_chapter(thread, context, 2)
@@ -323,15 +321,19 @@ class CupidServer(ChatKitServer[RequestContext]):
         input_items: list,
         agent_context: CupidAgentContext,
         context: RequestContext,
-    ) -> None:
+    ) -> AsyncIterator[ThreadStreamEvent]:
         """Chapter 2: Match narrative + DisplayContinueCard."""
         logger.info("Chapter 2: Match narrative")
 
-        # Run Match agent with context
+        # Agent Builder pattern: accumulate conversation after each agent
+        conversation_history = list(input_items)
+
+        # Run Match agent with context - stream events directly
         match_context = MatchContext(state_match=self.match_data_str)
-        result = Runner.run_streamed(match_agent, input_items, context=match_context)
+        result = Runner.run_streamed(match_agent, conversation_history, context=match_context)
         async for event in stream_agent_response(agent_context, result):
-            self._queue_event(event)
+            yield event
+        conversation_history.extend([item.to_input_item() for item in result.new_items])
 
         # Run DisplayContinueCard agent (pass [] - just outputs fixed message)
         display_result = await Runner.run(
@@ -339,7 +341,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             "display",
         )
 
-        # Build and stream Continue Card widget
+        # Build and yield Continue Card widget
         card_data = display_result.final_output.model_dump()
         continue_widget = build_continue_card_widget(card_data["confirmation_message"])
         widget_item = WidgetItem(
@@ -348,7 +350,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             created_at=datetime.now(),
             widget=continue_widget,
         )
-        self._queue_event(ThreadItemDoneEvent(item=widget_item))
+        yield ThreadItemDoneEvent(item=widget_item)
 
         # Increment chapter and persist
         await self._set_chapter(thread, context, 3)
@@ -359,9 +361,12 @@ class CupidServer(ChatKitServer[RequestContext]):
         input_items: list,
         agent_context: CupidAgentContext,
         context: RequestContext,
-    ) -> None:
-        """Chapter 3: DisplayCompatibilityCard + CompatibilityAnalysis widget + DisplayContinueCard."""
+    ) -> AsyncIterator[ThreadStreamEvent]:
+        """Chapter 3: DisplayCompatibilityCard + CompatibilityAnalysis narrative + DisplayContinueCard."""
         logger.info("Chapter 3: Compatibility analysis")
+
+        # Agent Builder pattern: accumulate conversation after each agent
+        conversation_history = list(input_items)
 
         # Run DisplayCompatibilityCard agent (pass [] - only needs context data)
         compat_context = DisplayCompatibilityCardContext(state_compatibility=self.compatibility_data_str)
@@ -371,7 +376,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             context=compat_context,
         )
 
-        # Build and stream CompatibilityAnalysis widget
+        # Build and yield CompatibilityAnalysis widget
         compat_data = display_result.final_output.model_dump()
         compat_widget = build_compatibility_analysis_widget(
             title=compat_data["title"],
@@ -385,7 +390,13 @@ class CupidServer(ChatKitServer[RequestContext]):
             created_at=datetime.now(),
             widget=compat_widget,
         )
-        self._queue_event(ThreadItemDoneEvent(item=widget_item))
+        yield ThreadItemDoneEvent(item=widget_item)
+
+        # Run CompatibilityAnalysis agent - streams The Big Four narrative
+        analysis_result = Runner.run_streamed(compatibility_analysis_agent, conversation_history, context=agent_context)
+        async for event in stream_agent_response(agent_context, analysis_result):
+            yield event
+        conversation_history.extend([item.to_input_item() for item in analysis_result.new_items])
 
         # Run DisplayContinueCard (game start version - pass [] - just outputs fixed message)
         continue_result = await Runner.run(
@@ -393,7 +404,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             "display",
         )
 
-        # Build and stream Continue Card widget
+        # Build and yield Continue Card widget
         card_data = continue_result.final_output.model_dump()
         continue_widget = build_continue_card_widget(card_data["confirmation_message"])
         widget_item = WidgetItem(
@@ -402,7 +413,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             created_at=datetime.now(),
             widget=continue_widget,
         )
-        self._queue_event(ThreadItemDoneEvent(item=widget_item))
+        yield ThreadItemDoneEvent(item=widget_item)
 
         # Increment chapter and persist
         await self._set_chapter(thread, context, 4)
@@ -413,22 +424,26 @@ class CupidServer(ChatKitServer[RequestContext]):
         input_items: list,
         agent_context: CupidAgentContext,
         context: RequestContext,
-    ) -> None:
+    ) -> AsyncIterator[ThreadStreamEvent]:
         """Chapter 4: StartCupidGame narrative + DisplayChoices widget."""
         logger.info("Chapter 4: Start Cupid Game")
 
-        # Run StartCupidGame agent
-        result = Runner.run_streamed(start_cupid_game_agent, input_items, context=agent_context)
-        async for event in stream_agent_response(agent_context, result):
-            self._queue_event(event)
+        # Agent Builder pattern: accumulate conversation after each agent
+        conversation_history = list(input_items)
 
-        # Run DisplayChoices agent
+        # Run StartCupidGame agent - stream events directly
+        result = Runner.run_streamed(start_cupid_game_agent, conversation_history, context=agent_context)
+        async for event in stream_agent_response(agent_context, result):
+            yield event
+        conversation_history.extend([item.to_input_item() for item in result.new_items])
+
+        # Run DisplayChoices agent - naturally sees the game narrative with OPTION A:, B:, etc.
         choices_result = await Runner.run(
             display_choices_agent,
-            input_items,
+            conversation_history,
         )
 
-        # Build and stream Choice list widget
+        # Build and yield Choice list widget
         choices_data = choices_result.final_output.model_dump()
         choices_widget = build_choice_list_widget(choices_data["items"])
         widget_item = WidgetItem(
@@ -437,7 +452,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             created_at=datetime.now(),
             widget=choices_widget,
         )
-        self._queue_event(ThreadItemDoneEvent(item=widget_item))
+        yield ThreadItemDoneEvent(item=widget_item)
 
         # Increment chapter and persist
         await self._set_chapter(thread, context, 5)
@@ -448,17 +463,21 @@ class CupidServer(ChatKitServer[RequestContext]):
         input_items: list,
         agent_context: CupidAgentContext,
         context: RequestContext,
-    ) -> None:
+    ) -> AsyncIterator[ThreadStreamEvent]:
         """Chapter 5: Game loop - EvaluateSceneScore -> GameDashboard -> CupidGame -> HasEnded."""
         logger.info(f"Chapter 5: Game loop - Scene {context.get('scene_number', 1)}")
+
+        # Agent Builder pattern: accumulate conversation after each agent
+        conversation_history = list(input_items)
 
         # Run EvaluateSceneScore agent
         score_result = await Runner.run(
             evaluate_scene_score_agent,
-            input_items,
+            conversation_history,
         )
         score_data = score_result.final_output.model_dump()
         score = score_data.get("score", "0")
+        conversation_history.extend([item.to_input_item() for item in score_result.new_items])
 
         # Update current compatibility
         try:
@@ -478,7 +497,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             context=dashboard_context,
         )
 
-        # Build and stream Compatibility Snapshot widget
+        # Build and yield Compatibility Snapshot widget
         dashboard_data = dashboard_result.final_output.model_dump()
         snapshot_widget = build_compatibility_snapshot_widget(
             scene=dashboard_data["scene"],
@@ -493,31 +512,33 @@ class CupidServer(ChatKitServer[RequestContext]):
             created_at=datetime.now(),
             widget=snapshot_widget,
         )
-        self._queue_event(ThreadItemDoneEvent(item=widget_item))
+        yield ThreadItemDoneEvent(item=widget_item)
 
-        # Run CupidGame agent for narrative
-        game_result = Runner.run_streamed(cupid_game_agent, input_items, context=agent_context)
+        # Run CupidGame agent for narrative - stream events directly
+        game_result = Runner.run_streamed(cupid_game_agent, conversation_history, context=agent_context)
         async for event in stream_agent_response(agent_context, game_result):
-            self._queue_event(event)
+            yield event
+        conversation_history.extend([item.to_input_item() for item in game_result.new_items])
 
         # Run HasEnded agent to check if game is over
         ended_result = await Runner.run(
             has_ended_agent,
-            input_items,
+            conversation_history,
         )
         ended_data = ended_result.final_output.model_dump()
+        conversation_history.extend([item.to_input_item() for item in ended_result.new_items])
 
         if ended_data.get("has_ended", False):
             # Game is over - move to evaluation and persist
             await self._set_chapter(thread, context, 6)
         else:
-            # Continue game loop - show choices
+            # Continue game loop - show choices (naturally sees game narrative with OPTION A:, B:, etc.)
             choices_result = await Runner.run(
                 display_choices_agent,
-                input_items,
+                conversation_history,
             )
 
-            # Build and stream Choice list widget
+            # Build and yield Choice list widget
             choices_data = choices_result.final_output.model_dump()
             choices_widget = build_choice_list_widget(choices_data["items"])
             widget_item = WidgetItem(
@@ -526,7 +547,7 @@ class CupidServer(ChatKitServer[RequestContext]):
                 created_at=datetime.now(),
                 widget=choices_widget,
             )
-            self._queue_event(ThreadItemDoneEvent(item=widget_item))
+            yield ThreadItemDoneEvent(item=widget_item)
 
             # Increment scene number
             context["scene_number"] = context.get("scene_number", 1) + 1
@@ -537,14 +558,14 @@ class CupidServer(ChatKitServer[RequestContext]):
         input_items: list,
         agent_context: CupidAgentContext,
         context: RequestContext,
-    ) -> None:
+    ) -> AsyncIterator[ThreadStreamEvent]:
         """Chapter 6+: CupidEvaluation (final)."""
         logger.info("Chapter 6+: Final Evaluation")
 
-        # Run CupidEvaluation agent
+        # Run CupidEvaluation agent - stream events directly
         result = Runner.run_streamed(cupid_evaluation_agent, input_items, context=agent_context)
         async for event in stream_agent_response(agent_context, result):
-            self._queue_event(event)
+            yield event
 
     async def to_message_content(self, _input: Attachment) -> ResponseInputContentParam:
         raise RuntimeError("File attachments are not supported.")
