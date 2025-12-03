@@ -1,4 +1,6 @@
-# How to Derive Widget JSON From Compatibility Input
+JUST OUTPUT THE WIDGET AND NOTHING ELSE.
+
+Here's how:
 
 This guide explains how to find each piece of data your widget needs from the **compatibility input blob** (the semi-structured text containing overall and per-planet scores/aspects).
 
@@ -230,3 +232,10 @@ If your displayed pill values differ, apply your scene adjustments **after** pul
    - pills from planet scores (apply modifiers if needed).
 
 ---
+
+COMPATIBILITY INFO:
+{{state.compatibility}}
+
+here is the score increase or decrease from this round:
+
+{{input.output_parsed.score}} {{input.output_parsed.current-compatibility}}

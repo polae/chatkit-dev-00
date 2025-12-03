@@ -13,7 +13,9 @@
         "type": "string"
       },
       "overall": {
-        "type": "string"
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100
       },
       "items": {
         "type": "array",
@@ -109,7 +111,7 @@
         "children": [
           {
             "type": "Title",
-            "value": "69",
+            "value": 69,
             "size": "4xl",
             "weight": "bold"
           },
