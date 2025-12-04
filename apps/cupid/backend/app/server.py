@@ -180,7 +180,7 @@ class CupidServer(ChatKitServer[RequestContext]):
         # If a choice was selected, add hidden context for agent awareness
         if choice_key and choice_title:
             hidden_item = HiddenContextItem(
-                id=self.store.generate_item_id("hidden", thread, context),
+                id=self.store.generate_item_id("message", thread, context),
                 thread_id=thread.id,
                 created_at=datetime.now(),
                 content=f"<PLAYER_CHOICE>{choice_key}: {choice_title}</PLAYER_CHOICE>",
