@@ -19,6 +19,12 @@ npm run cat-lounge
 npm run customer-support
 
 # Ctrl+C stops both frontend and backend (managed by concurrently)
+
+# Cupid (Docker) - http://localhost
+cd apps/cupid
+docker compose up -d --build    # Start
+docker compose down             # Stop
+docker compose logs -f          # View logs
 ```
 
 ## Architecture
@@ -103,3 +109,4 @@ my_agent = Agent[MyAgentContext](
 - The openai-agents SDK handles OpenAI API calls
 - Widgets use `.widget` JSON files with Jinja2 templates
 - let's restart. the server doesn' pick up changes to .md files
+- when staring the app `cupid` please use docker (and please add commands and dir in the CLAUDE.md)

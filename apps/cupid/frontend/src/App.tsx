@@ -24,9 +24,10 @@ export default function App() {
     <div className={containerClass}>
       <div className={headerBarClass}>
         <div className="relative mx-auto flex w-full max-w-4xl items-center gap-4 px-6 py-4">
-          <h1 className="text-lg font-semibold">CUPID</h1>
+          <img src="/cupid-cherub.svg" alt="Cupid" className="h-6 w-6" />
+          <h1 className="text-lg font-semibold">Cupid</h1>
           <p className="flex-1 text-sm text-slate-600 dark:text-slate-300">
-            Divine matchmaking powered by the stars
+            an interactive rom-com powered by astrology
           </p>
           <ThemeToggle />
         </div>
