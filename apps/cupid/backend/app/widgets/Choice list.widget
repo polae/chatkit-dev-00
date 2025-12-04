@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "name": "Choice list",
-  "template": "{\"type\":\"ListView\",\"children\":[{%- set _c -%}{%-for item in items -%},{\"type\":\"ListViewItem\",\"key\":{{ (item.key) | tojson }},\"gap\":2,\"onClickAction\":{\"type\":\"choice.select\",\"payload\":{\"key\":{{ (item.key) | tojson }},\"title\":{{ (item.title) | tojson }}}},\"children\":[{\"type\":\"Badge\",\"label\":{{ (item.key) | tojson }},\"color\":\"info\"},{\"type\":\"Text\",\"value\":{{ (item.title) | tojson }},\"size\":\"sm\"}]}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}",
+  "template": "{\"type\":\"ListView\",\"children\":[{%- set _c -%}{%-for item in items -%},{\"type\":\"ListViewItem\",\"key\":{{ (item.key) | tojson }},\"gap\":2,\"borderWidth\":1,\"borderColor\":\"#444\",\"padding\":2,\"onClickAction\":{\"type\":\"choice.select\",\"payload\":{\"key\":{{ (item.key) | tojson }},\"title\":{{ (item.title) | tojson }}}},\"children\":[{\"type\":\"Badge\",\"label\":{{ (item.key) | tojson }},\"color\":\"info\",\"size\":\"lg\"},{\"type\":\"Text\",\"value\":{{ (item.title) | tojson }},\"size\":\"xl\",\"weight\":\"bold\"}]}{%-endfor-%}{%- endset -%}{{- (_c[1:] if _c and _c[0] == ',' else _c) -}}]}",
   "jsonSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
@@ -38,6 +38,9 @@
         "type": "ListViewItem",
         "key": "A",
         "gap": 2,
+        "borderWidth": 1,
+        "borderColor": "#444",
+        "padding": 2,
         "onClickAction": {
           "type": "choice.select",
           "payload": {
@@ -49,12 +52,13 @@
           {
             "type": "Badge",
             "label": "A",
-            "color": "info"
+            "color": "info",
+            "size": "lg"
           },
           {
             "type": "Text",
             "value": "STAY FRONT AND CENTER — Lean Into the Spark",
-            "size": "sm"
+            "size": "md"
           }
         ]
       },
@@ -62,23 +66,27 @@
         "type": "ListViewItem",
         "key": "B",
         "gap": 2,
+        "borderWidth": 1,
+        "borderColor": "#444",
+        "padding": 2,
         "onClickAction": {
           "type": "choice.select",
           "payload": {
             "key": "B",
-            "title": "NEGOTIATED STAY — She Says She’ll Give Him Ten Minutes"
+            "title": "NEGOTIATED STAY — She Says She'll Give Him Ten Minutes"
           }
         },
         "children": [
           {
             "type": "Badge",
             "label": "B",
-            "color": "info"
+            "color": "info",
+            "size": "lg"
           },
           {
             "type": "Text",
-            "value": "NEGOTIATED STAY — She Says She’ll Give Him Ten Minutes",
-            "size": "sm"
+            "value": "NEGOTIATED STAY — She Says She'll Give Him Ten Minutes",
+            "size": "md"
           }
         ]
       },
@@ -86,6 +94,9 @@
         "type": "ListViewItem",
         "key": "C",
         "gap": 2,
+        "borderWidth": 1,
+        "borderColor": "#444",
+        "padding": 2,
         "onClickAction": {
           "type": "choice.select",
           "payload": {
@@ -97,12 +108,13 @@
           {
             "type": "Badge",
             "label": "C",
-            "color": "info"
+            "color": "info",
+            "size": "lg"
           },
           {
             "type": "Text",
             "value": "HALF EXIT — She Moves to the Back, Keeps Listening",
-            "size": "sm"
+            "size": "md"
           }
         ]
       },
@@ -110,6 +122,9 @@
         "type": "ListViewItem",
         "key": "D",
         "gap": 2,
+        "borderWidth": 1,
+        "borderColor": "#444",
+        "padding": 2,
         "onClickAction": {
           "type": "choice.select",
           "payload": {
@@ -121,12 +136,13 @@
           {
             "type": "Badge",
             "label": "D",
-            "color": "info"
+            "color": "info",
+            "size": "lg"
           },
           {
             "type": "Text",
             "value": "BAIL GRACEFULLY — She Declines, But Leaves a Door Open",
-            "size": "sm"
+            "size": "md"
           }
         ]
       }
