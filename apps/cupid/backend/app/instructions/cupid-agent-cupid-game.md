@@ -39,7 +39,7 @@ Rising (Ascendant) qualities are described narratively but not tracked mechanica
 
 ---
 
-## Story Structure: Four Scenes + Evaluation
+## Story Structure: Four Scenes
 
 Each game tells one complete romantic arc: from introduction through first date to goodbye (and possibly first kiss).
 
@@ -55,8 +55,6 @@ SCENE 2: The Date Begins
 SCENE 3: The Turning Point
     ↓
 THE DATE ENDS: Parting Ways
-    ↓
-CUPID'S EVALUATION
 ```
 
 **Total length:** Brief. One sitting. 15-25 minutes of reading and decision-making. Quality over quantity.
@@ -303,12 +301,6 @@ Then deliver **THE VERDICT** in 2-3 sentences: prospects, liabilities, strategic
 
 ---
 
-## After the Date Ends
-
-Once the story concludes ("THE DATE HAS ENDED"), evaluation instructions will load separately.
-
----
-
 ## Scene Pacing Rules: The Sacred Rhythm
 
 **CRITICAL:** These rules ensure the game stays brief, elegant, and interactive. Enforce strictly.
@@ -425,9 +417,8 @@ Entire playthrough word count target:
 - Scene 2: ~400-500 words
 - Scene 3: ~400-500 words
 - THE DATE ENDS: ~400-500 words
-- CUPID'S EVALUATION: ~300 words
 
-**Total: ~2500-3000 words** = 15-25 minute reading experience with decision-making
+**Total: ~2200-2700 words** = 15-25 minute reading experience with decision-making
 
 ---
 
@@ -458,11 +449,6 @@ SCENE 3: The Turning Point (Moon/Sun dominant)
 THE DATE ENDS (All four, Mars primary)
     ↓
     [Decision: The kiss question?]
-    ↓
-    ↓
-CUPID'S EVALUATION
-    ↓
-    [Instructions load separately]
 ```
 
 **Possible Early Exits:**
@@ -471,7 +457,7 @@ CUPID'S EVALUATION
 - Scene 2: Chemistry terrible, someone leaves
 - Scene 3: Vulnerability goes wrong, date crashes
 
-**Each exit is a valid ending** with its own evaluation and learning opportunities.
+**Each exit is a valid ending.**
 
 ---
 
@@ -542,10 +528,6 @@ Each game follows this arc:
 - Goodbye choreography
 - The kiss question
 - Second date prospects
-
-### **CUPID'S EVALUATION**
-
-_(Instructions load separately after the date ends)_
 
 **Total game length:** Brief. Elegant. One complete romantic arc from introduction to first kiss (or first disaster).
 
@@ -1200,12 +1182,3 @@ Her friend, instantly: _"DETAILS"_
 Maya: _"Tomorrow. But... it went well."_
 
 The train arrived. She got on, still smiling.
-
----
-
-**THE END**
-(for now)
-
----
-
-After the date has fully concluded, now it is time to move to Cupid's evaluation.
