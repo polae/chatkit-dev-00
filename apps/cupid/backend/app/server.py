@@ -14,6 +14,7 @@ from chatkit.server import ChatKitServer
 from chatkit.types import (
     Action,
     Attachment,
+    HiddenContextItem,
     InferenceOptions,
     ProgressUpdateEvent,
     ThreadItemDoneEvent,
@@ -35,7 +36,7 @@ from .agents.cupid_game_agent import cupid_game_agent
 from .agents.cupid_evaluation_agent import cupid_evaluation_agent
 from .agents.display_mortal_agent import display_mortal_agent, DisplayMortalContext
 from .agents.display_match_agent import display_match_agent, DisplayMatchContext
-from .agents.display_continue_card_agent import display_continue_card_agent, display_continue_card_agent_game
+# Note: display_continue_card_agent removed - using direct widget calls for static messages
 from .agents.display_compatibility_card_agent import display_compatibility_card_agent, DisplayCompatibilityCardContext
 from .agents.compatibility_analysis_agent import compatibility_analysis_agent
 from .agents.display_choices_agent import display_choices_agent
@@ -82,10 +83,30 @@ class CupidServer(ChatKitServer[RequestContext]):
         with open(data_dir / "compatibility.yaml", "r", encoding="utf-8") as f:
             self.compatibility_data = yaml.safe_load(f)
 
-        # Convert data to string format for agent instructions
-        self.mortal_data_str = yaml.dump(self.mortal_data, default_flow_style=False)
-        self.match_data_str = yaml.dump(self.match_data, default_flow_style=False)
-        self.compatibility_data_str = yaml.dump(self.compatibility_data, default_flow_style=False)
+        # Pre-compute YAML strings for default data (used when thread.metadata data matches)
+        self._default_mortal_str = yaml.dump(self.mortal_data, default_flow_style=False)
+        self._default_match_str = yaml.dump(self.match_data, default_flow_style=False)
+        self._default_compatibility_str = yaml.dump(self.compatibility_data, default_flow_style=False)
+
+    def _get_data_strings(self, thread: ThreadMetadata) -> tuple[str, str, str]:
+        """Get YAML data strings for agents, using thread.metadata if different from defaults.
+
+        This allows per-thread couple data in the future while optimizing for the common case
+        where all threads use the same default couple.
+        """
+        metadata = thread.metadata or {}
+
+        # Check if thread has custom data (future: different couples per thread)
+        mortal_data = metadata.get("mortal_data", self.mortal_data)
+        match_data = metadata.get("match_data", self.match_data)
+        compat_data = metadata.get("compatibility_data", self.compatibility_data)
+
+        # Use pre-computed strings if data matches defaults (optimization)
+        mortal_str = self._default_mortal_str if mortal_data is self.mortal_data else yaml.dump(mortal_data, default_flow_style=False)
+        match_str = self._default_match_str if match_data is self.match_data else yaml.dump(match_data, default_flow_style=False)
+        compat_str = self._default_compatibility_str if compat_data is self.compatibility_data else yaml.dump(compat_data, default_flow_style=False)
+
+        return mortal_str, match_str, compat_str
 
     def _generate_widget_id(self, thread: ThreadMetadata) -> str:
         """Generate a unique widget ID."""
@@ -97,11 +118,26 @@ class CupidServer(ChatKitServer[RequestContext]):
         context: RequestContext,
         chapter: int,
     ) -> None:
-        """Update chapter in both context and thread.metadata, then persist."""
-        context["chapter"] = chapter
+        """Update chapter in thread.metadata and persist."""
         if thread.metadata is None:
             thread.metadata = {}
         thread.metadata["chapter"] = chapter
+        await self.store.save_thread(thread, context)
+
+    async def _save_game_state(
+        self,
+        thread: ThreadMetadata,
+        context: RequestContext,
+        current_compatibility: int | None = None,
+        scene_number: int | None = None,
+    ) -> None:
+        """Persist game state (compatibility score, scene number) to thread.metadata."""
+        if thread.metadata is None:
+            thread.metadata = {}
+        if current_compatibility is not None:
+            thread.metadata["current_compatibility"] = current_compatibility
+        if scene_number is not None:
+            thread.metadata["scene_number"] = scene_number
         await self.store.save_thread(thread, context)
 
     async def action(
@@ -114,15 +150,17 @@ class CupidServer(ChatKitServer[RequestContext]):
         """Handle widget actions (Continue button, Choice selection)."""
 
         message_text = "Continue"  # Default
+        choice_key = None
+        choice_title = None
 
         if action.type == "continue":
             # Continue button clicked
             message_text = "Continue"
         elif action.type == "choice.select":
             # Choice item selected - format as "A - Title"
-            key = action.payload.get("key", "")
-            title = action.payload.get("title", "")
-            message_text = f"{key} - {title}"
+            choice_key = action.payload.get("key", "")
+            choice_title = action.payload.get("title", "")
+            message_text = f"{choice_key} - {choice_title}"
         elif action.type == "conversation.message":
             # Legacy support for conversation.message
             message_text = action.payload.get("text", "Continue")
@@ -139,6 +177,16 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Add the message to the store
         await self.store.add_thread_item(thread.id, user_message, context)
 
+        # If a choice was selected, add hidden context for agent awareness
+        if choice_key and choice_title:
+            hidden_item = HiddenContextItem(
+                id=self.store.generate_item_id("message", thread, context),
+                thread_id=thread.id,
+                created_at=datetime.now(),
+                content=f"<PLAYER_CHOICE>{choice_key}: {choice_title}</PLAYER_CHOICE>",
+            )
+            await self.store.add_thread_item(thread.id, hidden_item, context)
+
         # Yield the message event
         yield ThreadItemDoneEvent(item=user_message)
 
@@ -154,27 +202,19 @@ class CupidServer(ChatKitServer[RequestContext]):
     ) -> AsyncIterator[ThreadStreamEvent]:
         """Handle conversation turns with chapter-based logic."""
 
-        # Initialize or load state from thread.metadata (persisted across requests)
+        # Initialize state in thread.metadata (authoritative source, persists across requests)
         if thread.metadata is None:
             thread.metadata = {}
 
         if "chapter" not in thread.metadata:
             thread.metadata["chapter"] = 0
+            # Store data references for future flexibility (e.g., different couples per thread)
             thread.metadata["mortal_data"] = self.mortal_data
             thread.metadata["match_data"] = self.match_data
             thread.metadata["compatibility_data"] = self.compatibility_data
             thread.metadata["current_compatibility"] = self.compatibility_data.get("overall_compatibility", 69)
             thread.metadata["scene_number"] = 1
-            # Save the initial state
             await self.store.save_thread(thread, context)
-
-        # Copy metadata to context for compatibility with existing code
-        context["chapter"] = thread.metadata.get("chapter", 0)
-        context["mortal_data"] = thread.metadata.get("mortal_data", self.mortal_data)
-        context["match_data"] = thread.metadata.get("match_data", self.match_data)
-        context["compatibility_data"] = thread.metadata.get("compatibility_data", self.compatibility_data)
-        context["current_compatibility"] = thread.metadata.get("current_compatibility", 69)
-        context["scene_number"] = thread.metadata.get("scene_number", 1)
 
         # Create base agent context
         agent_context = CupidAgentContext(
@@ -198,8 +238,8 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Convert to agent input format
         input_items = await self.thread_item_converter.to_agent_input(items)
 
-        # Get current chapter
-        chapter = context.get("chapter", 0)
+        # Get current chapter from thread.metadata (authoritative source)
+        chapter = thread.metadata.get("chapter", 0)
         logger.info(f"Processing chapter {chapter}")
 
         # Yield events directly from chapter handlers (enables streaming)
@@ -241,6 +281,9 @@ class CupidServer(ChatKitServer[RequestContext]):
         """Chapter 0: Introduction + DisplayMortal + ProfileCard widget."""
         logger.info("Chapter 0: Introduction")
 
+        # Get thread-specific data strings
+        mortal_str, match_str, compat_str = self._get_data_strings(thread)
+
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
 
@@ -254,7 +297,7 @@ class CupidServer(ChatKitServer[RequestContext]):
         conversation_history.extend([item.to_input_item() for item in result.new_items])
 
         # Run DisplayMortal agent (pass minimal input - only needs context data, not conversation history)
-        display_context = DisplayMortalContext(state_mortal=self.mortal_data_str)
+        display_context = DisplayMortalContext(state_mortal=mortal_str)
         display_result = await Runner.run(
             display_mortal_agent,
             "display",
@@ -286,6 +329,9 @@ class CupidServer(ChatKitServer[RequestContext]):
         """Chapter 1: Mortal narrative + DisplayMatch + ProfileCard widget."""
         logger.info("Chapter 1: Mortal narrative")
 
+        # Get thread-specific data strings
+        mortal_str, match_str, compat_str = self._get_data_strings(thread)
+
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
 
@@ -293,14 +339,14 @@ class CupidServer(ChatKitServer[RequestContext]):
         yield ProgressUpdateEvent(text="Presenting your mortal...")
 
         # Run Mortal agent with context - stream events directly
-        mortal_context = MortalContext(state_mortal=self.mortal_data_str)
+        mortal_context = MortalContext(state_mortal=mortal_str)
         result = Runner.run_streamed(mortal_agent, conversation_history, context=mortal_context)
         async for event in stream_agent_response(agent_context, result):
             yield event
         conversation_history.extend([item.to_input_item() for item in result.new_items])
 
         # Run DisplayMatch agent (pass [] - only needs context data, not conversation history)
-        display_context = DisplayMatchContext(state_match=self.match_data_str)
+        display_context = DisplayMatchContext(state_match=match_str)
         display_result = await Runner.run(
             display_match_agent,
             "display",
@@ -332,6 +378,9 @@ class CupidServer(ChatKitServer[RequestContext]):
         """Chapter 2: Match narrative + DisplayContinueCard."""
         logger.info("Chapter 2: Match narrative")
 
+        # Get thread-specific data strings
+        mortal_str, match_str, compat_str = self._get_data_strings(thread)
+
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
 
@@ -339,21 +388,14 @@ class CupidServer(ChatKitServer[RequestContext]):
         yield ProgressUpdateEvent(text="Presenting the match...")
 
         # Run Match agent with context - stream events directly
-        match_context = MatchContext(state_match=self.match_data_str)
+        match_context = MatchContext(state_match=match_str)
         result = Runner.run_streamed(match_agent, conversation_history, context=match_context)
         async for event in stream_agent_response(agent_context, result):
             yield event
         conversation_history.extend([item.to_input_item() for item in result.new_items])
 
-        # Run DisplayContinueCard agent (pass [] - just outputs fixed message)
-        display_result = await Runner.run(
-            display_continue_card_agent,
-            "display",
-        )
-
-        # Build and yield Continue Card widget
-        card_data = display_result.final_output.model_dump()
-        continue_widget = build_continue_card_widget(card_data["confirmation_message"])
+        # Build Continue Card widget directly (no need for agent - fixed message)
+        continue_widget = build_continue_card_widget("Ready to see their compatibility?")
         widget_item = WidgetItem(
             thread_id=thread.id,
             id=self._generate_widget_id(thread),
@@ -375,6 +417,9 @@ class CupidServer(ChatKitServer[RequestContext]):
         """Chapter 3: DisplayCompatibilityCard + CompatibilityAnalysis narrative + DisplayContinueCard."""
         logger.info("Chapter 3: Compatibility analysis")
 
+        # Get thread-specific data strings
+        mortal_str, match_str, compat_str = self._get_data_strings(thread)
+
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
 
@@ -382,7 +427,7 @@ class CupidServer(ChatKitServer[RequestContext]):
         yield ProgressUpdateEvent(text="Analyzing compatibility...")
 
         # Run DisplayCompatibilityCard agent (pass [] - only needs context data)
-        compat_context = DisplayCompatibilityCardContext(state_compatibility=self.compatibility_data_str)
+        compat_context = DisplayCompatibilityCardContext(state_compatibility=compat_str)
         display_result = await Runner.run(
             display_compatibility_card_agent,
             "display",
@@ -411,15 +456,8 @@ class CupidServer(ChatKitServer[RequestContext]):
             yield event
         conversation_history.extend([item.to_input_item() for item in analysis_result.new_items])
 
-        # Run DisplayContinueCard (game start version - pass [] - just outputs fixed message)
-        continue_result = await Runner.run(
-            display_continue_card_agent_game,
-            "display",
-        )
-
-        # Build and yield Continue Card widget
-        card_data = continue_result.final_output.model_dump()
-        continue_widget = build_continue_card_widget(card_data["confirmation_message"])
+        # Build Continue Card widget directly (no need for agent - fixed message)
+        continue_widget = build_continue_card_widget("Ok, we can start the story. Ready for the meet-cute?")
         widget_item = WidgetItem(
             thread_id=thread.id,
             id=self._generate_widget_id(thread),
@@ -481,7 +519,12 @@ class CupidServer(ChatKitServer[RequestContext]):
         context: RequestContext,
     ) -> AsyncIterator[ThreadStreamEvent]:
         """Chapter 5: Game loop - EvaluateSceneScore -> GameDashboard -> CupidGame -> HasEnded."""
-        logger.info(f"Chapter 5: Game loop - Scene {context.get('scene_number', 1)}")
+        scene_number = thread.metadata.get("scene_number", 1)
+        current_compatibility = thread.metadata.get("current_compatibility", 69)
+        logger.info(f"Chapter 5: Game loop - Scene {scene_number}")
+
+        # Get thread-specific data strings
+        mortal_str, match_str, compat_str = self._get_data_strings(thread)
 
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
@@ -498,16 +541,17 @@ class CupidServer(ChatKitServer[RequestContext]):
         score = score_data.get("score", "0")
         conversation_history.extend([item.to_input_item() for item in score_result.new_items])
 
-        # Update current compatibility
+        # Update current compatibility and persist
         try:
             score_delta = int(score)
-            context["current_compatibility"] = max(0, min(100, context["current_compatibility"] + score_delta))
+            current_compatibility = max(0, min(100, current_compatibility + score_delta))
+            await self._save_game_state(thread, context, current_compatibility=current_compatibility)
         except (ValueError, TypeError):
             pass
 
         # Run GameDashboard agent (pass [] - only needs context data)
         dashboard_context = GameDashboardContext(
-            state_compatibility=self.compatibility_data_str,
+            state_compatibility=compat_str,
             input_output_parsed_score=score,
         )
         dashboard_result = await Runner.run(
@@ -568,8 +612,9 @@ class CupidServer(ChatKitServer[RequestContext]):
             )
             yield ThreadItemDoneEvent(item=widget_item)
 
-            # Increment scene number
-            context["scene_number"] = context.get("scene_number", 1) + 1
+            # Increment scene number and persist
+            new_scene = scene_number + 1
+            await self._save_game_state(thread, context, scene_number=new_scene)
 
     async def _handle_chapter_final(
         self,
