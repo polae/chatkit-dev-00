@@ -102,3 +102,4 @@ my_agent = Agent[MyAgentContext](
 - Each example runs on different ports - check the console output
 - The openai-agents SDK handles OpenAI API calls
 - Widgets use `.widget` JSON files with Jinja2 templates
+- let's restart. the server doesn' pick up changes to .md files

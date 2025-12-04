@@ -19,18 +19,27 @@ with open(INSTRUCTIONS_PATH, "r", encoding="utf-8") as f:
 
 class GameDashboardContext:
     """Context for the GameDashboard agent with compatibility and score data."""
-    def __init__(self, state_compatibility: str, input_output_parsed_score: str):
+    def __init__(
+        self,
+        state_compatibility: str,
+        input_output_parsed_score: str,
+        current_compatibility: int = 69,
+        scene_number: int = 1,
+    ):
         self.state_compatibility = state_compatibility
         self.input_output_parsed_score = input_output_parsed_score
+        self.current_compatibility = current_compatibility
+        self.scene_number = scene_number
 
 
 def gamedashboard_instructions(run_context: RunContextWrapper[GameDashboardContext], _agent: Agent[GameDashboardContext]) -> str:
     """Dynamic instructions that include compatibility and score state."""
-    state_compatibility = run_context.context.state_compatibility
-    score = run_context.context.input_output_parsed_score
+    ctx = run_context.context
     # Replace template variables in instructions
-    instructions = GAME_DASHBOARD_INSTRUCTIONS.replace("{{state.compatibility}}", state_compatibility)
-    instructions = instructions.replace("{{input.output_parsed.score}}", score)
+    instructions = GAME_DASHBOARD_INSTRUCTIONS.replace("{{state.compatibility}}", ctx.state_compatibility)
+    instructions = instructions.replace("{{input.output_parsed.score}}", ctx.input_output_parsed_score)
+    instructions = instructions.replace("{{current_compatibility}}", str(ctx.current_compatibility))
+    instructions = instructions.replace("{{scene_number}}", str(ctx.scene_number))
     return instructions
 
 

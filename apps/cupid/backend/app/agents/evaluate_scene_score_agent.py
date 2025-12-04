@@ -8,7 +8,7 @@ from openai.types.shared.reasoning import Reasoning
 from .schemas import SceneScoreOutput
 
 # Load instructions from file
-INSTRUCTIONS_PATH = Path(__file__).parent.parent / "instructions" / "cupid-agent-compatibility-analysis.md"
+INSTRUCTIONS_PATH = Path(__file__).parent.parent / "instructions" / "cupid-agent-evaluate-scene-score.md"
 with open(INSTRUCTIONS_PATH, "r", encoding="utf-8") as f:
     INSTRUCTIONS = f.read()
 

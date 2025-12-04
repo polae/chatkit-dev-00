@@ -1,40 +1,44 @@
 """DisplayChoices agent - generates Choice list widget data."""
 
-from agents import Agent, ModelSettings
+from agents import Agent, ModelSettings, RunContextWrapper
 from openai.types.shared.reasoning import Reasoning
 
 from .schemas import ChoicesOutput
 
 
-DISPLAY_CHOICES_INSTRUCTIONS = """Parse the previous assistant response to extract player choices.
+class DisplayChoicesContext:
+    """Context for the DisplayChoices agent with message to parse."""
+    def __init__(self, message_content: str):
+        self.message_content = message_content
 
-Look for options formatted as:
+
+def displaychoices_instructions(run_context: RunContextWrapper[DisplayChoicesContext], _agent: Agent[DisplayChoicesContext]) -> str:
+    """Dynamic instructions with the message content to parse."""
+    content = run_context.context.message_content
+    return f"""Extract player choices from the message below.
+
+## Option Format
+Options appear as:
 **OPTION A: "TITLE" — Description**
 or
 **OPTION A: TITLE — Description**
 
-Extract:
+## What to Extract
 - key: The letter (A, B, C, D)
-- title: The text immediately after the colon (in quotes if present, before the em-dash)
+- title: The text between the colon and the em-dash (—), removing quotes if present
 
-Example input:
-**OPTION A: "KISS HIM" — Romantic Escalation**
-**OPTION B: "SWAP INSTAGRAMS" — Light approach**
+## If No Options Found
+Return: {{"items": []}}
 
-Example output:
-{
-  "items": [
-    {"key": "A", "title": "KISS HIM"},
-    {"key": "B", "title": "SWAP INSTAGRAMS"}
-  ]
-}
+## Message to Parse:
 
-Parse ALL options from the last assistant message. Return only the structured output."""
+{content}
+"""
 
 
-display_choices_agent = Agent(
+display_choices_agent = Agent[DisplayChoicesContext](
     name="DisplayChoices",
-    instructions=DISPLAY_CHOICES_INSTRUCTIONS,
+    instructions=displaychoices_instructions,
     model="gpt-5.1",
     output_type=ChoicesOutput,
     model_settings=ModelSettings(

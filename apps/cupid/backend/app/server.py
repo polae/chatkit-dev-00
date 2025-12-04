@@ -39,10 +39,11 @@ from .agents.display_match_agent import display_match_agent, DisplayMatchContext
 # Note: display_continue_card_agent removed - using direct widget calls for static messages
 from .agents.display_compatibility_card_agent import display_compatibility_card_agent, DisplayCompatibilityCardContext
 from .agents.compatibility_analysis_agent import compatibility_analysis_agent
-from .agents.display_choices_agent import display_choices_agent
+from .agents.display_choices_agent import display_choices_agent, DisplayChoicesContext
 from .agents.game_dashboard_agent import game_dashboard_agent, GameDashboardContext
 from .agents.evaluate_scene_score_agent import evaluate_scene_score_agent
-from .agents.has_ended_agent import has_ended_agent
+from .agents.has_ended_agent import has_ended_agent, HasEndedContext
+from .agents.display_evaluation_card_agent import display_evaluation_card_agent
 
 from .memory_store import MemoryStore
 from .request_context import RequestContext
@@ -491,10 +492,28 @@ class CupidServer(ChatKitServer[RequestContext]):
             yield event
         conversation_history.extend([item.to_input_item() for item in result.new_items])
 
-        # Run DisplayChoices agent - naturally sees the game narrative with OPTION A:, B:, etc.
+        # Run DisplayChoices agent - extract last assistant message content via context
+        last_assistant_content = ""
+        for item in reversed(conversation_history):
+            role = item.get("role") if isinstance(item, dict) else getattr(item, "role", None)
+            if role == "assistant":
+                content = item.get("content") if isinstance(item, dict) else getattr(item, "content", None)
+                if isinstance(content, list):
+                    for block in content:
+                        if isinstance(block, dict) and block.get("type") == "output_text":
+                            last_assistant_content = block.get("text", "")
+                            break
+                        elif hasattr(block, "text"):
+                            last_assistant_content = block.text
+                            break
+                elif isinstance(content, str):
+                    last_assistant_content = content
+                break
+        choices_context = DisplayChoicesContext(message_content=last_assistant_content)
         choices_result = await Runner.run(
             display_choices_agent,
-            conversation_history,
+            "extract",
+            context=choices_context,
         )
 
         # Build and yield Choice list widget
@@ -544,15 +563,19 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Update current compatibility and persist
         try:
             score_delta = int(score)
+            # Clamp delta to reasonable range (-10 to +10) as defense in depth
+            score_delta = max(-10, min(10, score_delta))
             current_compatibility = max(0, min(100, current_compatibility + score_delta))
             await self._save_game_state(thread, context, current_compatibility=current_compatibility)
         except (ValueError, TypeError):
             pass
 
-        # Run GameDashboard agent (pass [] - only needs context data)
+        # Run GameDashboard agent (pass current compatibility and scene number)
         dashboard_context = GameDashboardContext(
             state_compatibility=compat_str,
             input_output_parsed_score=score,
+            current_compatibility=current_compatibility,
+            scene_number=scene_number,
         )
         dashboard_result = await Runner.run(
             game_dashboard_agent,
@@ -584,21 +607,84 @@ class CupidServer(ChatKitServer[RequestContext]):
         conversation_history.extend([item.to_input_item() for item in game_result.new_items])
 
         # Run HasEnded agent to check if game is over
+        # Extract the last game narrative (skip any structured outputs like choices)
+        last_narrative_content = ""
+        for item in reversed(conversation_history):
+            role = item.get("role") if isinstance(item, dict) else getattr(item, "role", None)
+            if role == "assistant":
+                content = item.get("content") if isinstance(item, dict) else getattr(item, "content", None)
+                text_content = ""
+                if isinstance(content, list):
+                    for block in content:
+                        if isinstance(block, dict) and block.get("type") == "output_text":
+                            text_content = block.get("text", "")
+                            break
+                        elif hasattr(block, "text"):
+                            text_content = block.text
+                            break
+                elif isinstance(content, str):
+                    text_content = content
+                # Use this message if it looks like narrative (not structured output)
+                if text_content and not text_content.startswith("{"):
+                    last_narrative_content = text_content
+                    break
+
+        hasended_context = HasEndedContext(narrative_content=last_narrative_content)
         ended_result = await Runner.run(
             has_ended_agent,
-            conversation_history,
+            "analyze",
+            context=hasended_context,
         )
         ended_data = ended_result.final_output.model_dump()
-        conversation_history.extend([item.to_input_item() for item in ended_result.new_items])
+        logger.info(f"HasEnded result: {ended_data}, narrative length: {len(last_narrative_content)}")
 
         if ended_data.get("has_ended", False):
-            # Game is over - move to evaluation and persist
+            # Game is over - show evaluation transition card
+            eval_card_result = await Runner.run(
+                display_evaluation_card_agent,
+                conversation_history,
+            )
+            eval_card_data = eval_card_result.final_output.model_dump()
+
+            # Build and yield Continue Card widget with the personalized message
+            continue_widget = build_continue_card_widget(eval_card_data["message"])
+            widget_item = WidgetItem(
+                thread_id=thread.id,
+                id=self._generate_widget_id(thread),
+                created_at=datetime.now(),
+                widget=continue_widget,
+            )
+            yield ThreadItemDoneEvent(item=widget_item)
+
+            # Move to evaluation chapter
             await self._set_chapter(thread, context, 6)
         else:
-            # Continue game loop - show choices (naturally sees game narrative with OPTION A:, B:, etc.)
+            # Continue game loop - extract message content with options (not HasEnded output)
+            last_assistant_content = ""
+            for item in reversed(conversation_history):
+                role = item.get("role") if isinstance(item, dict) else getattr(item, "role", None)
+                if role == "assistant":
+                    content = item.get("content") if isinstance(item, dict) else getattr(item, "content", None)
+                    text_content = ""
+                    if isinstance(content, list):
+                        for block in content:
+                            if isinstance(block, dict) and block.get("type") == "output_text":
+                                text_content = block.get("text", "")
+                                break
+                            elif hasattr(block, "text"):
+                                text_content = block.text
+                                break
+                    elif isinstance(content, str):
+                        text_content = content
+                    # Only use this message if it contains options (skip HasEnded output)
+                    if "OPTION A:" in text_content or "🏹 CUPID'S OPTIONS" in text_content:
+                        last_assistant_content = text_content
+                        break
+            choices_context = DisplayChoicesContext(message_content=last_assistant_content)
             choices_result = await Runner.run(
                 display_choices_agent,
-                conversation_history,
+                "extract",
+                context=choices_context,
             )
 
             # Build and yield Choice list widget

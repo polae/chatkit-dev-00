@@ -233,9 +233,13 @@ If your displayed pill values differ, apply your scene adjustments **after** pul
 
 ---
 
-COMPATIBILITY INFO:
+COMPATIBILITY INFO (base data from YAML):
 {{state.compatibility}}
 
-here is the score increase or decrease from this round:
+CURRENT ADJUSTED COMPATIBILITY: {{current_compatibility}}
+CURRENT SCENE NUMBER: {{scene_number}}
+SCORE DELTA THIS ROUND: {{input.output_parsed.score}}
 
-{{input.output_parsed.score}} {{input.output_parsed.current-compatibility}}
+IMPORTANT: Use {{current_compatibility}} as the "Now" value for `compatibility` and `bars[Now].percent`.
+DO NOT compute "Now" from overall_compatibility - use the explicit {{current_compatibility}} value provided above.
+Use {{scene_number}} for `scene.number`.
