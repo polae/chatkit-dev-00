@@ -8,6 +8,7 @@ import {
   STARTER_PROMPTS,
 } from "../lib/config";
 import { useAppStore } from "../store/useAppStore";
+import { WelcomeOverlay } from "./WelcomeOverlay";
 
 export type ChatKitControl = ReturnType<typeof useChatKit>;
 
@@ -18,6 +19,7 @@ type ChatKitPanelProps = {
 
 export function ChatKitPanel({ onChatKitReady, className }: ChatKitPanelProps) {
   const theme = useAppStore((state) => state.scheme);
+  const threadId = useAppStore((state) => state.threadId);
   const setThreadId = useAppStore((state) => state.setThreadId);
 
   const chatkit = useChatKit({
@@ -60,6 +62,7 @@ export function ChatKitPanel({ onChatKitReady, className }: ChatKitPanelProps) {
   return (
     <div className={clsx("relative h-full w-full overflow-hidden", className)}>
       <ChatKit control={chatkit.control} className="block h-full w-full" />
+      {!threadId && <WelcomeOverlay chatkit={chatkit} theme={theme} />}
     </div>
   );
 }

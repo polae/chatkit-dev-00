@@ -17,3 +17,9 @@ export const STARTER_PROMPTS: StartScreenPrompt[] = [
     icon: "play",
   },
 ];
+
+// Custom welcome overlay content
+export const WELCOME_IMAGE = "/cupid-cherub.svg";
+export const WELCOME_TEXT = "an interactive rom-com";
+export const WELCOME_DESCRIPTION = "Astrology is the physics. Wit is the currency. Your choices shape love stories in real-time. Cupid is a story-driven game where your choices influence connection, compatibility, and chemistry.";
+export const VERSION = "v0.1";
