@@ -15,6 +15,7 @@ from chatkit.types import (
     Action,
     Attachment,
     InferenceOptions,
+    ProgressUpdateEvent,
     ThreadItemDoneEvent,
     ThreadMetadata,
     ThreadStreamEvent,
@@ -243,6 +244,9 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
 
+        # Show progress indicator
+        yield ProgressUpdateEvent(text="Introducing Cupid...")
+
         # Run Introduction agent - stream events directly
         result = Runner.run_streamed(introduction_agent, conversation_history, context=agent_context)
         async for event in stream_agent_response(agent_context, result):
@@ -284,6 +288,9 @@ class CupidServer(ChatKitServer[RequestContext]):
 
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
+
+        # Show progress indicator
+        yield ProgressUpdateEvent(text="Presenting your mortal...")
 
         # Run Mortal agent with context - stream events directly
         mortal_context = MortalContext(state_mortal=self.mortal_data_str)
@@ -328,6 +335,9 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
 
+        # Show progress indicator
+        yield ProgressUpdateEvent(text="Presenting the match...")
+
         # Run Match agent with context - stream events directly
         match_context = MatchContext(state_match=self.match_data_str)
         result = Runner.run_streamed(match_agent, conversation_history, context=match_context)
@@ -367,6 +377,9 @@ class CupidServer(ChatKitServer[RequestContext]):
 
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
+
+        # Show progress indicator
+        yield ProgressUpdateEvent(text="Analyzing compatibility...")
 
         # Run DisplayCompatibilityCard agent (pass [] - only needs context data)
         compat_context = DisplayCompatibilityCardContext(state_compatibility=self.compatibility_data_str)
@@ -431,6 +444,9 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
 
+        # Show progress indicator
+        yield ProgressUpdateEvent(text="Starting the date...")
+
         # Run StartCupidGame agent - stream events directly
         result = Runner.run_streamed(start_cupid_game_agent, conversation_history, context=agent_context)
         async for event in stream_agent_response(agent_context, result):
@@ -469,6 +485,9 @@ class CupidServer(ChatKitServer[RequestContext]):
 
         # Agent Builder pattern: accumulate conversation after each agent
         conversation_history = list(input_items)
+
+        # Show progress indicator
+        yield ProgressUpdateEvent(text="Generating next scene...")
 
         # Run EvaluateSceneScore agent
         score_result = await Runner.run(
@@ -561,6 +580,9 @@ class CupidServer(ChatKitServer[RequestContext]):
     ) -> AsyncIterator[ThreadStreamEvent]:
         """Chapter 6+: CupidEvaluation (final)."""
         logger.info("Chapter 6+: Final Evaluation")
+
+        # Show progress indicator
+        yield ProgressUpdateEvent(text="Preparing final evaluation...")
 
         # Run CupidEvaluation agent - stream events directly
         result = Runner.run_streamed(cupid_evaluation_agent, input_items, context=agent_context)
