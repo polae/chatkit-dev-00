@@ -1,0 +1,12 @@
+# Caddyfile for Cupid
+# Caddy automatically handles HTTPS with Let's Encrypt
+
+# Production with domain (automatic HTTPS)
+cupid.humorist.ai {
+    reverse_proxy frontend:80
+}
+
+# Fallback for HTTP access via IP
+:80 {
+    reverse_proxy frontend:80
+}

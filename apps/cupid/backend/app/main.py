@@ -26,6 +26,12 @@ def get_chatkit_server() -> CupidServer:
     return _chatkit_server
 
 
+@app.get("/health")
+def health_check():
+    """Health check endpoint for Docker healthcheck."""
+    return {"status": "healthy"}
+
+
 @app.post("/chatkit")
 async def chatkit_endpoint(
     request: Request,
