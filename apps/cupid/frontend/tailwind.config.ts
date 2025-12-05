@@ -6,14 +6,10 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: [
-          "Inter",
-          "system-ui",
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "Segoe UI",
-          "sans-serif",
-        ],
+        sans: ["Lexend", "sans-serif"],
+        display: ['"Lexend Giga"', "sans-serif"],
+        emphasis: ['"Lexend Peta"', "sans-serif"],
+        body: ["Lexend", "sans-serif"],
       },
       colors: {
         surface: {

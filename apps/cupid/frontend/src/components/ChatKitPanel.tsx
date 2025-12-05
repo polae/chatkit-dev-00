@@ -7,6 +7,7 @@ import {
   GREETING,
   STARTER_PROMPTS,
 } from "../lib/config";
+import { LEXEND_FONT_SOURCES } from "../lib/fonts";
 import { useAppStore } from "../store/useAppStore";
 import { WelcomeOverlay } from "./WelcomeOverlay";
 
@@ -45,6 +46,10 @@ export function ChatKitPanel({ onChatKitReady, className }: ChatKitPanelProps) {
         },
       },
       radius: "round",
+      typography: {
+        fontFamily: "Lexend, sans-serif",
+        fontSources: LEXEND_FONT_SOURCES,
+      },
     },
     startScreen: {
       greeting: GREETING,
