@@ -10,14 +10,14 @@ export default function App() {
     "h-full bg-gradient-to-br transition-colors duration-300",
     scheme === "dark"
       ? "from-slate-900 via-slate-950 to-slate-850 text-slate-100"
-      : "from-slate-100 via-white to-slate-200 text-slate-900"
+      : "from-[#f8f6f1] via-[#faf9f5] to-[#f8f6f1] text-slate-900"
   );
 
   const headerBarClass = clsx(
     "sticky top-0 z-30 w-full border-b backdrop-blur",
     scheme === "dark"
       ? "bg-slate-950/80 border-slate-800/70 text-slate-100"
-      : "bg-white/90 border-slate-200/70 text-slate-900"
+      : "bg-[#f8f6f1]/90 border-slate-200/70 text-slate-900"
   );
 
   return (
@@ -27,13 +27,13 @@ export default function App() {
           <img src="/cupid-cherub.svg" alt="Cupid" className="h-6 w-6" />
           <h1 className="text-lg font-semibold">Cupid</h1>
           <p className="flex-1 text-sm text-slate-600 dark:text-slate-300">
-            interactive RomCom powered by astrology
+            interactive rom-com
           </p>
           <ThemeToggle />
         </div>
       </div>
       <div className="mx-auto w-full max-w-4xl px-6 pb-10 pt-6" style={{ height: "calc(100vh - 80px)" }}>
-        <ChatKitPanel className="relative w-full h-full overflow-hidden rounded-3xl bg-white/80 shadow-lg ring-1 ring-slate-200/60 backdrop-blur dark:bg-slate-900/70 dark:ring-slate-800/60" />
+        <ChatKitPanel className="relative w-full h-full overflow-hidden rounded-3xl bg-[#f8f6f1]/80 shadow-lg ring-1 ring-slate-200/60 backdrop-blur dark:bg-slate-900/70 dark:ring-slate-800/60" />
       </div>
     </div>
   );

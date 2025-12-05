@@ -22,15 +22,15 @@ name: my-app
 description: Brief description of what the app does
 
 agent:
-  workflow_id: wf_xxxxx  # From Agent Builder (optional)
-  workflow_source: ./my-app-workflow.md  # Exported agent code
+  workflow_id: wf_xxxxx # From Agent Builder (optional)
+  workflow_source: ./my-app-workflow.md # Exported agent code
 
 backend:
-  tools: none  # Or list of tools needed
-  state: in-memory  # Session state type
+  tools: none # Or list of tools needed
+  state: in-memory # Session state type
 
 frontend:
-  type: chat-only  # Or chat-with-panel, etc.
+  type: chat-only # Or chat-with-panel, etc.
   features:
     - markdown rendering
     - conversation history
@@ -49,9 +49,9 @@ This is the workflow code from Agent Builder.
 from agents import Agent
 
 my_agent = Agent(
-  name="MyAgent",
-  instructions="Your system prompt here.",
-  model="gpt-4.1",
+name="MyAgent",
+instructions="Your system prompt here.",
+model="gpt-4.1",
 )
 \`\`\`
 ```
@@ -65,6 +65,7 @@ In Claude Code, run:
 ```
 
 Claude will:
+
 1. Read your spec and workflow
 2. Ask clarifying questions if needed
 3. Present an implementation plan
@@ -73,11 +74,13 @@ Claude will:
 ## Step 3: Configure and Run
 
 1. **Add your API key** (if not already exported):
+
    ```bash
    echo "OPENAI_API_KEY=sk-your-key" > apps/my-app/backend/.env
    ```
 
 2. **Add the run script** to root `package.json`:
+
    ```json
    "scripts": {
      "my-app": "npm --prefix apps/my-app install && npm --prefix apps/my-app start"
@@ -145,7 +148,7 @@ async def my_tool(ctx: RunContextWrapper[MyAgentContext], param: str) -> dict:
 my_agent = Agent(
     name="MyAgent",
     instructions="...",
-    model="gpt-4.1",
+    model="gpt-5.1",
     tools=[my_tool],
 )
 ```
@@ -153,6 +156,7 @@ my_agent = Agent(
 ## Adding Widgets
 
 For interactive UI elements, see the `cat-lounge` and `metro-map` examples which demonstrate:
+
 - Building widgets with templates
 - Streaming widgets to the client
 - Handling widget actions

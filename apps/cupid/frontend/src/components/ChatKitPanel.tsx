@@ -28,6 +28,12 @@ export function ChatKitPanel({ onChatKitReady, className }: ChatKitPanelProps) {
       density: "spacious",
       colorScheme: theme,
       color: {
+        ...(theme === "light" ? {
+          surface: {
+            background: "#f8f6f1",
+            foreground: "#faf9f5"
+          }
+        } : {}),
         grayscale: {
           hue: 220,
           tint: 6,

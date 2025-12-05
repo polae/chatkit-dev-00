@@ -17,7 +17,7 @@ const config: Config = {
       },
       colors: {
         surface: {
-          light: "#f3f4f6",
+          light: "#f8f6f1",
           dark: "#0b1120",
         },
       },
