@@ -17,7 +17,7 @@ chmod 400 ~/.ssh/cupid-pk-00.pem
 
 ```bash
 # Connect to EC2
-ssh -i ~/.ssh/cupid-pk-00.pem ubuntu@3.151.112.221
+ssh -i ~/.ssh/cupid-simple-pk-00.pem ubuntu@3.151.112.221
 ```
 
 ---
