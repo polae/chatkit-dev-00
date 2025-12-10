@@ -189,11 +189,41 @@ class CupidServer(ChatKitServer[RequestContext]):
 
         if "chapter" not in thread.metadata:
             thread.metadata["chapter"] = 0
-            # Store data references for future flexibility (e.g., different couples per thread)
-            thread.metadata["mortal_data"] = self.mortal_data
-            thread.metadata["match_data"] = self.match_data
-            thread.metadata["compatibility_data"] = self.compatibility_data
-            thread.metadata["current_compatibility"] = self.compatibility_data.get("overall_compatibility", 69)
+
+            # Check for match session ID in request header
+            match_data_loaded = False
+            request = context.get("request")
+            if request:
+                session_id = request.headers.get("x-match-session-id")
+                if session_id:
+                    try:
+                        # Import the pending selections store from main
+                        from .main import get_pending_selections_store
+                        pending_selections = get_pending_selections_store()
+                        match_selection = pending_selections.pop(session_id, None)
+
+                        if match_selection:
+                            thread.metadata["selected_match_id"] = match_selection.get("selected_match_id")
+                            thread.metadata["mortal_data"] = match_selection.get("mortal_data", self.mortal_data)
+                            thread.metadata["match_data"] = match_selection.get("match_data", self.match_data)
+                            thread.metadata["compatibility_data"] = match_selection.get("compatibility_data", self.compatibility_data)
+                            match_data_loaded = True
+                            logger.info(f"Using match data from session header: {session_id}")
+                        else:
+                            logger.warning(f"Session ID not found or expired: {session_id}")
+                    except Exception as e:
+                        logger.warning(f"Failed to retrieve match data from session: {e}")
+
+            if not match_data_loaded:
+                # Legacy: use default files (backwards compatibility)
+                logger.info("Using default match data (legacy mode)")
+                thread.metadata["mortal_data"] = self.mortal_data
+                thread.metadata["match_data"] = self.match_data
+                thread.metadata["compatibility_data"] = self.compatibility_data
+
+            thread.metadata["current_compatibility"] = thread.metadata.get(
+                "compatibility_data", {}
+            ).get("overall_compatibility", 69)
             await self.store.save_thread(thread, context)
 
         # Create base agent context

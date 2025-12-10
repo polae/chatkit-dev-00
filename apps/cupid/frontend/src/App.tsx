@@ -1,10 +1,12 @@
 import clsx from "clsx";
 import { ChatKitPanel } from "./components/ChatKitPanel";
 import { ThemeToggle } from "./components/ThemeToggle";
+import { MatchSelectionFlow } from "./components/MatchSelectionFlow";
 import { useAppStore } from "./store/useAppStore";
 
 export default function App() {
   const scheme = useAppStore((state) => state.scheme);
+  const gamePhase = useAppStore((state) => state.gamePhase);
 
   const containerClass = clsx(
     "h-full bg-gradient-to-br transition-colors duration-300",
@@ -32,9 +34,16 @@ export default function App() {
           <ThemeToggle />
         </div>
       </div>
-      <div className="mx-auto w-full max-w-4xl px-6 pb-10 pt-6" style={{ height: "calc(100vh - 80px)" }}>
-        <ChatKitPanel className="relative w-full h-full overflow-hidden rounded-3xl bg-[#f8f6f1]/80 shadow-lg ring-1 ring-slate-200/60 backdrop-blur dark:bg-slate-900/70 dark:ring-slate-800/60" />
-      </div>
+
+      {gamePhase === "selection" ? (
+        <div className="mx-auto w-full max-w-4xl" style={{ height: "calc(100vh - 80px)" }}>
+          <MatchSelectionFlow />
+        </div>
+      ) : (
+        <div className="mx-auto w-full max-w-4xl px-6 pb-10 pt-6" style={{ height: "calc(100vh - 80px)" }}>
+          <ChatKitPanel className="relative w-full h-full overflow-hidden rounded-3xl bg-[#f8f6f1]/80 shadow-lg ring-1 ring-slate-200/60 backdrop-blur dark:bg-slate-900/70 dark:ring-slate-800/60" />
+        </div>
+      )}
     </div>
   );
 }

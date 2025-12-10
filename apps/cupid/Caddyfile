@@ -3,10 +3,36 @@
 
 # Production with domain (automatic HTTPS)
 cupid.humorist.ai {
-    reverse_proxy frontend:80
+    # API routes go to backend
+    handle /api/* {
+        reverse_proxy backend:8003
+    }
+    handle /chatkit {
+        reverse_proxy backend:8003
+    }
+    handle /health {
+        reverse_proxy backend:8003
+    }
+    # Everything else goes to frontend
+    handle {
+        reverse_proxy frontend:80
+    }
 }
 
 # Fallback for HTTP access via IP
 :80 {
-    reverse_proxy frontend:80
+    # API routes go to backend
+    handle /api/* {
+        reverse_proxy backend:8003
+    }
+    handle /chatkit {
+        reverse_proxy backend:8003
+    }
+    handle /health {
+        reverse_proxy backend:8003
+    }
+    # Everything else goes to frontend
+    handle {
+        reverse_proxy frontend:80
+    }
 }
