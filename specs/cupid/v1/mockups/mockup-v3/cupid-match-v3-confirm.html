@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupid - Ready to Play</title>
+
+    <!-- Google Fonts: Lexend Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend+Peta:wght@700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           Cupid Match Selection v3 - Confirm & Play
+           Multi-page flow: Page 3 of 3
+           ============================================ */
+        :root {
+            /* Light mode (default) */
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+            --border-color: rgba(101, 123, 131, 0.1);
+            --border-color-hover: rgba(101, 123, 131, 0.2);
+
+            /* Accent Spectrum */
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+
+            /* Typography */
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-emphasis: 'Lexend Peta', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+
+            /* Spacing */
+            --space-xs: 6px;
+            --space-sm: 12px;
+            --space-md: 20px;
+            --space-lg: 28px;
+            --space-xl: 40px;
+
+            /* Shadows */
+            --shadow-subtle: 0 1px 3px rgba(70, 70, 70, 0.04);
+            --shadow-medium: 0 4px 16px rgba(70, 70, 70, 0.06);
+            --shadow-elevated: 0 8px 32px rgba(70, 70, 70, 0.08);
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+            --border-color: rgba(168, 168, 168, 0.1);
+            --border-color-hover: rgba(168, 168, 168, 0.2);
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 200ms ease, color 200ms ease;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .navbar-icon {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .navbar-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .back-button {
+            background: var(--bg-surface);
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            min-width: 40px;
+            color: var(--text-secondary);
+        }
+
+        .back-button:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .back-button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* PAGE LAYOUT */
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-md) var(--space-md);
+            padding-bottom: 100px;
+            max-width: 420px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-md);
+            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 100ms both;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 20px;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: var(--space-xs);
+        }
+
+        /* PROFILES SIDE BY SIDE */
+        .profiles-row {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: var(--space-sm);
+            align-items: center;
+            width: 100%;
+            margin-bottom: var(--space-lg);
+            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms both;
+        }
+
+        .profile-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: var(--space-md);
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-sm);
+        }
+
+        .profile-avatar svg {
+            width: 30px;
+            height: 30px;
+            color: white;
+        }
+
+        .profile-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .profile-details {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .profile-zodiac {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            justify-content: center;
+            gap: 4px;
+            margin-top: var(--space-xs);
+        }
+
+        .profile-zodiac-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            padding: 2px 6px;
+            background: rgba(107, 194, 255, 0.1);
+            border-radius: 10px;
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+
+        html.dark .profile-zodiac-badge {
+            background: rgba(107, 194, 255, 0.15);
+        }
+
+        /* HEART CONNECTOR */
+        .heart-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .heart-icon {
+            width: 32px;
+            height: 32px;
+            color: var(--red);
+        }
+
+        .heart-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* COMPATIBILITY SECTION */
+        .compatibility-section {
+            width: 100%;
+            margin-bottom: var(--space-lg);
+            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 300ms both;
+        }
+
+        .compatibility-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: var(--space-md);
+            width: 100%;
+        }
+
+        .compatibility-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .compatibility-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .compatibility-subtitle {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .compatibility-score {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .compatibility-score-value {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 28px;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .compatibility-tier {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .compatibility-tier.excellent { background: rgba(138, 164, 125, 0.2); color: var(--green); }
+        .compatibility-tier.good { background: rgba(107, 194, 255, 0.2); color: var(--blue); }
+        .compatibility-tier.moderate { background: rgba(255, 201, 34, 0.2); color: var(--orange); }
+
+        /* Compatibility Bars */
+        .compatibility-bars {
+            display: grid;
+            gap: var(--space-xs);
+        }
+
+        .compatibility-row {
+            display: grid;
+            grid-template-columns: 28px 1fr 28px;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .compatibility-left, .compatibility-right {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1px;
+            font-size: 12px;
+        }
+
+        .compatibility-bar-container {
+            height: 16px;
+            background: var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .compatibility-bar {
+            height: 100%;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: width 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .compatibility-bar-value {
+            font-size: 9px;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .bar-yellow { background: var(--yellow); }
+        .bar-purple { background: var(--purple); }
+        .bar-pink { background: var(--pink); }
+        .bar-red { background: var(--red); }
+        .bar-orange { background: var(--orange); }
+
+        /* STEP INDICATOR */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: var(--space-md);
+            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 400ms both;
+        }
+
+        .step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 200ms ease;
+        }
+
+        .step-dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background: var(--pink);
+        }
+
+        .step-dot.completed {
+            background: var(--pink);
+        }
+
+        /* PLAY BUTTON SECTION */
+        .nav-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--space-md);
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            z-index: 50;
+        }
+
+        .play-button {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            display: flex;
+            padding: var(--space-md) var(--space-xl);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: 0.02em;
+            color: white;
+            background: var(--red);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 300ms ease;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+        }
+
+        .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .play-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes gentle-enter {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <button class="back-button" onclick="location.href='cupid-match-v2-select.html'" aria-label="Back">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
+            <img class="navbar-icon" src="cupid-cherub.svg" alt="Cupid">
+            <span class="navbar-title">Cupid</span>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <!-- Section Header -->
+        <section class="section-header">
+            <h1 class="section-title">Ready to Play?</h1>
+            <p class="section-subtitle">Your match is set for today's game</p>
+        </section>
+
+        <!-- Profiles Side by Side -->
+        <div class="profiles-row">
+            <!-- Maya (Mortal) -->
+            <article class="profile-card">
+                <div class="profile-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <h3 class="profile-name">Maya</h3>
+                <p class="profile-details">Interior Designer</p>
+                <div class="profile-zodiac">
+                    <span class="profile-zodiac-badge">☀️♉</span>
+                    <span class="profile-zodiac-badge">🌙♈</span>
+                    <span class="profile-zodiac-badge">💖♋</span>
+                    <span class="profile-zodiac-badge">🔥♎</span>
+                </div>
+            </article>
+
+            <!-- Heart Connector -->
+            <div class="heart-connector">
+                <svg class="heart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <span class="heart-label">Match</span>
+            </div>
+
+            <!-- Match (Dynamic) -->
+            <article class="profile-card" id="match-profile">
+                <div class="profile-avatar" id="match-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <h3 class="profile-name" id="match-name">Ethan</h3>
+                <p class="profile-details" id="match-details">Creative Director</p>
+                <div class="profile-zodiac" id="match-zodiac">
+                    <span class="profile-zodiac-badge">☀️♌</span>
+                    <span class="profile-zodiac-badge">🌙♌</span>
+                    <span class="profile-zodiac-badge">💖♋</span>
+                    <span class="profile-zodiac-badge">🔥♉</span>
+                </div>
+            </article>
+        </div>
+
+        <!-- Compatibility Section -->
+        <section class="compatibility-section">
+            <div class="compatibility-card">
+                <div class="compatibility-header">
+                    <div>
+                        <h3 class="compatibility-title" id="compatibility-title">Maya & Ethan</h3>
+                        <p class="compatibility-subtitle">Compatibility Analysis</p>
+                    </div>
+                    <div class="compatibility-score">
+                        <div class="compatibility-score-value" id="compatibility-score">68</div>
+                        <span class="compatibility-tier good" id="compatibility-tier">Good</span>
+                    </div>
+                </div>
+                <div class="compatibility-bars" id="compatibility-bars">
+                    <!-- Sun -->
+                    <div class="compatibility-row">
+                        <div class="compatibility-left"><span>☀️</span><span id="maya-sun">♉</span></div>
+                        <div class="compatibility-bar-container">
+                            <div class="compatibility-bar bar-yellow" id="bar-sun" style="width: 42%;">
+                                <span class="compatibility-bar-value" id="val-sun">42</span>
+                            </div>
+                        </div>
+                        <div class="compatibility-right"><span id="match-sun">♌</span><span>☀️</span></div>
+                    </div>
+                    <!-- Moon -->
+                    <div class="compatibility-row">
+                        <div class="compatibility-left"><span>🌙</span><span id="maya-moon">♈</span></div>
+                        <div class="compatibility-bar-container">
+                            <div class="compatibility-bar bar-purple" id="bar-moon" style="width: 48%;">
+                                <span class="compatibility-bar-value" id="val-moon">48</span>
+                            </div>
+                        </div>
+                        <div class="compatibility-right"><span id="match-moon">♌</span><span>🌙</span></div>
+                    </div>
+                    <!-- Venus -->
+                    <div class="compatibility-row">
+                        <div class="compatibility-left"><span>💖</span><span id="maya-venus">♋</span></div>
+                        <div class="compatibility-bar-container">
+                            <div class="compatibility-bar bar-pink" id="bar-venus" style="width: 86%;">
+                                <span class="compatibility-bar-value" id="val-venus">86</span>
+                            </div>
+                        </div>
+                        <div class="compatibility-right"><span id="match-venus">♋</span><span>💖</span></div>
+                    </div>
+                    <!-- Mars -->
+                    <div class="compatibility-row">
+                        <div class="compatibility-left"><span>🔥</span><span id="maya-mars">♎</span></div>
+                        <div class="compatibility-bar-container">
+                            <div class="compatibility-bar bar-red" id="bar-mars" style="width: 66%;">
+                                <span class="compatibility-bar-value" id="val-mars">66</span>
+                            </div>
+                        </div>
+                        <div class="compatibility-right"><span id="match-mars">♉</span><span>🔥</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Play Button -->
+    <section class="nav-section">
+        <button class="play-button" id="play-button" onclick="startGame()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5,3 19,12 5,21"></polygon>
+            </svg>
+            Play
+        </button>
+    </section>
+
+    <script>
+        // Match data
+        const matchData = {
+            ethan: {
+                name: "Ethan",
+                details: "Creative Director",
+                avatarColor: "var(--blue)",
+                zodiac: ["☀️♌", "🌙♌", "💖♋", "🔥♉"],
+                compatibility: {
+                    title: "Maya & Ethan",
+                    overall: 68,
+                    tier: "Good",
+                    tierClass: "good",
+                    sun: { score: 42, matchSign: "♌", color: "bar-yellow" },
+                    moon: { score: 48, matchSign: "♌", color: "bar-purple" },
+                    venus: { score: 86, matchSign: "♋", color: "bar-pink" },
+                    mars: { score: 66, matchSign: "♉", color: "bar-red" }
+                }
+            },
+            leo: {
+                name: "Leo",
+                details: "Tech Entrepreneur",
+                avatarColor: "var(--orange)",
+                zodiac: ["☀️♈", "🌙♌", "💖♒", "🔥♒"],
+                compatibility: {
+                    title: "Maya & Leo",
+                    overall: 44,
+                    tier: "Moderate",
+                    tierClass: "moderate",
+                    sun: { score: 42, matchSign: "♈", color: "bar-yellow" },
+                    moon: { score: 48, matchSign: "♌", color: "bar-purple" },
+                    venus: { score: 60, matchSign: "♒", color: "bar-pink" },
+                    mars: { score: 30, matchSign: "♒", color: "bar-orange" }
+                }
+            },
+            noah: {
+                name: "Noah",
+                details: "Documentary Filmmaker",
+                avatarColor: "var(--green)",
+                zodiac: ["☀️♊", "🌙♓", "💖♉", "🔥♌"],
+                compatibility: {
+                    title: "Maya & Noah",
+                    overall: 62,
+                    tier: "Good",
+                    tierClass: "good",
+                    sun: { score: 58, matchSign: "♊", color: "bar-yellow" },
+                    moon: { score: 56, matchSign: "♓", color: "bar-purple" },
+                    venus: { score: 56, matchSign: "♉", color: "bar-pink" },
+                    mars: { score: 66, matchSign: "♌", color: "bar-red" }
+                }
+            }
+        };
+
+        function loadMatch() {
+            const selectedMatch = localStorage.getItem('cupid-selected-match') || 'ethan';
+            const data = matchData[selectedMatch];
+
+            // Update match profile
+            document.getElementById('match-name').textContent = data.name;
+            document.getElementById('match-details').textContent = data.details;
+            document.getElementById('match-avatar').style.background = data.avatarColor;
+
+            // Update zodiac badges
+            const zodiacContainer = document.getElementById('match-zodiac');
+            zodiacContainer.innerHTML = data.zodiac.map(z => 
+                `<span class="profile-zodiac-badge">${z}</span>`
+            ).join('');
+
+            // Update compatibility
+            const compat = data.compatibility;
+            document.getElementById('compatibility-title').textContent = compat.title;
+            document.getElementById('compatibility-score').textContent = compat.overall;
+
+            const tierEl = document.getElementById('compatibility-tier');
+            tierEl.textContent = compat.tier;
+            tierEl.className = `compatibility-tier ${compat.tierClass}`;
+
+            // Update bars
+            ['sun', 'moon', 'venus', 'mars'].forEach((planet, index) => {
+                const bar = document.getElementById(`bar-${planet}`);
+                const val = document.getElementById(`val-${planet}`);
+                const matchSign = document.getElementById(`match-${planet}`);
+
+                const planetData = compat[planet];
+                bar.style.width = '0%';
+                bar.className = `compatibility-bar ${planetData.color}`;
+                val.textContent = planetData.score;
+                matchSign.textContent = planetData.matchSign;
+
+                // Animate
+                setTimeout(() => {
+                    bar.style.width = `${planetData.score}%`;
+                }, 200 + (index * 100));
+            });
+        }
+
+        function startGame() {
+            const selectedMatch = localStorage.getItem('cupid-selected-match') || 'ethan';
+            const data = matchData[selectedMatch];
+
+            alert(`🎮 Starting Cupid Game!\n\n` +
+                `Mortal: Maya Brooks\n` +
+                `Match: ${data.name}\n` +
+                `Compatibility: ${data.compatibility.overall}%\n\n` +
+                `In production, this would:\n` +
+                `1. Create a new ChatKit thread\n` +
+                `2. Set state.mortal, state.match, state.compatibility\n` +
+                `3. Navigate to the ChatKit experience`);
+        }
+
+        // Theme toggle
+        function initTheme() {
+            const savedTheme = localStorage.getItem('cupid-theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        initTheme();
+        loadMatch();
+    </script>
+</body>
+</html>
+

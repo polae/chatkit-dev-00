@@ -24,14 +24,16 @@ and three matches:
 And their compatibillty charts.
 `apps/cupid/backend/app/data/today/compatibility/`
 
-WE have a chatkit expreince that begins with the play screen, but i would like to add a a page overlay or a new page (BEFORE we get to the chatkit expreince that allows a user to see todays mortal (a single card) and then select from three MATHCES, (three smaller cards). When the player selects a match, we show the comoatibily score much like we do in the Comptibility Dashboard. `apps/cupid/backend/app/widgets/CompatibilityAnalysis.widget`
+We have a chatkit expreince that begins with the play screen. I would like to change that (but we are not able to simply change the config there).
 
-WE should have a screeen that shows the Mortal at the top with three choices, and then space for the comaptibility dash (or the dash), and a PLay button. These elements shoudl mirror the profile widgets (two sizes: one big for mortal, three smaller cards for the match selection), the compatibily card should mirror the Compatibilty widget we use in cupid.
+but i would like to start the app with a new page sequence at the beginning (BEFORE we get to the chatkit expreince) This will allow a player user Cupid to see todays mortal (a single card) and then select from three MATCHES, (three smaller cards). When the player selects a match, we show the comoatibily score much like we do in the Comptibility Dashboard
 
-When the comptibiliy display is loaded, we should also activate (a deactivated) button ath the bottom that says 'Play'
+Please examine this HTML MOCKUP we made. It is three pages in this direcotry:
 
-When the user presses play, we need to pass these into the state variables (and I blieve the thread metadata) that will be used in the game instrutcions as {{state.mortal}}, {{state.match}} {{state.compatibilty}}
+`/Users/johnsteven/GITHUB/CHATKIT/chatkit-dev-00/specs/cupid/v1/mockups/mockup-v3`
 
-into state (as we do in out current version -- now we just have one each).
+Please follow this as a tempalte, but we will implement it with the ssame react stack that we use in the app.
 
-Can you plan this out.
+When the user presses play, we need to pass these into the state variables (and I blieve the thread metadata) that will be used in the game instrutcions as {{state.mortal}}, {{state.match}} {{state.compatibilty}} into state (as we do in out current version -- now we just have one each).
+
+Can you plan this out?

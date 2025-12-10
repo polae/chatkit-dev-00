@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cupid - Match Selection</title>
+    <title>Cupid - Choose a Match</title>
 
     <!-- Google Fonts: Lexend Family -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,8 @@
 
     <style>
         /* ============================================
-           Cupid Match Selection - Humorist Design System
+           Cupid Match Selection v2 - Choose a Match
+           Multi-page flow: Page 2 of 3
            ============================================ */
         :root {
             /* Light mode (default) */
@@ -44,7 +45,6 @@
             --space-md: 20px;
             --space-lg: 28px;
             --space-xl: 40px;
-            --space-2xl: 56px;
 
             /* Shadows */
             --shadow-subtle: 0 1px 3px rgba(70, 70, 70, 0.04);
@@ -123,15 +123,7 @@
             letter-spacing: -0.01em;
         }
 
-        .navbar-subtitle {
-            font-family: var(--font-body);
-            font-weight: 300;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-left: var(--space-xs);
-        }
-
-        .theme-toggle {
+        .back-button {
             background: var(--bg-surface);
             border: none;
             padding: 8px;
@@ -146,36 +138,30 @@
             color: var(--text-secondary);
         }
 
-        .theme-toggle:hover {
+        .back-button:hover {
             background: var(--border-color);
             color: var(--text-primary);
         }
 
-        .theme-toggle-icon {
+        .back-button svg {
             width: 18px;
             height: 18px;
-            stroke: currentColor;
         }
 
-        /* LAYOUT */
+        /* PAGE LAYOUT */
         .page-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: clamp(20px, 4vw, 40px) clamp(12px, 4vw, 24px);
-            max-width: 600px;
+            padding: var(--space-md) var(--space-md);
+            padding-bottom: 100px;
+            max-width: 420px;
             margin: 0 auto;
             width: 100%;
         }
 
-        @media (max-width: 600px) {
-            .page-wrapper {
-                padding-bottom: 100px; /* Room for sticky play button */
-            }
-        }
-
-        /* SECTION HEADERS */
+        /* SECTION HEADER */
         .section-header {
             text-align: center;
             margin-bottom: var(--space-md);
@@ -184,154 +170,28 @@
 
         .section-title {
             font-family: var(--font-display);
-            font-weight: 400;
-            font-size: clamp(18px, 5vw, 24px);
-            letter-spacing: -0.01em;
-            color: var(--text-primary);
-            margin-bottom: var(--space-xs);
-        }
-
-        /* FLEURON */
-        .fleuron {
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-            align-items: center;
-            margin-top: var(--space-sm);
-        }
-
-        .fleuron-dot {
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            animation: fleuron-appear 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
-        }
-
-        .fleuron-dot:nth-child(1) { background: var(--red); animation-delay: 300ms; }
-        .fleuron-dot:nth-child(2) { background: var(--orange); animation-delay: 350ms; }
-        .fleuron-dot:nth-child(3) { background: var(--yellow); animation-delay: 400ms; }
-        .fleuron-dot:nth-child(4) { background: var(--pink); animation-delay: 450ms; }
-        .fleuron-dot:nth-child(5) { background: var(--green); animation-delay: 500ms; }
-        .fleuron-dot:nth-child(6) { background: var(--blue); animation-delay: 550ms; }
-        .fleuron-dot:nth-child(7) { background: var(--purple); animation-delay: 600ms; }
-
-        @keyframes fleuron-appear {
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        /* MORTAL CARD (Large) */
-        .mortal-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: var(--space-md);
-            width: 100%;
-            margin-bottom: var(--space-lg);
-            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms both;
-        }
-
-        .mortal-header {
-            display: flex;
-            align-items: flex-start;
-            gap: var(--space-sm);
-            margin-bottom: 0;
-        }
-
-        .mortal-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--pink);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .mortal-avatar svg {
-            width: 28px;
-            height: 28px;
-            color: white;
-        }
-
-        .mortal-info {
-            flex: 1;
-        }
-
-        .mortal-name {
-            font-family: var(--font-display);
             font-weight: 600;
             font-size: 20px;
-            color: var(--text-primary);
             letter-spacing: -0.01em;
-            line-height: 1.2;
-        }
-
-        .mortal-details {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-
-        .mortal-location {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .mortal-location svg {
-            width: 12px;
-            height: 12px;
-        }
-
-
-        .zodiac-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: var(--space-sm);
-        }
-
-        .zodiac-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            padding: 4px 10px;
-            background: rgba(107, 194, 255, 0.1);
-            border-radius: 16px;
-            font-size: 12px;
             color: var(--text-primary);
         }
 
-        html.dark .zodiac-badge {
-            background: rgba(107, 194, 255, 0.15);
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: var(--space-xs);
         }
 
-        /* MATCHES SECTION */
-        .matches-section {
+        /* MATCH CARDS GRID */
+        .matches-grid {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
             width: 100%;
             margin-bottom: var(--space-lg);
         }
 
-        .matches-grid {
-            display: flex;
-            gap: var(--space-sm);
-            width: 100%;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: var(--space-xs);
-        }
-
-        /* Hide scrollbar but keep functionality */
-        .matches-grid::-webkit-scrollbar { display: none; }
-        .matches-grid { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* MATCH CARD (Small) */
+        /* MATCH CARD */
         .match-card {
             background: var(--bg-surface);
             border: 2px solid var(--border-color);
@@ -340,24 +200,18 @@
             cursor: pointer;
             transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
             animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
-            flex: 0 0 180px;
-            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
         }
 
-        @media (min-width: 601px) {
-            .match-card {
-                flex: 1;
-            }
-        }
-
-        .match-card:nth-child(1) { animation-delay: 300ms; }
-        .match-card:nth-child(2) { animation-delay: 350ms; }
-        .match-card:nth-child(3) { animation-delay: 400ms; }
+        .match-card:nth-child(1) { animation-delay: 150ms; }
+        .match-card:nth-child(2) { animation-delay: 200ms; }
+        .match-card:nth-child(3) { animation-delay: 250ms; }
 
         .match-card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-elevated);
             border-color: var(--border-color-hover);
+            box-shadow: var(--shadow-medium);
         }
 
         .match-card.selected {
@@ -370,20 +224,25 @@
         }
 
         .match-avatar {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: var(--blue);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: var(--space-sm);
+            flex-shrink: 0;
         }
 
         .match-avatar svg {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             color: white;
+        }
+
+        .match-info {
+            flex: 1;
+            min-width: 0;
         }
 
         .match-name {
@@ -406,7 +265,7 @@
             gap: 4px;
             font-size: 12px;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .match-location svg {
@@ -415,10 +274,10 @@
         }
 
         .match-zodiac {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, auto);
             gap: 4px;
-            margin-top: var(--space-sm);
+            margin-top: var(--space-xs);
         }
 
         .match-zodiac-badge {
@@ -436,10 +295,38 @@
             background: rgba(107, 194, 255, 0.15);
         }
 
+        .match-check {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 200ms ease;
+        }
+
+        .match-card.selected .match-check {
+            background: var(--pink);
+            border-color: var(--pink);
+        }
+
+        .match-check svg {
+            width: 14px;
+            height: 14px;
+            color: white;
+            opacity: 0;
+            transition: opacity 200ms ease;
+        }
+
+        .match-card.selected .match-check svg {
+            opacity: 1;
+        }
+
         /* COMPATIBILITY SECTION */
         .compatibility-section {
             width: 100%;
-            margin-bottom: var(--space-lg);
             opacity: 0;
             transform: translateY(20px);
             transition: all 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -467,14 +354,12 @@
             margin-bottom: var(--space-md);
             padding-bottom: var(--space-sm);
             border-bottom: 1px solid var(--border-color);
-            flex-wrap: wrap;
-            gap: var(--space-xs);
         }
 
         .compatibility-title {
             font-family: var(--font-display);
             font-weight: 600;
-            font-size: 16px;
+            font-size: 14px;
             color: var(--text-primary);
         }
 
@@ -492,16 +377,9 @@
         .compatibility-score-value {
             font-family: var(--font-display);
             font-weight: 600;
-            font-size: 32px;
+            font-size: 28px;
             color: var(--text-primary);
             line-height: 1;
-        }
-
-        .compatibility-score-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
         }
 
         .compatibility-tier {
@@ -516,7 +394,7 @@
         .compatibility-tier.good { background: rgba(107, 194, 255, 0.2); color: var(--blue); }
         .compatibility-tier.moderate { background: rgba(255, 201, 34, 0.2); color: var(--orange); }
 
-        /* Compatibility Bars - Compact List Style */
+        /* Compatibility Bars */
         .compatibility-bars {
             display: grid;
             gap: var(--space-xs);
@@ -524,30 +402,30 @@
 
         .compatibility-row {
             display: grid;
-            grid-template-columns: 32px 1fr 32px;
+            grid-template-columns: 28px 1fr 28px;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .compatibility-left, .compatibility-right {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2px;
-            font-size: 13px;
+            gap: 1px;
+            font-size: 12px;
         }
 
         .compatibility-bar-container {
-            height: 18px;
+            height: 16px;
             background: var(--border-color);
-            border-radius: 9px;
+            border-radius: 8px;
             overflow: hidden;
             position: relative;
         }
 
         .compatibility-bar {
             height: 100%;
-            border-radius: 9px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -555,7 +433,7 @@
         }
 
         .compatibility-bar-value {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             color: white;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -567,32 +445,53 @@
         .bar-red { background: var(--red); }
         .bar-orange { background: var(--orange); }
 
-        /* PLAY BUTTON */
-        .play-section {
-            width: 100%;
-            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 500ms both;
+        /* STEP INDICATOR */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: var(--space-lg);
         }
 
-        @media (max-width: 600px) {
-            .play-section {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                padding: var(--space-md);
-                background: var(--bg-primary);
-                border-top: 1px solid var(--border-color);
-                z-index: 50;
-                animation: none;
-            }
+        .step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 200ms ease;
         }
 
-        .play-button {
+        .step-dot.active {
+            width: 24px;
+            border-radius: 4px;
+            background: var(--pink);
+        }
+
+        .step-dot.completed {
+            background: var(--pink);
+        }
+
+        /* NAV SECTION */
+        .nav-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--space-md);
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            z-index: 50;
+        }
+
+        .nav-button {
             width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            display: flex;
             padding: var(--space-md) var(--space-xl);
             font-family: var(--font-display);
             font-weight: 600;
-            font-size: 18px;
+            font-size: 16px;
             letter-spacing: 0.02em;
             color: white;
             background: var(--red);
@@ -600,45 +499,31 @@
             border-radius: 12px;
             cursor: pointer;
             transition: all 300ms ease;
-            display: flex;
             align-items: center;
             justify-content: center;
             gap: var(--space-sm);
         }
 
-        .play-button:disabled {
+        .nav-button:disabled {
             opacity: 0.4;
             cursor: not-allowed;
             background: var(--text-muted);
         }
 
-        .play-button:not(:disabled):hover {
+        .nav-button:not(:disabled):hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-elevated);
         }
 
-        .play-button svg {
-            width: 24px;
-            height: 24px;
+        .nav-button svg {
+            width: 20px;
+            height: 20px;
         }
 
         /* ANIMATIONS */
         @keyframes gentle-enter {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Tighter mobile padding */
-        @media (max-width: 480px) {
-            .page-wrapper {
-                padding: var(--space-sm) var(--space-sm) 100px;
-            }
-            .mortal-card, .compatibility-card {
-                padding: var(--space-sm);
-            }
-            .section-title {
-                font-size: 16px;
-            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -652,7 +537,12 @@
 <body>
     <nav class="navbar">
         <div class="navbar-left">
-            <!-- Cupid Cherub Icon -->
+            <button class="back-button" onclick="location.href='cupid-match-v1-welcome.html'" aria-label="Back">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+            </button>
             <svg class="navbar-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="50" cy="50" r="45" fill="#E7B5A0"/>
                 <path d="M35 55 Q50 35 65 55" stroke="#D74E39" stroke-width="4" stroke-linecap="round" fill="none"/>
@@ -662,84 +552,27 @@
                 <path d="M75 30 L65 45 L75 50 Z" fill="#E7B5A0" stroke="#D74E39" stroke-width="2"/>
             </svg>
             <span class="navbar-title">Cupid</span>
-            <span class="navbar-subtitle">interactive rom-com</span>
         </div>
-        <button class="theme-toggle" aria-label="Toggle theme" id="theme-toggle-btn">
-            <svg id="sun-icon" class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"></circle>
-                <line x1="12" y1="1" x2="12" y2="3"></line>
-                <line x1="12" y1="21" x2="12" y2="23"></line>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                <line x1="1" y1="12" x2="3" y2="12"></line>
-                <line x1="21" y1="12" x2="23" y2="12"></line>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-            </svg>
-            <svg id="moon-icon" class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-                <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>
-            </svg>
-        </button>
     </nav>
 
     <div class="page-wrapper">
-        <!-- Section: Today's Match -->
+        <!-- Section Header -->
         <section class="section-header">
-            <h1 class="section-title">Today's Match</h1>
-            <div class="fleuron" role="presentation">
-                <span class="fleuron-dot"></span>
-                <span class="fleuron-dot"></span>
-                <span class="fleuron-dot"></span>
-                <span class="fleuron-dot"></span>
-                <span class="fleuron-dot"></span>
-                <span class="fleuron-dot"></span>
-                <span class="fleuron-dot"></span>
-            </div>
+            <h1 class="section-title">Choose a Match for Maya</h1>
+            <p class="section-subtitle">Select one of the three potential matches</p>
         </section>
 
-        <!-- Mortal Card (Large) -->
-        <article class="mortal-card">
-            <div class="mortal-header">
-                <div class="mortal-avatar">
+        <!-- Match Cards -->
+        <div class="matches-grid">
+            <!-- Match 1: Ethan -->
+            <article class="match-card" data-match="ethan" onclick="selectMatch('ethan')">
+                <div class="match-avatar">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                         <circle cx="12" cy="7" r="4"></circle>
                     </svg>
                 </div>
-                <div class="mortal-info">
-                    <h2 class="mortal-name">Maya Brooks</h2>
-                    <p class="mortal-details">Interior Designer, 25</p>
-                    <p class="mortal-location">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        Cobble Hill, Brooklyn
-                    </p>
-                </div>
-            </div>
-            <div class="zodiac-badges">
-                <span class="zodiac-badge">☀️ Taurus</span>
-                <span class="zodiac-badge">🌙 Aries</span>
-                <span class="zodiac-badge">💖 Cancer</span>
-                <span class="zodiac-badge">🔥 Libra</span>
-            </div>
-        </article>
-
-        <!-- Section: Choose a Match -->
-        <section class="matches-section">
-            <div class="section-header" style="margin-bottom: var(--space-md);">
-                <h2 class="section-title" style="font-size: 18px;">Choose a Match</h2>
-            </div>
-            <div class="matches-grid">
-                <!-- Match 1: Ethan -->
-                <article class="match-card" data-match="ethan" onclick="selectMatch('ethan')">
-                    <div class="match-avatar">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
+                <div class="match-info">
                     <h3 class="match-name">Ethan Murphy</h3>
                     <p class="match-details">Creative Director, 34</p>
                     <p class="match-location">
@@ -752,19 +585,26 @@
                     <div class="match-zodiac">
                         <span class="match-zodiac-badge">☀️ Leo</span>
                         <span class="match-zodiac-badge">🌙 Leo</span>
-                        <span class="match-zodiac-badge">💖 Can</span>
-                        <span class="match-zodiac-badge">🔥 Tau</span>
+                        <span class="match-zodiac-badge">💖 Cancer</span>
+                        <span class="match-zodiac-badge">🔥 Taurus</span>
                     </div>
-                </article>
+                </div>
+                <div class="match-check">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+            </article>
 
-                <!-- Match 2: Leo -->
-                <article class="match-card" data-match="leo" onclick="selectMatch('leo')">
-                    <div class="match-avatar" style="background: var(--orange);">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
+            <!-- Match 2: Leo -->
+            <article class="match-card" data-match="leo" onclick="selectMatch('leo')">
+                <div class="match-avatar" style="background: var(--orange);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="match-info">
                     <h3 class="match-name">Leo Foster</h3>
                     <p class="match-details">Tech Entrepreneur, 34</p>
                     <p class="match-location">
@@ -775,21 +615,28 @@
                         Tribeca, Manhattan
                     </p>
                     <div class="match-zodiac">
-                        <span class="match-zodiac-badge">☀️ Ari</span>
+                        <span class="match-zodiac-badge">☀️ Aries</span>
                         <span class="match-zodiac-badge">🌙 Leo</span>
-                        <span class="match-zodiac-badge">💖 Aqu</span>
-                        <span class="match-zodiac-badge">🔥 Aqu</span>
+                        <span class="match-zodiac-badge">💖 Aquarius</span>
+                        <span class="match-zodiac-badge">🔥 Aquarius</span>
                     </div>
-                </article>
+                </div>
+                <div class="match-check">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+            </article>
 
-                <!-- Match 3: Noah -->
-                <article class="match-card" data-match="noah" onclick="selectMatch('noah')">
-                    <div class="match-avatar" style="background: var(--green);">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </div>
+            <!-- Match 3: Noah -->
+            <article class="match-card" data-match="noah" onclick="selectMatch('noah')">
+                <div class="match-avatar" style="background: var(--green);">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="match-info">
                     <h3 class="match-name">Noah Foster</h3>
                     <p class="match-details">Documentary Filmmaker, 31</p>
                     <p class="match-location">
@@ -800,14 +647,19 @@
                         Fort Greene, Brooklyn
                     </p>
                     <div class="match-zodiac">
-                        <span class="match-zodiac-badge">☀️ Gem</span>
-                        <span class="match-zodiac-badge">🌙 Pis</span>
-                        <span class="match-zodiac-badge">💖 Tau</span>
+                        <span class="match-zodiac-badge">☀️ Gemini</span>
+                        <span class="match-zodiac-badge">🌙 Pisces</span>
+                        <span class="match-zodiac-badge">💖 Taurus</span>
                         <span class="match-zodiac-badge">🔥 Leo</span>
                     </div>
-                </article>
-            </div>
-        </section>
+                </div>
+                <div class="match-check">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+            </article>
+        </div>
 
         <!-- Compatibility Section (Initially Hidden) -->
         <section class="compatibility-section" id="compatibility-section">
@@ -867,16 +719,18 @@
             </div>
         </section>
 
-        <!-- Play Button -->
-        <section class="play-section">
-            <button class="play-button" id="play-button" disabled>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                    <polygon points="5,3 19,12 5,21"></polygon>
-                </svg>
-                Play
-            </button>
-        </section>
     </div>
+
+    <!-- Navigation -->
+    <section class="nav-section">
+        <button class="nav-button" id="next-button" disabled onclick="goToConfirm()">
+            Continue
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </button>
+    </section>
 
     <script>
         // Compatibility data for each match
@@ -922,7 +776,6 @@
         let selectedMatchId = null;
 
         function selectMatch(matchId) {
-            // Update selection state
             selectedMatchId = matchId;
 
             // Update card styling
@@ -952,27 +805,32 @@
                 const planet = planets[index];
                 const planetData = data.planets[planet];
 
-                // Reset width to 0 first for animation
                 bar.style.width = '0%';
                 bar.className = `compatibility-bar ${planetData.color}`;
                 bar.querySelector('.compatibility-bar-value').textContent = planetData.score;
 
-                // Update zodiac signs
                 const row = bar.closest('.compatibility-row');
                 row.querySelector('.compatibility-left span:last-child').textContent = planetData.mayaSign;
                 row.querySelector('.compatibility-right span:first-child').textContent = planetData.matchSign;
 
-                // Animate to new width
                 setTimeout(() => {
                     bar.style.width = `${planetData.score}%`;
                 }, 100 + (index * 100));
             });
 
-            // Show compatibility section
             compatSection.classList.add('visible');
 
-            // Enable play button
-            document.getElementById('play-button').disabled = false;
+            // Enable next button
+            document.getElementById('next-button').disabled = false;
+
+            // Store selection for next page
+            localStorage.setItem('cupid-selected-match', matchId);
+        }
+
+        function goToConfirm() {
+            if (selectedMatchId) {
+                location.href = 'cupid-match-v3-confirm.html';
+            }
         }
 
         // Theme toggle
@@ -981,32 +839,9 @@
             const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
                 document.documentElement.classList.add('dark');
-                updateIcons(true);
-            } else {
-                document.documentElement.classList.remove('dark');
-                updateIcons(false);
             }
         }
 
-        function updateIcons(isDark) {
-            document.getElementById('sun-icon').style.display = isDark ? 'none' : 'block';
-            document.getElementById('moon-icon').style.display = isDark ? 'block' : 'none';
-        }
-
-        document.getElementById('theme-toggle-btn').addEventListener('click', function() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            localStorage.setItem('cupid-theme', isDark ? 'dark' : 'light');
-            updateIcons(isDark);
-        });
-
-        // Play button handler
-        document.getElementById('play-button').addEventListener('click', function() {
-            if (selectedMatchId) {
-                alert(`Starting game with ${selectedMatchId.charAt(0).toUpperCase() + selectedMatchId.slice(1)}!\n\nIn the real app, this would:\n1. Create a new ChatKit thread\n2. Pass mortal_id and match_id in metadata\n3. Navigate to the ChatKit experience`);
-            }
-        });
-
-        // Initialize
         initTheme();
     </script>
 </body>

@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Cupid - Welcome</title>
+
+    <!-- Google Fonts: Lexend Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend+Peta:wght@700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           Cupid Match Selection v2 - Page 1: Welcome
+           Multi-page sequential flow for mobile
+           ============================================ */
+        :root {
+            /* Light mode (default) */
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+            --border-color: rgba(101, 123, 131, 0.1);
+            --border-color-hover: rgba(101, 123, 131, 0.2);
+
+            /* Accent Spectrum */
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+
+            /* Typography */
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-emphasis: 'Lexend Peta', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+
+            /* Spacing */
+            --space-xs: 6px;
+            --space-sm: 12px;
+            --space-md: 20px;
+            --space-lg: 28px;
+            --space-xl: 40px;
+
+            /* Shadows */
+            --shadow-subtle: 0 1px 3px rgba(70, 70, 70, 0.04);
+            --shadow-medium: 0 4px 16px rgba(70, 70, 70, 0.06);
+            --shadow-elevated: 0 8px 32px rgba(70, 70, 70, 0.08);
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+            --border-color: rgba(168, 168, 168, 0.1);
+            --border-color-hover: rgba(168, 168, 168, 0.2);
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 200ms ease, color 200ms ease;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .navbar-icon {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .navbar-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .theme-toggle {
+            background: var(--bg-surface);
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            min-width: 40px;
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .theme-toggle-icon {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        /* PAGE LAYOUT */
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--space-lg) var(--space-md);
+            padding-bottom: 100px;
+            max-width: 420px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* WELCOME SECTION */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: var(--space-xl);
+            animation: fade-in 600ms ease-out both;
+        }
+
+        .welcome-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto var(--space-lg);
+        }
+
+        .welcome-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 28px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-sm);
+        }
+
+        .welcome-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* FLEURON */
+        .fleuron {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            align-items: center;
+            margin: var(--space-lg) 0;
+        }
+
+        .fleuron-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: fleuron-appear 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+
+        .fleuron-dot:nth-child(1) { background: var(--red); animation-delay: 300ms; }
+        .fleuron-dot:nth-child(2) { background: var(--orange); animation-delay: 350ms; }
+        .fleuron-dot:nth-child(3) { background: var(--yellow); animation-delay: 400ms; }
+        .fleuron-dot:nth-child(4) { background: var(--pink); animation-delay: 450ms; }
+        .fleuron-dot:nth-child(5) { background: var(--green); animation-delay: 500ms; }
+        .fleuron-dot:nth-child(6) { background: var(--blue); animation-delay: 550ms; }
+        .fleuron-dot:nth-child(7) { background: var(--purple); animation-delay: 600ms; }
+
+        /* MORTAL CARD (Full Profile) */
+        .mortal-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: var(--space-lg);
+            width: 100%;
+            animation: slide-up 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms both;
+        }
+
+        .mortal-label {
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--pink);
+            margin-bottom: var(--space-sm);
+        }
+
+        .mortal-header {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .mortal-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .mortal-avatar svg {
+            width: 36px;
+            height: 36px;
+            color: white;
+        }
+
+        .mortal-info {
+            flex: 1;
+        }
+
+        .mortal-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 24px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+
+        .mortal-details {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .mortal-location {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .mortal-location svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .mortal-bio {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--space-md);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .zodiac-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .zodiac-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            background: rgba(107, 194, 255, 0.1);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        html.dark .zodiac-badge {
+            background: rgba(107, 194, 255, 0.15);
+        }
+
+        /* STICKY FOOTER */
+        .footer-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--space-md);
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            z-index: 50;
+        }
+
+        .next-button {
+            width: 100%;
+            padding: var(--space-md);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.02em;
+            color: white;
+            background: var(--red);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 300ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+        }
+
+        .next-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .next-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* PAGE INDICATOR */
+        .page-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: var(--space-lg);
+        }
+
+        .page-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 300ms ease;
+        }
+
+        .page-dot.active {
+            background: var(--red);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fleuron-appear {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <svg class="navbar-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="#E7B5A0"/>
+                <path d="M35 55 Q50 35 65 55" stroke="#D74E39" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <circle cx="38" cy="45" r="4" fill="#464646"/>
+                <circle cx="62" cy="45" r="4" fill="#464646"/>
+                <path d="M25 30 L35 45 L25 50 Z" fill="#E7B5A0" stroke="#D74E39" stroke-width="2"/>
+                <path d="M75 30 L65 45 L75 50 Z" fill="#E7B5A0" stroke="#D74E39" stroke-width="2"/>
+            </svg>
+            <span class="navbar-title">Cupid</span>
+        </div>
+        <button class="theme-toggle" aria-label="Toggle theme" id="theme-toggle-btn">
+            <svg id="sun-icon" class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg id="moon-icon" class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>
+            </svg>
+        </button>
+    </nav>
+
+    <div class="page-wrapper">
+        <!-- Page Indicator -->
+        <div class="page-indicator">
+            <span class="page-dot active"></span>
+            <span class="page-dot"></span>
+            <span class="page-dot"></span>
+        </div>
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <svg class="welcome-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="#E7B5A0"/>
+                <path d="M35 55 Q50 35 65 55" stroke="#D74E39" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <circle cx="38" cy="45" r="4" fill="#464646"/>
+                <circle cx="62" cy="45" r="4" fill="#464646"/>
+                <path d="M25 30 L35 45 L25 50 Z" fill="#E7B5A0" stroke="#D74E39" stroke-width="2"/>
+                <path d="M75 30 L65 45 L75 50 Z" fill="#E7B5A0" stroke="#D74E39" stroke-width="2"/>
+            </svg>
+            <h1 class="welcome-title">Today's Match</h1>
+            <p class="welcome-subtitle">Meet your mortal and choose their perfect match for an interactive rom-com adventure.</p>
+        </section>
+
+        <!-- Fleuron Divider -->
+        <div class="fleuron" role="presentation">
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+            <span class="fleuron-dot"></span>
+        </div>
+
+        <!-- Mortal Profile Card -->
+        <article class="mortal-card">
+            <div class="mortal-label">Your Mortal</div>
+            <div class="mortal-header">
+                <div class="mortal-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="mortal-info">
+                    <h2 class="mortal-name">Maya Brooks</h2>
+                    <p class="mortal-details">Interior Designer, 25</p>
+                    <p class="mortal-location">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Cobble Hill, Brooklyn
+                    </p>
+                </div>
+            </div>
+            <p class="mortal-bio">
+                Maya moved from San Francisco to Brooklyn for a design role at a boutique firm in Tribeca. Her Taurus Sun gives her an eye for beauty and material comfort, but her Aries Moon means she acts on impulse more than she'd admit.
+            </p>
+            <div class="zodiac-badges">
+                <span class="zodiac-badge">☀️ Taurus</span>
+                <span class="zodiac-badge">🌙 Aries</span>
+                <span class="zodiac-badge">💖 Cancer</span>
+                <span class="zodiac-badge">🔥 Libra</span>
+            </div>
+        </article>
+    </div>
+
+    <!-- Sticky Footer -->
+    <div class="footer-actions">
+        <button class="next-button" onclick="goToPage2()">
+            Choose a Match
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        // Theme toggle
+        function initTheme() {
+            const savedTheme = localStorage.getItem('cupid-theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                document.documentElement.classList.add('dark');
+                updateIcons(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateIcons(false);
+            }
+        }
+
+        function updateIcons(isDark) {
+            document.getElementById('sun-icon').style.display = isDark ? 'none' : 'block';
+            document.getElementById('moon-icon').style.display = isDark ? 'block' : 'none';
+        }
+
+        document.getElementById('theme-toggle-btn').addEventListener('click', function() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('cupid-theme', isDark ? 'dark' : 'light');
+            updateIcons(isDark);
+        });
+
+        function goToPage2() {
+            window.location.href = 'cupid-match-selection-v2-page2.html';
+        }
+
+        initTheme();
+    </script>
+</body>
+</html>
+
