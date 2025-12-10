@@ -1,0 +1,51 @@
+# Person: Ethan Murphy
+# Generated from: ethan_murphy_astrological_subject.yaml
+# Big Four: Sun in Leo, Moon in Leo, Venus in Can, Mars in Tau, Gem Rising
+
+name: "Ethan Murphy"
+age: 34
+gender: "male"
+occupation: "Creative Director"
+
+location: "Brooklyn Heights, Brooklyn"
+origin: "New York, NY"
+
+bio: |
+  Ethan is a born-and-raised New Yorker who's never left, and never wanted to. His Brooklyn Heights apartment has views of the Manhattan skyline he grew up dreaming about. A double Leo with the ego to match, his Venus in Cancer softens the fire. He commands attention in any room—from Soho ad agency boardrooms to rooftop parties in Dumbo—with his Gemini Rising charm. But beneath the bravado, he's a romantic who wants to be adored. His Mars in Taurus means he's persistent in pursuit and slow to give up on what he wants. He builds empires by day and dreams of a cozy home life by night.
+
+history: |
+  Ethan's dating history is a highlight reel of grand gestures and dramatic exits. His double Leo placements mean he needs constant validation, which exhausted less demonstrative partners. His Cancer Venus craves emotional depth, but his Leo pride makes vulnerability feel like weakness. He's learning that being seen is different from being understood.
+
+personality_traits:
+  - "charismatic leader"
+  - "secretly sensitive"
+  - "persistent"
+  - "generous"
+  - "needs validation"
+
+preferences:
+  date_style:
+    - "upscale restaurants in Tribeca or West Village"
+    - "Broadway shows and Lincoln Center performances"
+    - "rooftop bars with Manhattan skyline views"
+
+  love_language: "words_of_affirmation"
+
+  interests:
+    - "advertising and brand strategy"
+    - "photography and visual arts"
+    - "hosting elaborate dinner parties"
+    - "fitness at Equinox"
+
+  ideal_partner_traits:
+    - "openly affectionate"
+    - "appreciates his accomplishments"
+    - "emotionally nurturing"
+    - "has her own ambitions"
+
+astrological_reference:
+  sun: "Leo"
+  moon: "Leo"
+  venus: "Can"
+  mars: "Tau"
+  ascendant: "Gem"

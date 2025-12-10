@@ -1,0 +1,51 @@
+# Person: Noah Foster
+# Generated from: noah_foster_astrological_subject.yaml
+# Big Four: Sun in Gem, Moon in Pis, Venus in Tau, Mars in Leo, Leo Rising
+
+name: "Noah Foster"
+age: 31
+gender: "male"
+occupation: "Documentary Filmmaker"
+
+location: "Fort Greene, Brooklyn"
+origin: "Toronto, Canada"
+
+bio: |
+  Noah came to New York from Toronto for film school at NYU and stayed for the stories. His Fort Greene apartment is filled with vinyl records and film equipment, a block from BAM where he premieres his documentaries. His Gemini Sun makes him curious about everything, constantly gathering stories and perspectives from every corner of the city. But his Pisces Moon gives him emotional intuition that surfaces in his films. His Venus in Taurus craves sensory pleasure and lasting love, while his Leo Mars and Rising command attention. He's the charming intellectual with a romantic soul.
+
+history: |
+  Noah's dating life reads like a documentary with multiple storylines. His Gemini Sun gets bored easily, but his Pisces Moon falls deeply when he connects. His Venus in Taurus means he takes commitment seriously, even when his mind wanders. Past partners loved his intensity but struggled with his emotional undercurrents. He's looking for someone grounded enough to anchor his flights of fancy.
+
+personality_traits:
+  - "curious storyteller"
+  - "emotionally intuitive"
+  - "sensually grounded"
+  - "dramatic presence"
+  - "secretly sentimental"
+
+preferences:
+  date_style:
+    - "indie film screenings at IFC Center or Metrograph"
+    - "cozy bookstore cafes in the Village"
+    - "late-night walks across the Brooklyn Bridge"
+
+  love_language: "physical_touch"
+
+  interests:
+    - "documentary filmmaking"
+    - "collecting vinyl records"
+    - "cooking elaborate meals"
+    - "swimming at the McCarren Park pool"
+
+  ideal_partner_traits:
+    - "emotionally grounded"
+    - "appreciates art and culture"
+    - "comfortable with his sensitivity"
+    - "values physical affection"
+
+astrological_reference:
+  sun: "Gem"
+  moon: "Pis"
+  venus: "Tau"
+  mars: "Leo"
+  ascendant: "Leo"

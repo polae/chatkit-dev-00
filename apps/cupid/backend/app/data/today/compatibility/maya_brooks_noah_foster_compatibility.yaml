@@ -1,0 +1,90 @@
+# Compatibility Analysis: Maya Brooks & Noah Foster
+# Generated: 2025-12-10T12:10:00.000000
+# Overall: 62/100 (Good)
+# Connection: 28/100
+
+subject1_name: "Maya Brooks"
+subject2_name: "Noah Foster"
+
+overall_compatibility: 62
+connection_intensity: 28
+compatibility_tier: "Good"
+
+sun_compatibility:
+  planet_name: "Sun"
+  score: 58
+  connection_intensity: 40
+  compatibility_label: "Neutral"
+  aspects:
+    - "Maya Brooks's Sun Sextile Noah Foster's Moon (+6)"
+    - "Maya Brooks's Mars Trine Noah Foster's Sun (+10)"
+    - "Maya Brooks's Sun Square Noah Foster's Mars (-8)"
+  # Score: 50 + 6 + 10 - 8 = 58
+
+moon_compatibility:
+  planet_name: "Moon"
+  score: 56
+  connection_intensity: 20
+  compatibility_label: "Neutral"
+  aspects:
+    - "Maya Brooks's Sun Sextile Noah Foster's Moon (+6)"
+  # Score: 50 + 6 = 56
+
+venus_compatibility:
+  planet_name: "Venus"
+  score: 56
+  connection_intensity: 20
+  compatibility_label: "Neutral"
+  aspects:
+    - "Maya Brooks's Venus Sextile Noah Foster's Venus (+6)"
+  # Score: 50 + 6 = 56
+
+mars_compatibility:
+  planet_name: "Mars"
+  score: 66
+  connection_intensity: 60
+  compatibility_label: "Good"
+  aspects:
+    - "Maya Brooks's Mars Trine Noah Foster's Sun (+10)"
+    - "Maya Brooks's Mars Sextile Noah Foster's Mars (+6)"
+    - "Maya Brooks's Sun Square Noah Foster's Mars (-8)"
+  # Score: 50 + 10 + 6 - 8 = 58, boosted for Mars-Mars harmony
+
+ascendant_compatibility:
+  planet_name: "Ascendant"
+  score: 54
+  connection_intensity: 40
+  compatibility_label: "Neutral"
+  aspects:
+    - "Maya Brooks's Mars Sextile Noah Foster's Ascendant (+6)"
+    - "Maya Brooks's Sun Square Noah Foster's Ascendant (-8)"
+  # Score: 50 + 6 - 8 = 48
+
+summary:
+  total_aspects: 7
+  harmonious_aspects: 5
+  challenging_aspects: 2
+  strengths:
+    - "Mars trine Sun creates mutual admiration and support"
+    - "Venus sextile Venus means compatible romantic expressions"
+    - "His Pisces Moon receives her nurturing Cancer Venus well"
+  challenges:
+    - "Sun-Mars and Sun-Ascendant squares create identity friction"
+    - "Lower connection intensity (28) may feel less electric initially"
+    - "Her Earth stability may clash with his Air-Water changeability"
+
+narrative:
+  first_impression: |
+    There's quiet recognition rather than fireworks. Her Cancer Rising is gentle; his Leo Rising is warm. The Mars sextile to his Ascendant means she finds his presence comfortable, even attractive. He sees her as nurturing and safe. It's a slow start, but promising.
+
+  emotional_bond: |
+    Her Sun sextile his Pisces Moon creates genuine emotional understanding. She grounds his watery emotions; he helps her access deeper feelings. His sensitivity might overwhelm her practical Taurus nature at times, but mostly they flow together.
+
+  romantic_chemistry: |
+    Venus sextile Venus is gentle but real. Her Cancer Venus wants emotional intimacy; his Taurus Venus craves sensual comfort. Both value quality time and physical presence. Not flashy chemistry, but deeply satisfying when they relax into it.
+
+  passion_dynamic: |
+    Mars trine Sun is excellent for mutual support. Her Libra Mars admires his Gemini Sun's wit; his Leo Mars is drawn to her grounded sensuality. The Mars-Mars sextile means they energize rather than exhaust each other. Compatible rhythms.
+
+  long_term_potential: |
+    Solid foundation for a lasting relationship. Lower intensity means less drama but also less volatility. They'd need to consciously create excitement, but the mutual respect and easy flow make daily life harmonious. A relationship that deepens over time.

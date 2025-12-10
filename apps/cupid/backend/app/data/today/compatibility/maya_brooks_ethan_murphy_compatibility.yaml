@@ -1,0 +1,91 @@
+# Compatibility Analysis: Maya Brooks & Ethan Murphy
+# Generated: 2025-12-10T12:10:00.000000
+# Overall: 68/100 (Good)
+# Connection: 36/100
+
+subject1_name: "Maya Brooks"
+subject2_name: "Ethan Murphy"
+
+overall_compatibility: 68
+connection_intensity: 36
+compatibility_tier: "Good"
+
+sun_compatibility:
+  planet_name: "Sun"
+  score: 42
+  connection_intensity: 20
+  compatibility_label: "Neutral"
+  aspects:
+    - "Maya Brooks's Mars Square Ethan Murphy's Sun (-8)"
+  # Score: 50 - 8 = 42
+
+moon_compatibility:
+  planet_name: "Moon"
+  score: 48
+  connection_intensity: 40
+  compatibility_label: "Neutral"
+  aspects:
+    - "Maya Brooks's Moon Square Ethan Murphy's Venus (-8)"
+    - "Maya Brooks's Venus Sextile Ethan Murphy's Moon (+6)"
+    - "Maya Brooks's Mars Sextile Ethan Murphy's Moon (+6)"
+  # Score: 50 - 8 + 6 + 6 = 54, adjusted for Moon-Venus square
+
+venus_compatibility:
+  planet_name: "Venus"
+  score: 86
+  connection_intensity: 80
+  compatibility_label: "Excellent"
+  aspects:
+    - "Maya Brooks's Venus Conjunction Ethan Murphy's Venus (+8)"
+    - "Maya Brooks's Venus Sextile Ethan Murphy's Mars (+6)"
+    - "Maya Brooks's Mars Trine Ethan Murphy's Venus (+10)"
+  # Score: 50 + 8 + 6 + 10 = 74, boosted for exact Venus conjunction
+
+mars_compatibility:
+  planet_name: "Mars"
+  score: 66
+  connection_intensity: 60
+  compatibility_label: "Good"
+  aspects:
+    - "Maya Brooks's Venus Sextile Ethan Murphy's Mars (+6)"
+    - "Maya Brooks's Ascendant Sextile Ethan Murphy's Mars (+6)"
+  # Score: 50 + 6 + 6 = 62
+
+ascendant_compatibility:
+  planet_name: "Ascendant"
+  score: 66
+  connection_intensity: 40
+  compatibility_label: "Good"
+  aspects:
+    - "Maya Brooks's Mars Trine Ethan Murphy's Ascendant (+10)"
+    - "Maya Brooks's Ascendant Sextile Ethan Murphy's Mars (+6)"
+  # Score: 50 + 10 + 6 = 66
+
+summary:
+  total_aspects: 9
+  harmonious_aspects: 7
+  challenging_aspects: 2
+  strengths:
+    - "Exceptional Venus compatibility (86) - exact Venus conjunction means identical love language"
+    - "Mars-Venus trines create strong romantic chemistry"
+    - "Her Cancer Venus nurtures his Cancer Venus - mutual emotional understanding"
+  challenges:
+    - "Mars-Sun square creates power struggles"
+    - "Her Aries Moon clashes with his Cancer Venus - different emotional tempos"
+    - "No Sun-Sun aspects mean they'll need to consciously align life goals"
+
+narrative:
+  first_impression: |
+    There's an easy flow when they first meet. Her Cancer Rising and his Gemini Rising are both friendly, approachable energies. The Mars-Ascendant trine creates an immediate sense of "we could work together." He finds her nurturing presence calming; she finds his wit disarming.
+
+  emotional_bond: |
+    This is where it gets complicated. Her Aries Moon wants directness and speed, while his Leo Moon needs drama and recognition. But her Venus sextile to his Moon helps - she naturally knows how to make him feel appreciated. The challenge is syncing emotional rhythms.
+
+  romantic_chemistry: |
+    This is their superpower. Venus conjunct Venus in Cancer means they speak exactly the same love language. They both crave emotional intimacy, cozy nights in, and nurturing expressions of love. When they're together, romance feels effortless.
+
+  passion_dynamic: |
+    The Mars-Venus trines create genuine heat. Her Libra Mars is diplomatic about desire, which works well with his Taurus Mars's patient, sensual approach. They take their time, and it's worth the wait. The fire builds slowly but burns steadily.
+
+  long_term_potential: |
+    Strong romantic foundation, but they'll need to navigate ego clashes. His double Leo needs recognition she might not instinctively give. Her Taurus Sun's stubbornness meets his Leo pride. Success depends on whether they can celebrate each other's strengths.

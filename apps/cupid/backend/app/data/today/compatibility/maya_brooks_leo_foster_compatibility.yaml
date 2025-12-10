@@ -1,0 +1,93 @@
+# Compatibility Analysis: Maya Brooks & Leo Foster
+# Generated: 2025-12-10T12:10:00.000000
+# Overall: 44/100 (Moderate)
+# Connection: 40/100
+
+subject1_name: "Maya Brooks"
+subject2_name: "Leo Foster"
+
+overall_compatibility: 44
+connection_intensity: 40
+compatibility_tier: "Moderate"
+
+sun_compatibility:
+  planet_name: "Sun"
+  score: 42
+  connection_intensity: 40
+  compatibility_label: "Neutral"
+  aspects:
+    - "Maya Brooks's Moon Conjunction Leo Foster's Sun (+8)"
+    - "Maya Brooks's Ascendant Square Leo Foster's Sun (-8)"
+  # Score: 50 + 8 - 8 = 50, but the square creates friction
+
+moon_compatibility:
+  planet_name: "Moon"
+  score: 48
+  connection_intensity: 40
+  compatibility_label: "Neutral"
+  aspects:
+    - "Maya Brooks's Moon Conjunction Leo Foster's Sun (+8)"
+    - "Maya Brooks's Moon Opposition Leo Foster's Ascendant (-6)"
+    - "Maya Brooks's Mars Square Leo Foster's Moon (-8)"
+  # Score: 50 + 8 - 6 - 8 = 44
+
+venus_compatibility:
+  planet_name: "Venus"
+  score: 60
+  connection_intensity: 60
+  compatibility_label: "Good"
+  aspects:
+    - "Maya Brooks's Venus Trine Leo Foster's Venus (+10)"
+    - "Maya Brooks's Venus Square Leo Foster's Ascendant (-8)"
+    - "Maya Brooks's Mars Trine Leo Foster's Venus (+10)"
+  # Score: 50 + 10 - 8 + 10 = 62
+
+mars_compatibility:
+  planet_name: "Mars"
+  score: 30
+  connection_intensity: 40
+  compatibility_label: "Tense"
+  aspects:
+    - "Maya Brooks's Sun Square Leo Foster's Mars (-8)"
+    - "Maya Brooks's Moon Sextile Leo Foster's Mars (+6)"
+    - "Maya Brooks's Mars Square Leo Foster's Moon (-8)"
+  # Score: 50 - 8 + 6 - 8 = 40
+
+ascendant_compatibility:
+  planet_name: "Ascendant"
+  score: 36
+  connection_intensity: 40
+  compatibility_label: "Tense"
+  aspects:
+    - "Maya Brooks's Moon Opposition Leo Foster's Ascendant (-6)"
+    - "Maya Brooks's Ascendant Square Leo Foster's Sun (-8)"
+  # Score: 50 - 6 - 8 = 36
+
+summary:
+  total_aspects: 10
+  harmonious_aspects: 5
+  challenging_aspects: 5
+  strengths:
+    - "Venus trine Venus creates romantic harmony despite challenges"
+    - "Moon-Sun conjunction gives deep emotional recognition"
+    - "Both Aries Moon placements understand each other's need for independence"
+  challenges:
+    - "Multiple squares create friction and power struggles"
+    - "Mars compatibility is tense (30) - different energy and conflict styles"
+    - "Ascendant clashes mean rocky first impressions"
+
+narrative:
+  first_impression: |
+    Sparks fly immediately - but not the comfortable kind. Her Cancer Ascendant squares his Aries Sun, creating an almost combative tension. She seems too sensitive for his boldness; he seems too brash for her warmth. It takes multiple meetings before they see past the friction.
+
+  emotional_bond: |
+    The Moon-Sun conjunction is their saving grace. When her Aries Moon meets his Aries Sun, there's instant recognition - they understand each other's fire and independence. But her Moon opposing his Ascendant means the emotional connection doesn't translate to easy daily interaction.
+
+  romantic_chemistry: |
+    Venus trine Venus provides genuine romantic compatibility. She craves nurturing connection; his Aquarius Venus offers intellectual romance. Different styles, but they intrigue each other. The Mars trines add passion when they get past their defenses.
+
+  passion_dynamic: |
+    This is the challenge zone. Her Libra Mars wants harmony; his Aquarius Mars wants freedom and experimentation. She pulls toward togetherness; he pushes toward independence. The square to his Moon means her drive can feel overwhelming to his emotional needs.
+
+  long_term_potential: |
+    High effort, potentially high reward. They're fundamentally different but not incompatible. Success requires both to appreciate what the other offers - her grounding stability for his fire, his adventure for her routine. Not for the faint of heart.

@@ -1,0 +1,51 @@
+# Person: Leo Foster
+# Generated from: leo_foster_astrological_subject.yaml
+# Big Four: Sun in Ari, Moon in Leo, Venus in Aqu, Mars in Aqu, Lib Rising
+
+name: "Leo Foster"
+age: 34
+gender: "male"
+occupation: "Tech Entrepreneur"
+
+location: "Tribeca, Manhattan"
+origin: "Denver, CO"
+
+bio: |
+  Leo relocated from Denver to Tribeca when his AI startup raised its Series A from a NYC-based VC firm. He traded mountain biking for Central Park runs, but kept his Colorado directness. His Aries Sun makes him a natural leader who moves fast and breaks things, while his Leo Moon needs recognition for his achievements. But his Aquarius Venus and Mars give him an unconventional approach to love and passion—he's more interested in intellectual connection than traditional romance. His Libra Rising makes him appear charming and balanced, hiding the competitive fire within.
+
+history: |
+  Leo's relationships have been experimental. His Aquarius Venus wants intellectual connection and freedom, which clashes with his Leo Moon's need for devotion. He's dated creatives, founders, and free spirits who couldn't match his pace. He's searching for someone who can give him both space and adoration, and doesn't see those as contradictions.
+
+personality_traits:
+  - "pioneering"
+  - "needs recognition"
+  - "intellectually romantic"
+  - "freedom-loving"
+  - "charming first impression"
+
+preferences:
+  date_style:
+    - "running in Central Park followed by brunch"
+    - "tech meetups and startup events in Flatiron"
+    - "spontaneous weekend trips upstate"
+
+  love_language: "quality_time"
+
+  interests:
+    - "startup investing and mentorship"
+    - "running and outdoor fitness"
+    - "futurism and emerging tech"
+    - "stand-up comedy at the Comedy Cellar"
+
+  ideal_partner_traits:
+    - "intellectually stimulating"
+    - "independent and self-sufficient"
+    - "admires his ambition"
+    - "comfortable with unconventional"
+
+astrological_reference:
+  sun: "Ari"
+  moon: "Leo"
+  venus: "Aqu"
+  mars: "Aqu"
+  ascendant: "Lib"
