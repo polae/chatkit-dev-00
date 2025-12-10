@@ -32,18 +32,15 @@ from .agents.introduction_agent import introduction_agent
 from .agents.mortal_agent import mortal_agent, MortalContext
 from .agents.match_agent import match_agent, MatchContext
 from .agents.start_cupid_game_agent import start_cupid_game_agent
-from .agents.cupid_game_agent import cupid_game_agent
 from .agents.cupid_evaluation_agent import cupid_evaluation_agent
+from .agents.end_agent import end_agent
 from .agents.display_mortal_agent import display_mortal_agent, DisplayMortalContext
 from .agents.display_match_agent import display_match_agent, DisplayMatchContext
 # Note: display_continue_card_agent removed - using direct widget calls for static messages
 from .agents.display_compatibility_card_agent import display_compatibility_card_agent, DisplayCompatibilityCardContext
 from .agents.compatibility_analysis_agent import compatibility_analysis_agent
 from .agents.display_choices_agent import display_choices_agent, DisplayChoicesContext
-from .agents.game_dashboard_agent import game_dashboard_agent, GameDashboardContext
-from .agents.evaluate_scene_score_agent import evaluate_scene_score_agent
 from .agents.has_ended_agent import has_ended_agent, HasEndedContext
-from .agents.display_evaluation_card_agent import display_evaluation_card_agent
 
 from .memory_store import MemoryStore
 from .request_context import RequestContext
@@ -54,7 +51,6 @@ from .widgets.profilecard_widget import build_profilecard_widget
 from .widgets.continue_card_widget import build_continue_card_widget
 from .widgets.choice_list_widget import build_choice_list_widget
 from .widgets.compatibility_analysis_widget import build_compatibility_analysis_widget
-from .widgets.compatibility_snapshot_widget import build_compatibility_snapshot_widget
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -123,22 +119,6 @@ class CupidServer(ChatKitServer[RequestContext]):
         if thread.metadata is None:
             thread.metadata = {}
         thread.metadata["chapter"] = chapter
-        await self.store.save_thread(thread, context)
-
-    async def _save_game_state(
-        self,
-        thread: ThreadMetadata,
-        context: RequestContext,
-        current_compatibility: int | None = None,
-        scene_number: int | None = None,
-    ) -> None:
-        """Persist game state (compatibility score, scene number) to thread.metadata."""
-        if thread.metadata is None:
-            thread.metadata = {}
-        if current_compatibility is not None:
-            thread.metadata["current_compatibility"] = current_compatibility
-        if scene_number is not None:
-            thread.metadata["scene_number"] = scene_number
         await self.store.save_thread(thread, context)
 
     async def action(
@@ -214,7 +194,6 @@ class CupidServer(ChatKitServer[RequestContext]):
             thread.metadata["match_data"] = self.match_data
             thread.metadata["compatibility_data"] = self.compatibility_data
             thread.metadata["current_compatibility"] = self.compatibility_data.get("overall_compatibility", 69)
-            thread.metadata["scene_number"] = 1
             await self.store.save_thread(thread, context)
 
         # Create base agent context
@@ -477,7 +456,7 @@ class CupidServer(ChatKitServer[RequestContext]):
         agent_context: CupidAgentContext,
         context: RequestContext,
     ) -> AsyncIterator[ThreadStreamEvent]:
-        """Chapter 4: StartCupidGame narrative + DisplayChoices widget."""
+        """Chapter 4: StartCupidGame narrative + HasEnded check + DisplayChoices or ContinueCard."""
         logger.info("Chapter 4: Start Cupid Game")
 
         # Agent Builder pattern: accumulate conversation after each agent
@@ -492,122 +471,7 @@ class CupidServer(ChatKitServer[RequestContext]):
             yield event
         conversation_history.extend([item.to_input_item() for item in result.new_items])
 
-        # Run DisplayChoices agent - extract last assistant message content via context
-        last_assistant_content = ""
-        for item in reversed(conversation_history):
-            role = item.get("role") if isinstance(item, dict) else getattr(item, "role", None)
-            if role == "assistant":
-                content = item.get("content") if isinstance(item, dict) else getattr(item, "content", None)
-                if isinstance(content, list):
-                    for block in content:
-                        if isinstance(block, dict) and block.get("type") == "output_text":
-                            last_assistant_content = block.get("text", "")
-                            break
-                        elif hasattr(block, "text"):
-                            last_assistant_content = block.text
-                            break
-                elif isinstance(content, str):
-                    last_assistant_content = content
-                break
-        choices_context = DisplayChoicesContext(message_content=last_assistant_content)
-        choices_result = await Runner.run(
-            display_choices_agent,
-            "extract",
-            context=choices_context,
-        )
-
-        # Build and yield Choice list widget
-        choices_data = choices_result.final_output.model_dump()
-        choices_widget = build_choice_list_widget(choices_data["items"])
-        widget_item = WidgetItem(
-            thread_id=thread.id,
-            id=self._generate_widget_id(thread),
-            created_at=datetime.now(),
-            widget=choices_widget,
-        )
-        yield ThreadItemDoneEvent(item=widget_item)
-
-        # Increment chapter and persist
-        await self._set_chapter(thread, context, 5)
-
-    async def _handle_chapter_5(
-        self,
-        thread: ThreadMetadata,
-        input_items: list,
-        agent_context: CupidAgentContext,
-        context: RequestContext,
-    ) -> AsyncIterator[ThreadStreamEvent]:
-        """Chapter 5: Game loop - EvaluateSceneScore -> GameDashboard -> CupidGame -> HasEnded."""
-        scene_number = thread.metadata.get("scene_number", 1)
-        current_compatibility = thread.metadata.get("current_compatibility", 69)
-        logger.info(f"Chapter 5: Game loop - Scene {scene_number}")
-
-        # Get thread-specific data strings
-        mortal_str, match_str, compat_str = self._get_data_strings(thread)
-
-        # Agent Builder pattern: accumulate conversation after each agent
-        conversation_history = list(input_items)
-
-        # Show progress indicator
-        yield ProgressUpdateEvent(text="Generating next scene...")
-
-        # Run EvaluateSceneScore agent
-        score_result = await Runner.run(
-            evaluate_scene_score_agent,
-            conversation_history,
-        )
-        score_data = score_result.final_output.model_dump()
-        score = score_data.get("score", "0")
-        conversation_history.extend([item.to_input_item() for item in score_result.new_items])
-
-        # Update current compatibility and persist
-        try:
-            score_delta = int(score)
-            # Clamp delta to reasonable range (-10 to +10) as defense in depth
-            score_delta = max(-10, min(10, score_delta))
-            current_compatibility = max(0, min(100, current_compatibility + score_delta))
-            await self._save_game_state(thread, context, current_compatibility=current_compatibility)
-        except (ValueError, TypeError):
-            pass
-
-        # Run GameDashboard agent (pass current compatibility and scene number)
-        dashboard_context = GameDashboardContext(
-            state_compatibility=compat_str,
-            input_output_parsed_score=score,
-            current_compatibility=current_compatibility,
-            scene_number=scene_number,
-        )
-        dashboard_result = await Runner.run(
-            game_dashboard_agent,
-            "display",
-            context=dashboard_context,
-        )
-
-        # Build and yield Compatibility Snapshot widget
-        dashboard_data = dashboard_result.final_output.model_dump()
-        snapshot_widget = build_compatibility_snapshot_widget(
-            scene=dashboard_data["scene"],
-            compatibility=int(dashboard_data["compatibility"]),
-            delta=dashboard_data["delta"],
-            bars=dashboard_data["bars"],
-            pills=dashboard_data["pills"],
-        )
-        widget_item = WidgetItem(
-            thread_id=thread.id,
-            id=self._generate_widget_id(thread),
-            created_at=datetime.now(),
-            widget=snapshot_widget,
-        )
-        yield ThreadItemDoneEvent(item=widget_item)
-
-        # Run CupidGame agent for narrative - stream events directly
-        game_result = Runner.run_streamed(cupid_game_agent, conversation_history, context=agent_context)
-        async for event in stream_agent_response(agent_context, game_result):
-            yield event
-        conversation_history.extend([item.to_input_item() for item in game_result.new_items])
-
-        # Run HasEnded agent to check if game is over
-        # Extract the last game narrative (skip any structured outputs like choices)
+        # Extract last assistant message content for HasEnded check
         last_narrative_content = ""
         for item in reversed(conversation_history):
             role = item.get("role") if isinstance(item, dict) else getattr(item, "role", None)
@@ -629,6 +493,7 @@ class CupidServer(ChatKitServer[RequestContext]):
                     last_narrative_content = text_content
                     break
 
+        # Run HasEnded agent to check if story has concluded
         hasended_context = HasEndedContext(narrative_content=last_narrative_content)
         ended_result = await Runner.run(
             has_ended_agent,
@@ -639,15 +504,10 @@ class CupidServer(ChatKitServer[RequestContext]):
         logger.info(f"HasEnded result: {ended_data}, narrative length: {len(last_narrative_content)}")
 
         if ended_data.get("has_ended", False):
-            # Game is over - show evaluation transition card
-            eval_card_result = await Runner.run(
-                display_evaluation_card_agent,
-                conversation_history,
+            # Story has ended - show Continue Card with evaluation prompt
+            continue_widget = build_continue_card_widget(
+                "Ok, our story has ended. Would you like to see your evaluation? I have notes."
             )
-            eval_card_data = eval_card_result.final_output.model_dump()
-
-            # Build and yield Continue Card widget with the personalized message
-            continue_widget = build_continue_card_widget(eval_card_data["message"])
             widget_item = WidgetItem(
                 thread_id=thread.id,
                 id=self._generate_widget_id(thread),
@@ -657,30 +517,10 @@ class CupidServer(ChatKitServer[RequestContext]):
             yield ThreadItemDoneEvent(item=widget_item)
 
             # Move to evaluation chapter
-            await self._set_chapter(thread, context, 6)
+            await self._set_chapter(thread, context, 5)
         else:
-            # Continue game loop - extract message content with options (not HasEnded output)
-            last_assistant_content = ""
-            for item in reversed(conversation_history):
-                role = item.get("role") if isinstance(item, dict) else getattr(item, "role", None)
-                if role == "assistant":
-                    content = item.get("content") if isinstance(item, dict) else getattr(item, "content", None)
-                    text_content = ""
-                    if isinstance(content, list):
-                        for block in content:
-                            if isinstance(block, dict) and block.get("type") == "output_text":
-                                text_content = block.get("text", "")
-                                break
-                            elif hasattr(block, "text"):
-                                text_content = block.text
-                                break
-                    elif isinstance(content, str):
-                        text_content = content
-                    # Only use this message if it contains options (skip HasEnded output)
-                    if "OPTION A:" in text_content or "🏹 CUPID'S OPTIONS" in text_content:
-                        last_assistant_content = text_content
-                        break
-            choices_context = DisplayChoicesContext(message_content=last_assistant_content)
+            # Story continues - show choices
+            choices_context = DisplayChoicesContext(message_content=last_narrative_content)
             choices_result = await Runner.run(
                 display_choices_agent,
                 "extract",
@@ -698,9 +538,28 @@ class CupidServer(ChatKitServer[RequestContext]):
             )
             yield ThreadItemDoneEvent(item=widget_item)
 
-            # Increment scene number and persist
-            new_scene = scene_number + 1
-            await self._save_game_state(thread, context, scene_number=new_scene)
+            # Stay in chapter 4 (loop) - don't increment chapter
+
+    async def _handle_chapter_5(
+        self,
+        thread: ThreadMetadata,
+        input_items: list,
+        agent_context: CupidAgentContext,
+        context: RequestContext,
+    ) -> AsyncIterator[ThreadStreamEvent]:
+        """Chapter 5: CupidEvaluation - final evaluation of the date."""
+        logger.info("Chapter 5: Cupid Evaluation")
+
+        # Show progress indicator
+        yield ProgressUpdateEvent(text="Preparing your evaluation...")
+
+        # Run CupidEvaluation agent - stream events directly
+        result = Runner.run_streamed(cupid_evaluation_agent, input_items, context=agent_context)
+        async for event in stream_agent_response(agent_context, result):
+            yield event
+
+        # Move to final chapter (End agent)
+        await self._set_chapter(thread, context, 6)
 
     async def _handle_chapter_final(
         self,
@@ -709,14 +568,14 @@ class CupidServer(ChatKitServer[RequestContext]):
         agent_context: CupidAgentContext,
         context: RequestContext,
     ) -> AsyncIterator[ThreadStreamEvent]:
-        """Chapter 6+: CupidEvaluation (final)."""
-        logger.info("Chapter 6+: Final Evaluation")
+        """Chapter 6+: End agent - final thank you and restart prompt."""
+        logger.info("Chapter 6+: End")
 
         # Show progress indicator
-        yield ProgressUpdateEvent(text="Preparing final evaluation...")
+        yield ProgressUpdateEvent(text="Wrapping up...")
 
-        # Run CupidEvaluation agent - stream events directly
-        result = Runner.run_streamed(cupid_evaluation_agent, input_items, context=agent_context)
+        # Run End agent - stream events directly
+        result = Runner.run_streamed(end_agent, input_items, context=agent_context)
         async for event in stream_agent_response(agent_context, result):
             yield event
 
