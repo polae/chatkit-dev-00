@@ -1,7 +1,7 @@
 /* Match Selection Flow Styles */
 
 :root {
-  /* Light mode (default) - matches ChatKit palette */
+  /* Light mode (default) - cream background */
   --ms-bg-primary: #f8f6f1;
   --ms-bg-surface: #f8f6f1;
   --ms-text-primary: #464646;
@@ -33,14 +33,14 @@
 }
 
 .dark {
-  /* Dark mode - matches ChatKit/Tailwind palette */
-  --ms-bg-primary: #0b1120;
-  --ms-bg-surface: #0b1120;
-  --ms-text-primary: #E8E8E8;
-  --ms-text-secondary: #A8A8A8;
-  --ms-text-muted: #6B6B6B;
-  --ms-border-color: rgba(168, 168, 168, 0.1);
-  --ms-border-color-hover: rgba(168, 168, 168, 0.2);
+  /* Dark mode - dark blue (slate-900/950) */
+  --ms-bg-primary: #0f172a;
+  --ms-bg-surface: #1e293b;
+  --ms-text-primary: #f1f5f9;
+  --ms-text-secondary: #cbd5e1;
+  --ms-text-muted: #64748b;
+  --ms-border-color: rgba(241, 245, 249, 0.1);
+  --ms-border-color-hover: rgba(241, 245, 249, 0.2);
   --ms-shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
   --ms-shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
   --ms-shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);

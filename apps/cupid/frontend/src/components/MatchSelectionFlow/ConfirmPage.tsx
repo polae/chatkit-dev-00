@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, ArrowLeft, Play, Heart } from "lucide-react";
+import { User, ArrowLeft, Play, Heart, Loader2 } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
 import type { PersonData, CompatibilityData } from "../../types/today";
 import { getZodiacSymbol } from "../../types/today";
@@ -186,9 +186,22 @@ export function ConfirmPage({
 
       {/* Play Button */}
       <section className="ms-nav-section">
-        <button className="ms-nav-button ms-play-button" onClick={handlePlay}>
-          <Play fill="currentColor" />
-          Play
+        <button
+          className="ms-nav-button ms-play-button"
+          onClick={handlePlay}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <>
+              <Loader2 className="animate-spin" />
+              Starting...
+            </>
+          ) : (
+            <>
+              <Play fill="currentColor" />
+              Play
+            </>
+          )}
         </button>
       </section>
     </>

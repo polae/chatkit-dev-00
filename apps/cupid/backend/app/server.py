@@ -190,29 +190,19 @@ class CupidServer(ChatKitServer[RequestContext]):
         if "chapter" not in thread.metadata:
             thread.metadata["chapter"] = 0
 
-            # Check for match session ID in request header
+            # Check for match session ID in context (populated from header by main.py)
             match_data_loaded = False
-            request = context.get("request")
-            if request:
-                session_id = request.headers.get("x-match-session-id")
-                if session_id:
-                    try:
-                        # Import the pending selections store from main
-                        from .main import get_pending_selections_store
-                        pending_selections = get_pending_selections_store()
-                        match_selection = pending_selections.pop(session_id, None)
+            if context.match_session_id:
+                from .match_session_store import match_session_store
+                match_selection = match_session_store.retrieve(context.match_session_id)
 
-                        if match_selection:
-                            thread.metadata["selected_match_id"] = match_selection.get("selected_match_id")
-                            thread.metadata["mortal_data"] = match_selection.get("mortal_data", self.mortal_data)
-                            thread.metadata["match_data"] = match_selection.get("match_data", self.match_data)
-                            thread.metadata["compatibility_data"] = match_selection.get("compatibility_data", self.compatibility_data)
-                            match_data_loaded = True
-                            logger.info(f"Using match data from session header: {session_id}")
-                        else:
-                            logger.warning(f"Session ID not found or expired: {session_id}")
-                    except Exception as e:
-                        logger.warning(f"Failed to retrieve match data from session: {e}")
+                if match_selection:
+                    thread.metadata["selected_match_id"] = match_selection.get("selected_match_id")
+                    thread.metadata["mortal_data"] = match_selection.get("mortal_data", self.mortal_data)
+                    thread.metadata["match_data"] = match_selection.get("match_data", self.match_data)
+                    thread.metadata["compatibility_data"] = match_selection.get("compatibility_data", self.compatibility_data)
+                    match_data_loaded = True
+                    logger.info(f"Using match data from session: {context.match_session_id}")
 
             if not match_data_loaded:
                 # Legacy: use default files (backwards compatibility)

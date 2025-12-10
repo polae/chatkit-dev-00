@@ -85,8 +85,8 @@ export function MatchSelectionFlow() {
 
   const containerClass =
     scheme === "dark"
-      ? "min-h-full bg-[#1a1a1a] text-[#E8E8E8]"
-      : "min-h-full bg-[#FDF6E3] text-[#464646]";
+      ? "min-h-full bg-slate-900 text-slate-100"
+      : "min-h-full bg-[#f8f6f1] text-[#464646]";
 
   return (
     <div className={containerClass}>
