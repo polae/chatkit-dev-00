@@ -1,0 +1,138 @@
+# Astrological Subject: Ethan Murphy
+# Generated: 2025-12-10T11:59:37.949485
+# Sun: Leo | Moon: Leo | Rising: Gem
+
+name: Ethan Murphy
+birth_data:
+  year: 1990
+  month: 7
+  day: 24
+  hour: 3
+  minute: 0
+  city: New York, NY
+  nation: US
+  latitude: 40.7128
+  longitude: -74.006
+  tz_str: America/New_York
+sun:
+  name: Sun
+  sign: Leo
+  emoji: ♌️
+  position: 1.14
+  abs_pos: 121.14
+  house: Second_House
+  element: Fire
+  quality: Fixed
+  retrograde: false
+moon:
+  name: Moon
+  sign: Leo
+  emoji: ♌️
+  position: 29.27
+  abs_pos: 149.27
+  house: Third_House
+  element: Fire
+  quality: Fixed
+  retrograde: false
+mercury:
+  name: Mercury
+  sign: Leo
+  emoji: ♌️
+  position: 22.09
+  abs_pos: 142.09
+  house: Third_House
+  element: Fire
+  quality: Fixed
+  retrograde: false
+venus:
+  name: Venus
+  sign: Can
+  emoji: ♋️
+  position: 4.98
+  abs_pos: 94.98
+  house: First_House
+  element: Water
+  quality: Cardinal
+  retrograde: false
+mars:
+  name: Mars
+  sign: Tau
+  emoji: ♉️
+  position: 7.74
+  abs_pos: 37.74
+  house: Eleventh_House
+  element: Earth
+  quality: Fixed
+  retrograde: false
+jupiter:
+  name: Jupiter
+  sign: Can
+  emoji: ♋️
+  position: 24.52
+  abs_pos: 114.52
+  house: Second_House
+  element: Water
+  quality: Cardinal
+  retrograde: false
+saturn:
+  name: Saturn
+  sign: Cap
+  emoji: ♑️
+  position: 21.32
+  abs_pos: 291.32
+  house: Eighth_House
+  element: Earth
+  quality: Cardinal
+  retrograde: true
+uranus:
+  name: Uranus
+  sign: Cap
+  emoji: ♑️
+  position: 6.64
+  abs_pos: 276.64
+  house: Seventh_House
+  element: Earth
+  quality: Cardinal
+  retrograde: true
+neptune:
+  name: Neptune
+  sign: Cap
+  emoji: ♑️
+  position: 12.69
+  abs_pos: 282.69
+  house: Seventh_House
+  element: Earth
+  quality: Cardinal
+  retrograde: true
+pluto:
+  name: Pluto
+  sign: Sco
+  emoji: ♏️
+  position: 14.97
+  abs_pos: 224.97
+  house: Sixth_House
+  element: Water
+  quality: Fixed
+  retrograde: true
+ascendant:
+  name: Ascendant
+  sign: Gem
+  emoji: ♊️
+  position: 24.99
+  abs_pos: 84.99
+midheaven:
+  name: Midheaven
+  sign: Pis
+  emoji: ♓️
+  position: 0.68
+  abs_pos: 330.68
+chiron:
+  name: Chiron
+  sign: Can
+  emoji: ♋️
+  position: 20.17
+  abs_pos: 110.17
+  house: Second_House
+  element: Water
+  quality: Cardinal
+  retrograde: false

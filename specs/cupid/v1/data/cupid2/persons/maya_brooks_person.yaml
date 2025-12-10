@@ -1,0 +1,51 @@
+# Person: Maya Brooks
+# Generated from: maya_brooks_astrological_subject.yaml
+# Big Four: Sun in Tau, Moon in Ari, Venus in Can, Mars in Lib (Rx), Can Rising
+
+name: "Maya Brooks"
+age: 25
+gender: "female"
+occupation: "Interior Designer"
+
+location: "Cobble Hill, Brooklyn"
+origin: "San Francisco, CA"
+
+bio: |
+  Maya moved from San Francisco to Brooklyn for a design role at a boutique firm in Tribeca, and fell in love with Cobble Hill's brownstones and tree-lined streets. Her Taurus Sun gives her an eye for beauty and material comfort, but her Aries Moon means she acts on impulse more than she'd admit—like accepting a job across the country on a whim. With Venus in Cancer and Cancer Rising, she radiates warmth and nurturing energy, hosting Sunday brunches for friends in her carefully curated apartment. Her retrograde Mars in Libra makes her avoid conflict, preferring to keep the peace even when she's seething inside.
+
+history: |
+  Maya falls fast but commits slowly. Her Aries Moon rushes in, but her Taurus Sun needs security before she lets her guard down. Past relationships ended because partners mistook her patience for passivity. Her Cancer Venus means she remembers every slight and every kindness. She's looking for someone who can match her intensity without overwhelming her need for stability.
+
+personality_traits:
+  - "sensual and grounded"
+  - "secretly impulsive"
+  - "nurturing"
+  - "conflict-avoidant"
+  - "fiercely loyal once committed"
+
+preferences:
+  date_style:
+    - "cozy home-cooked dinner dates"
+    - "Brooklyn Botanic Garden and Smorgasburg"
+    - "intimate wine bars in Carroll Gardens"
+
+  love_language: "acts_of_service"
+
+  interests:
+    - "interior design and home decor"
+    - "cooking and hosting dinner parties"
+    - "yoga and pilates"
+    - "vintage shopping in Williamsburg"
+
+  ideal_partner_traits:
+    - "emotionally available"
+    - "financially stable"
+    - "patient but not passive"
+    - "appreciates beauty and comfort"
+
+astrological_reference:
+  sun: "Tau"
+  moon: "Ari"
+  venus: "Can"
+  mars: "Lib"
+  ascendant: "Can"

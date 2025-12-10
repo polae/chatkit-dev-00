@@ -1,0 +1,148 @@
+# Synastry Analysis: Maya Brooks & Leo Foster
+# Generated: 2025-12-10T12:01:16.019737
+# Total Aspects: 10
+
+person1_name: Maya Brooks
+person2_name: Leo Foster
+total_aspects: 10
+aspects:
+- description: Maya Brooks's Sun Square Leo Foster's Venus
+  planet1:
+    name: Sun
+    owner: Maya Brooks
+    sign: Tau
+    position: 51.51
+  planet2:
+    name: Venus
+    owner: Leo Foster
+    sign: Aqu
+    position: 327.6
+  aspect_type: Square
+  symbol: ''
+  orb: 6.09
+- description: Maya Brooks's Sun Square Leo Foster's Mars
+  planet1:
+    name: Sun
+    owner: Maya Brooks
+    sign: Tau
+    position: 51.51
+  planet2:
+    name: Mars
+    owner: Leo Foster
+    sign: Aqu
+    position: 317.37
+  aspect_type: Square
+  symbol: ''
+  orb: 4.14
+- description: Maya Brooks's Moon Conjunction Leo Foster's Sun
+  planet1:
+    name: Moon
+    owner: Maya Brooks
+    sign: Ari
+    position: 11.8
+  planet2:
+    name: Sun
+    owner: Leo Foster
+    sign: Ari
+    position: 13.99
+  aspect_type: Conjunction
+  symbol: ''
+  orb: 2.19
+- description: Maya Brooks's Moon Sextile Leo Foster's Mars
+  planet1:
+    name: Moon
+    owner: Maya Brooks
+    sign: Ari
+    position: 11.8
+  planet2:
+    name: Mars
+    owner: Leo Foster
+    sign: Aqu
+    position: 317.37
+  aspect_type: Sextile
+  symbol: ''
+  orb: 5.57
+- description: Maya Brooks's Moon Opposition Leo Foster's Ascendant
+  planet1:
+    name: Moon
+    owner: Maya Brooks
+    sign: Ari
+    position: 11.8
+  planet2:
+    name: Ascendant
+    owner: Leo Foster
+    sign: Lib
+    position: 185.68
+  aspect_type: Opposition
+  symbol: ''
+  orb: 6.12
+- description: Maya Brooks's Venus Trine Leo Foster's Venus
+  planet1:
+    name: Venus
+    owner: Maya Brooks
+    sign: Can
+    position: 94.44
+  planet2:
+    name: Venus
+    owner: Leo Foster
+    sign: Aqu
+    position: 327.6
+  aspect_type: Trine
+  symbol: ''
+  orb: 6.85
+- description: Maya Brooks's Venus Square Leo Foster's Ascendant
+  planet1:
+    name: Venus
+    owner: Maya Brooks
+    sign: Can
+    position: 94.44
+  planet2:
+    name: Ascendant
+    owner: Leo Foster
+    sign: Lib
+    position: 185.68
+  aspect_type: Square
+  symbol: ''
+  orb: 1.24
+- description: Maya Brooks's Mars Square Leo Foster's Moon
+  planet1:
+    name: Mars
+    owner: Maya Brooks
+    sign: Lib
+    position: 207.82
+  planet2:
+    name: Moon
+    owner: Leo Foster
+    sign: Leo
+    position: 123.75
+  aspect_type: Square
+  symbol: ''
+  orb: 5.93
+- description: Maya Brooks's Mars Trine Leo Foster's Venus
+  planet1:
+    name: Mars
+    owner: Maya Brooks
+    sign: Lib
+    position: 207.82
+  planet2:
+    name: Venus
+    owner: Leo Foster
+    sign: Aqu
+    position: 327.6
+  aspect_type: Trine
+  symbol: ''
+  orb: 0.23
+- description: Maya Brooks's Ascendant Square Leo Foster's Sun
+  planet1:
+    name: Ascendant
+    owner: Maya Brooks
+    sign: Can
+    position: 103.4
+  planet2:
+    name: Sun
+    owner: Leo Foster
+    sign: Ari
+    position: 13.99
+  aspect_type: Square
+  symbol: ''
+  orb: 0.59

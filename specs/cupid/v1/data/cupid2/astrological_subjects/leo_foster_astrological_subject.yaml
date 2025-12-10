@@ -1,0 +1,138 @@
+# Astrological Subject: Leo Foster
+# Generated: 2025-12-10T11:59:37.952284
+# Sun: Ari | Moon: Leo | Rising: Lib
+
+name: Leo Foster
+birth_data:
+  year: 1990
+  month: 4
+  day: 3
+  hour: 18
+  minute: 40
+  city: Denver, CO
+  nation: US
+  latitude: 39.7392
+  longitude: -104.9903
+  tz_str: America/Denver
+sun:
+  name: Sun
+  sign: Ari
+  emoji: ♈️
+  position: 13.99
+  abs_pos: 13.99
+  house: Seventh_House
+  element: Fire
+  quality: Cardinal
+  retrograde: false
+moon:
+  name: Moon
+  sign: Leo
+  emoji: ♌️
+  position: 3.75
+  abs_pos: 123.75
+  house: Tenth_House
+  element: Fire
+  quality: Fixed
+  retrograde: false
+mercury:
+  name: Mercury
+  sign: Ari
+  emoji: ♈️
+  position: 29.5
+  abs_pos: 29.5
+  house: Seventh_House
+  element: Fire
+  quality: Cardinal
+  retrograde: false
+venus:
+  name: Venus
+  sign: Aqu
+  emoji: ♒️
+  position: 27.6
+  abs_pos: 327.6
+  house: Fifth_House
+  element: Air
+  quality: Fixed
+  retrograde: false
+mars:
+  name: Mars
+  sign: Aqu
+  emoji: ♒️
+  position: 17.37
+  abs_pos: 317.37
+  house: Fifth_House
+  element: Air
+  quality: Fixed
+  retrograde: false
+jupiter:
+  name: Jupiter
+  sign: Can
+  emoji: ♋️
+  position: 3.09
+  abs_pos: 93.09
+  house: Ninth_House
+  element: Water
+  quality: Cardinal
+  retrograde: false
+saturn:
+  name: Saturn
+  sign: Cap
+  emoji: ♑️
+  position: 24.56
+  abs_pos: 294.56
+  house: Fourth_House
+  element: Earth
+  quality: Cardinal
+  retrograde: false
+uranus:
+  name: Uranus
+  sign: Cap
+  emoji: ♑️
+  position: 9.55
+  abs_pos: 279.55
+  house: Fourth_House
+  element: Earth
+  quality: Cardinal
+  retrograde: false
+neptune:
+  name: Neptune
+  sign: Cap
+  emoji: ♑️
+  position: 14.53
+  abs_pos: 284.53
+  house: Fourth_House
+  element: Earth
+  quality: Cardinal
+  retrograde: false
+pluto:
+  name: Pluto
+  sign: Sco
+  emoji: ♏️
+  position: 17.26
+  abs_pos: 227.26
+  house: Second_House
+  element: Water
+  quality: Fixed
+  retrograde: true
+ascendant:
+  name: Ascendant
+  sign: Lib
+  emoji: ♎️
+  position: 5.68
+  abs_pos: 185.68
+midheaven:
+  name: Midheaven
+  sign: Can
+  emoji: ♋️
+  position: 6.51
+  abs_pos: 96.51
+chiron:
+  name: Chiron
+  sign: Can
+  emoji: ♋️
+  position: 10.86
+  abs_pos: 100.86
+  house: Tenth_House
+  element: Water
+  quality: Cardinal
+  retrograde: false

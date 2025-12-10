@@ -1,0 +1,134 @@
+# Synastry Analysis: Maya Brooks & Ethan Murphy
+# Generated: 2025-12-10T12:01:16.015939
+# Total Aspects: 9
+
+person1_name: Maya Brooks
+person2_name: Ethan Murphy
+total_aspects: 9
+aspects:
+- description: Maya Brooks's Moon Square Ethan Murphy's Venus
+  planet1:
+    name: Moon
+    owner: Maya Brooks
+    sign: Ari
+    position: 11.8
+  planet2:
+    name: Venus
+    owner: Ethan Murphy
+    sign: Can
+    position: 94.98
+  aspect_type: Square
+  symbol: ''
+  orb: 6.82
+- description: Maya Brooks's Venus Sextile Ethan Murphy's Moon
+  planet1:
+    name: Venus
+    owner: Maya Brooks
+    sign: Can
+    position: 94.44
+  planet2:
+    name: Moon
+    owner: Ethan Murphy
+    sign: Leo
+    position: 149.27
+  aspect_type: Sextile
+  symbol: ''
+  orb: 5.17
+- description: Maya Brooks's Venus Conjunction Ethan Murphy's Venus
+  planet1:
+    name: Venus
+    owner: Maya Brooks
+    sign: Can
+    position: 94.44
+  planet2:
+    name: Venus
+    owner: Ethan Murphy
+    sign: Can
+    position: 94.98
+  aspect_type: Conjunction
+  symbol: ''
+  orb: 0.54
+- description: Maya Brooks's Venus Sextile Ethan Murphy's Mars
+  planet1:
+    name: Venus
+    owner: Maya Brooks
+    sign: Can
+    position: 94.44
+  planet2:
+    name: Mars
+    owner: Ethan Murphy
+    sign: Tau
+    position: 37.74
+  aspect_type: Sextile
+  symbol: ''
+  orb: 3.3
+- description: Maya Brooks's Mars Square Ethan Murphy's Sun
+  planet1:
+    name: Mars
+    owner: Maya Brooks
+    sign: Lib
+    position: 207.82
+  planet2:
+    name: Sun
+    owner: Ethan Murphy
+    sign: Leo
+    position: 121.14
+  aspect_type: Square
+  symbol: ''
+  orb: 3.32
+- description: Maya Brooks's Mars Sextile Ethan Murphy's Moon
+  planet1:
+    name: Mars
+    owner: Maya Brooks
+    sign: Lib
+    position: 207.82
+  planet2:
+    name: Moon
+    owner: Ethan Murphy
+    sign: Leo
+    position: 149.27
+  aspect_type: Sextile
+  symbol: ''
+  orb: 1.45
+- description: Maya Brooks's Mars Trine Ethan Murphy's Venus
+  planet1:
+    name: Mars
+    owner: Maya Brooks
+    sign: Lib
+    position: 207.82
+  planet2:
+    name: Venus
+    owner: Ethan Murphy
+    sign: Can
+    position: 94.98
+  aspect_type: Trine
+  symbol: ''
+  orb: 7.16
+- description: Maya Brooks's Mars Trine Ethan Murphy's Ascendant
+  planet1:
+    name: Mars
+    owner: Maya Brooks
+    sign: Lib
+    position: 207.82
+  planet2:
+    name: Ascendant
+    owner: Ethan Murphy
+    sign: Gem
+    position: 84.99
+  aspect_type: Trine
+  symbol: ''
+  orb: 2.83
+- description: Maya Brooks's Ascendant Sextile Ethan Murphy's Mars
+  planet1:
+    name: Ascendant
+    owner: Maya Brooks
+    sign: Can
+    position: 103.4
+  planet2:
+    name: Mars
+    owner: Ethan Murphy
+    sign: Tau
+    position: 37.74
+  aspect_type: Sextile
+  symbol: ''
+  orb: 5.66

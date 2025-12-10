@@ -1,0 +1,138 @@
+# Astrological Subject: Maya Brooks
+# Generated: 2025-12-10T11:59:37.955527
+# Sun: Tau | Moon: Ari | Rising: Can
+
+name: Maya Brooks
+birth_data:
+  year: 1999
+  month: 5
+  day: 12
+  hour: 9
+  minute: 32
+  city: San Francisco, CA
+  nation: US
+  latitude: 37.7749
+  longitude: -122.4194
+  tz_str: America/Los_Angeles
+sun:
+  name: Sun
+  sign: Tau
+  emoji: ♉️
+  position: 21.51
+  abs_pos: 51.51
+  house: Eleventh_House
+  element: Earth
+  quality: Fixed
+  retrograde: false
+moon:
+  name: Moon
+  sign: Ari
+  emoji: ♈️
+  position: 11.8
+  abs_pos: 11.8
+  house: Tenth_House
+  element: Fire
+  quality: Cardinal
+  retrograde: false
+mercury:
+  name: Mercury
+  sign: Tau
+  emoji: ♉️
+  position: 6.97
+  abs_pos: 36.97
+  house: Eleventh_House
+  element: Earth
+  quality: Fixed
+  retrograde: false
+venus:
+  name: Venus
+  sign: Can
+  emoji: ♋️
+  position: 4.44
+  abs_pos: 94.44
+  house: Twelfth_House
+  element: Water
+  quality: Cardinal
+  retrograde: false
+mars:
+  name: Mars
+  sign: Lib
+  emoji: ♎️
+  position: 27.82
+  abs_pos: 207.82
+  house: Fourth_House
+  element: Air
+  quality: Cardinal
+  retrograde: true
+jupiter:
+  name: Jupiter
+  sign: Ari
+  emoji: ♈️
+  position: 20.85
+  abs_pos: 20.85
+  house: Tenth_House
+  element: Fire
+  quality: Cardinal
+  retrograde: false
+saturn:
+  name: Saturn
+  sign: Tau
+  emoji: ♉️
+  position: 8.69
+  abs_pos: 38.69
+  house: Eleventh_House
+  element: Earth
+  quality: Fixed
+  retrograde: false
+uranus:
+  name: Uranus
+  sign: Aqu
+  emoji: ♒️
+  position: 16.76
+  abs_pos: 316.76
+  house: Eighth_House
+  element: Air
+  quality: Fixed
+  retrograde: false
+neptune:
+  name: Neptune
+  sign: Aqu
+  emoji: ♒️
+  position: 4.36
+  abs_pos: 304.36
+  house: Eighth_House
+  element: Air
+  quality: Fixed
+  retrograde: true
+pluto:
+  name: Pluto
+  sign: Sag
+  emoji: ♐️
+  position: 9.62
+  abs_pos: 249.62
+  house: Sixth_House
+  element: Fire
+  quality: Mutable
+  retrograde: true
+ascendant:
+  name: Ascendant
+  sign: Can
+  emoji: ♋️
+  position: 13.4
+  abs_pos: 103.4
+midheaven:
+  name: Midheaven
+  sign: Pis
+  emoji: ♓️
+  position: 25.19
+  abs_pos: 355.19
+chiron:
+  name: Chiron
+  sign: Sag
+  emoji: ♐️
+  position: 1.44
+  abs_pos: 241.44
+  house: Fifth_House
+  element: Fire
+  quality: Mutable
+  retrograde: true

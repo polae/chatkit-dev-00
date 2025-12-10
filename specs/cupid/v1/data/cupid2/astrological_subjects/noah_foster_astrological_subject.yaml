@@ -1,0 +1,138 @@
+# Astrological Subject: Noah Foster
+# Generated: 2025-12-10T11:59:37.958398
+# Sun: Gem | Moon: Pis | Rising: Leo
+
+name: Noah Foster
+birth_data:
+  year: 1993
+  month: 6
+  day: 12
+  hour: 10
+  minute: 54
+  city: Toronto
+  nation: CA
+  latitude: 43.6532
+  longitude: -79.3832
+  tz_str: America/Toronto
+sun:
+  name: Sun
+  sign: Gem
+  emoji: ♊️
+  position: 21.64
+  abs_pos: 81.64
+  house: Tenth_House
+  element: Air
+  quality: Mutable
+  retrograde: false
+moon:
+  name: Moon
+  sign: Pis
+  emoji: ♓️
+  position: 25.88
+  abs_pos: 355.88
+  house: Eighth_House
+  element: Water
+  quality: Mutable
+  retrograde: false
+mercury:
+  name: Mercury
+  sign: Can
+  emoji: ♋️
+  position: 15.6
+  abs_pos: 105.6
+  house: Eleventh_House
+  element: Water
+  quality: Cardinal
+  retrograde: false
+venus:
+  name: Venus
+  sign: Tau
+  emoji: ♉️
+  position: 5.89
+  abs_pos: 35.89
+  house: Ninth_House
+  element: Earth
+  quality: Fixed
+  retrograde: false
+mars:
+  name: Mars
+  sign: Leo
+  emoji: ♌️
+  position: 23.91
+  abs_pos: 143.91
+  house: Twelfth_House
+  element: Fire
+  quality: Fixed
+  retrograde: false
+jupiter:
+  name: Jupiter
+  sign: Lib
+  emoji: ♎️
+  position: 4.96
+  abs_pos: 184.96
+  house: Second_House
+  element: Air
+  quality: Cardinal
+  retrograde: false
+saturn:
+  name: Saturn
+  sign: Pis
+  emoji: ♓️
+  position: 0.32
+  abs_pos: 330.32
+  house: Seventh_House
+  element: Water
+  quality: Mutable
+  retrograde: true
+uranus:
+  name: Uranus
+  sign: Cap
+  emoji: ♑️
+  position: 21.34
+  abs_pos: 291.34
+  house: Fifth_House
+  element: Earth
+  quality: Cardinal
+  retrograde: true
+neptune:
+  name: Neptune
+  sign: Cap
+  emoji: ♑️
+  position: 20.52
+  abs_pos: 290.52
+  house: Fifth_House
+  element: Earth
+  quality: Cardinal
+  retrograde: true
+pluto:
+  name: Pluto
+  sign: Sco
+  emoji: ♏️
+  position: 23.38
+  abs_pos: 233.38
+  house: Fourth_House
+  element: Water
+  quality: Fixed
+  retrograde: true
+ascendant:
+  name: Ascendant
+  sign: Leo
+  emoji: ♌️
+  position: 25.53
+  abs_pos: 145.53
+midheaven:
+  name: Midheaven
+  sign: Tau
+  emoji: ♉️
+  position: 17.52
+  abs_pos: 47.52
+chiron:
+  name: Chiron
+  sign: Leo
+  emoji: ♌️
+  position: 19.9
+  abs_pos: 139.9
+  house: Twelfth_House
+  element: Fire
+  quality: Fixed
+  retrograde: false
