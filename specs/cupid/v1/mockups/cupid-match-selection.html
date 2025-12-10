@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupid - Match Selection</title>
+
+    <!-- Google Fonts: Lexend Family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Giga:wght@400;600;900&family=Lexend+Peta:wght@700&family=Lexend:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================
+           Cupid Match Selection - Humorist Design System
+           ============================================ */
+        :root {
+            /* Light mode (default) */
+            --bg-primary: #FDF6E3;
+            --bg-surface: #F5EFE0;
+            --text-primary: #464646;
+            --text-secondary: #657B83;
+            --text-muted: #93A1A1;
+            --border-color: rgba(101, 123, 131, 0.1);
+            --border-color-hover: rgba(101, 123, 131, 0.2);
+
+            /* Accent Spectrum */
+            --red: #D74E39;
+            --orange: #DA6800;
+            --yellow: #FFC922;
+            --pink: #E7B5A0;
+            --green: #8AA47D;
+            --blue: #6CC2FF;
+            --purple: #9B85B7;
+
+            /* Typography */
+            --font-display: 'Lexend Giga', sans-serif;
+            --font-emphasis: 'Lexend Peta', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+
+            /* Spacing */
+            --space-xs: 6px;
+            --space-sm: 12px;
+            --space-md: 20px;
+            --space-lg: 28px;
+            --space-xl: 40px;
+            --space-2xl: 56px;
+
+            /* Shadows */
+            --shadow-subtle: 0 1px 3px rgba(70, 70, 70, 0.04);
+            --shadow-medium: 0 4px 16px rgba(70, 70, 70, 0.06);
+            --shadow-elevated: 0 8px 32px rgba(70, 70, 70, 0.08);
+        }
+
+        html.dark {
+            --bg-primary: #1a1a1a;
+            --bg-surface: #2d2d2d;
+            --text-primary: #E8E8E8;
+            --text-secondary: #A8A8A8;
+            --text-muted: #6B6B6B;
+            --border-color: rgba(168, 168, 168, 0.1);
+            --border-color-hover: rgba(168, 168, 168, 0.2);
+            --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
+            --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
+            --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-weight: 300;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 200ms ease, color 200ms ease;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            padding: var(--space-sm) var(--space-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .navbar-icon {
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .navbar-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .navbar-subtitle {
+            font-family: var(--font-body);
+            font-weight: 300;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-left: var(--space-xs);
+        }
+
+        .theme-toggle {
+            background: var(--bg-surface);
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 200ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            min-width: 40px;
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle:hover {
+            background: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .theme-toggle-icon {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        /* LAYOUT */
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: clamp(20px, 4vw, 40px) clamp(12px, 4vw, 24px);
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .page-wrapper {
+                padding-bottom: 100px; /* Room for sticky play button */
+            }
+        }
+
+        /* SECTION HEADERS */
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 100ms both;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-weight: 400;
+            font-size: clamp(20px, 5vw, 28px);
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        /* FLEURON */
+        .fleuron {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            align-items: center;
+            margin-top: var(--space-sm);
+        }
+
+        .fleuron-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: fleuron-appear 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+
+        .fleuron-dot:nth-child(1) { background: var(--red); animation-delay: 300ms; }
+        .fleuron-dot:nth-child(2) { background: var(--orange); animation-delay: 350ms; }
+        .fleuron-dot:nth-child(3) { background: var(--yellow); animation-delay: 400ms; }
+        .fleuron-dot:nth-child(4) { background: var(--pink); animation-delay: 450ms; }
+        .fleuron-dot:nth-child(5) { background: var(--green); animation-delay: 500ms; }
+        .fleuron-dot:nth-child(6) { background: var(--blue); animation-delay: 550ms; }
+        .fleuron-dot:nth-child(7) { background: var(--purple); animation-delay: 600ms; }
+
+        @keyframes fleuron-appear {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* MORTAL CARD (Large) */
+        .mortal-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: clamp(20px, 4vw, 28px);
+            width: 100%;
+            margin-bottom: var(--space-xl);
+            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms both;
+        }
+
+        .mortal-header {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .mortal-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--purple) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .mortal-avatar svg {
+            width: 36px;
+            height: 36px;
+            color: white;
+        }
+
+        .mortal-info {
+            flex: 1;
+        }
+
+        .mortal-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(22px, 5vw, 28px);
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+
+        .mortal-details {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .mortal-location {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .mortal-location svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .mortal-bio {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: var(--space-md);
+        }
+
+        .zodiac-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .zodiac-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            background: rgba(107, 194, 255, 0.1);
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        html.dark .zodiac-badge {
+            background: rgba(107, 194, 255, 0.15);
+        }
+
+        /* MATCHES SECTION */
+        .matches-section {
+            width: 100%;
+            margin-bottom: var(--space-xl);
+        }
+
+        .matches-grid {
+            display: flex;
+            gap: var(--space-sm);
+            width: 100%;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: var(--space-xs);
+        }
+
+        /* Hide scrollbar but keep functionality */
+        .matches-grid::-webkit-scrollbar { display: none; }
+        .matches-grid { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* MATCH CARD (Small) */
+        .match-card {
+            background: var(--bg-surface);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: var(--space-md);
+            cursor: pointer;
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+            flex: 0 0 180px;
+            scroll-snap-align: start;
+        }
+
+        @media (min-width: 601px) {
+            .match-card {
+                flex: 1;
+            }
+        }
+
+        .match-card:nth-child(1) { animation-delay: 300ms; }
+        .match-card:nth-child(2) { animation-delay: 350ms; }
+        .match-card:nth-child(3) { animation-delay: 400ms; }
+
+        .match-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-elevated);
+            border-color: var(--border-color-hover);
+        }
+
+        .match-card.selected {
+            border-color: var(--pink);
+            box-shadow: 0 0 0 3px rgba(231, 181, 160, 0.3);
+        }
+
+        html.dark .match-card.selected {
+            box-shadow: 0 0 0 3px rgba(231, 181, 160, 0.2);
+        }
+
+        .match-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-sm);
+        }
+
+        .match-avatar svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .match-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .match-details {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .match-location {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .match-location svg {
+            width: 12px;
+            height: 12px;
+        }
+
+        .match-zodiac {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: var(--space-sm);
+        }
+
+        .match-zodiac-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            padding: 3px 8px;
+            background: rgba(107, 194, 255, 0.1);
+            border-radius: 12px;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        html.dark .match-zodiac-badge {
+            background: rgba(107, 194, 255, 0.15);
+        }
+
+        /* COMPATIBILITY SECTION */
+        .compatibility-section {
+            width: 100%;
+            margin-bottom: var(--space-xl);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+
+        .compatibility-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .compatibility-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: clamp(20px, 4vw, 28px);
+            width: 100%;
+        }
+
+        .compatibility-header {
+            text-align: center;
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .compatibility-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+
+        .compatibility-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .compatibility-score {
+            text-align: center;
+            padding: var(--space-md) 0;
+        }
+
+        .compatibility-score-value {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: clamp(48px, 12vw, 72px);
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        .compatibility-score-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 4px;
+        }
+
+        .compatibility-tier {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-top: var(--space-sm);
+        }
+
+        .compatibility-tier.excellent { background: rgba(138, 164, 125, 0.2); color: var(--green); }
+        .compatibility-tier.good { background: rgba(107, 194, 255, 0.2); color: var(--blue); }
+        .compatibility-tier.moderate { background: rgba(255, 201, 34, 0.2); color: var(--orange); }
+
+        /* Compatibility Bars */
+        .compatibility-bars {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+
+        .compatibility-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .compatibility-left, .compatibility-right {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            width: 56px;
+            font-size: 14px;
+        }
+
+        .compatibility-left { justify-content: flex-start; }
+        .compatibility-right { justify-content: flex-end; }
+
+        .compatibility-bar-container {
+            flex: 1;
+            height: 24px;
+            background: var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .compatibility-bar {
+            height: 100%;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: width 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .compatibility-bar-value {
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .bar-yellow { background: var(--yellow); }
+        .bar-purple { background: var(--purple); }
+        .bar-pink { background: var(--pink); }
+        .bar-red { background: var(--red); }
+        .bar-orange { background: var(--orange); }
+
+        /* PLAY BUTTON */
+        .play-section {
+            width: 100%;
+            animation: gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 500ms both;
+        }
+
+        @media (max-width: 600px) {
+            .play-section {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: var(--space-md);
+                background: var(--bg-primary);
+                border-top: 1px solid var(--border-color);
+                z-index: 50;
+                animation: none;
+            }
+        }
+
+        .play-button {
+            width: 100%;
+            padding: var(--space-md) var(--space-xl);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: 0.02em;
+            color: white;
+            background: linear-gradient(135deg, var(--pink) 0%, var(--red) 100%);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 300ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+        }
+
+        .play-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: var(--text-muted);
+        }
+
+        .play-button:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .play-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* ANIMATIONS */
+        @keyframes gentle-enter {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Tighter mobile padding */
+        @media (max-width: 480px) {
+            .page-wrapper {
+                padding: var(--space-sm) var(--space-sm) 100px;
+            }
+            .mortal-card, .compatibility-card {
+                padding: var(--space-md);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <!-- Cupid Cherub Icon -->
+            <svg class="navbar-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="#E7B5A0"/>
+                <path d="M35 55 Q50 35 65 55" stroke="#D74E39" stroke-width="4" stroke-linecap="round" fill="none"/>
+                <circle cx="38" cy="45" r="4" fill="#464646"/>
+                <circle cx="62" cy="45" r="4" fill="#464646"/>
+                <path d="M25 30 L35 45 L25 50 Z" fill="#E7B5A0" stroke="#D74E39" stroke-width="2"/>
+                <path d="M75 30 L65 45 L75 50 Z" fill="#E7B5A0" stroke="#D74E39" stroke-width="2"/>
+            </svg>
+            <span class="navbar-title">Cupid</span>
+            <span class="navbar-subtitle">interactive rom-com</span>
+        </div>
+        <button class="theme-toggle" aria-label="Toggle theme" id="theme-toggle-btn">
+            <svg id="sun-icon" class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg id="moon-icon" class="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"></path>
+            </svg>
+        </button>
+    </nav>
+
+    <div class="page-wrapper">
+        <!-- Section: Today's Match -->
+        <section class="section-header">
+            <h1 class="section-title">Today's Match</h1>
+            <div class="fleuron" role="presentation">
+                <span class="fleuron-dot"></span>
+                <span class="fleuron-dot"></span>
+                <span class="fleuron-dot"></span>
+                <span class="fleuron-dot"></span>
+                <span class="fleuron-dot"></span>
+                <span class="fleuron-dot"></span>
+                <span class="fleuron-dot"></span>
+            </div>
+        </section>
+
+        <!-- Mortal Card (Large) -->
+        <article class="mortal-card">
+            <div class="mortal-header">
+                <div class="mortal-avatar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="mortal-info">
+                    <h2 class="mortal-name">Maya Brooks</h2>
+                    <p class="mortal-details">Interior Designer, 25</p>
+                    <p class="mortal-location">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Cobble Hill, Brooklyn
+                    </p>
+                </div>
+            </div>
+            <p class="mortal-bio">
+                Maya moved from San Francisco to Brooklyn for a design role at a boutique firm in Tribeca. Her Taurus Sun gives her an eye for beauty and material comfort, but her Aries Moon means she acts on impulse more than she'd admit. With Venus in Cancer and Cancer Rising, she radiates warmth and nurturing energy.
+            </p>
+            <div class="zodiac-badges">
+                <span class="zodiac-badge">☀️ Taurus</span>
+                <span class="zodiac-badge">🌙 Aries</span>
+                <span class="zodiac-badge">💖 Cancer</span>
+                <span class="zodiac-badge">🔥 Libra</span>
+            </div>
+        </article>
+
+        <!-- Section: Choose a Match -->
+        <section class="matches-section">
+            <div class="section-header" style="margin-bottom: var(--space-md);">
+                <h2 class="section-title" style="font-size: 18px;">Choose a Match</h2>
+            </div>
+            <div class="matches-grid">
+                <!-- Match 1: Ethan -->
+                <article class="match-card" data-match="ethan" onclick="selectMatch('ethan')">
+                    <div class="match-avatar">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="match-name">Ethan Murphy</h3>
+                    <p class="match-details">Creative Director, 34</p>
+                    <p class="match-location">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Brooklyn Heights
+                    </p>
+                    <div class="match-zodiac">
+                        <span class="match-zodiac-badge">☀️ Leo</span>
+                        <span class="match-zodiac-badge">🌙 Leo</span>
+                        <span class="match-zodiac-badge">💖 Can</span>
+                        <span class="match-zodiac-badge">🔥 Tau</span>
+                    </div>
+                </article>
+
+                <!-- Match 2: Leo -->
+                <article class="match-card" data-match="leo" onclick="selectMatch('leo')">
+                    <div class="match-avatar" style="background: linear-gradient(135deg, var(--orange) 0%, var(--red) 100%);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="match-name">Leo Foster</h3>
+                    <p class="match-details">Tech Entrepreneur, 34</p>
+                    <p class="match-location">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Tribeca, Manhattan
+                    </p>
+                    <div class="match-zodiac">
+                        <span class="match-zodiac-badge">☀️ Ari</span>
+                        <span class="match-zodiac-badge">🌙 Leo</span>
+                        <span class="match-zodiac-badge">💖 Aqu</span>
+                        <span class="match-zodiac-badge">🔥 Aqu</span>
+                    </div>
+                </article>
+
+                <!-- Match 3: Noah -->
+                <article class="match-card" data-match="noah" onclick="selectMatch('noah')">
+                    <div class="match-avatar" style="background: linear-gradient(135deg, var(--green) 0%, var(--blue) 100%);">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="match-name">Noah Foster</h3>
+                    <p class="match-details">Documentary Filmmaker, 31</p>
+                    <p class="match-location">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                        Fort Greene, Brooklyn
+                    </p>
+                    <div class="match-zodiac">
+                        <span class="match-zodiac-badge">☀️ Gem</span>
+                        <span class="match-zodiac-badge">🌙 Pis</span>
+                        <span class="match-zodiac-badge">💖 Tau</span>
+                        <span class="match-zodiac-badge">🔥 Leo</span>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Compatibility Section (Initially Hidden) -->
+        <section class="compatibility-section" id="compatibility-section">
+            <div class="compatibility-card">
+                <div class="compatibility-header">
+                    <h3 class="compatibility-title" id="compatibility-title">Maya & Ethan</h3>
+                    <p class="compatibility-subtitle">Compatibility Analysis</p>
+                </div>
+                <div class="compatibility-score">
+                    <div class="compatibility-score-value" id="compatibility-score">68</div>
+                    <div class="compatibility-score-label">Overall Match</div>
+                    <span class="compatibility-tier good" id="compatibility-tier">Good</span>
+                </div>
+                <div class="compatibility-bars" id="compatibility-bars">
+                    <!-- Sun -->
+                    <div class="compatibility-row">
+                        <div class="compatibility-left"><span>☀️</span><span>♉</span></div>
+                        <div class="compatibility-bar-container">
+                            <div class="compatibility-bar bar-yellow" style="width: 42%;" data-planet="sun">
+                                <span class="compatibility-bar-value">42</span>
+                            </div>
+                        </div>
+                        <div class="compatibility-right"><span>♌</span><span>☀️</span></div>
+                    </div>
+                    <!-- Moon -->
+                    <div class="compatibility-row">
+                        <div class="compatibility-left"><span>🌙</span><span>♈</span></div>
+                        <div class="compatibility-bar-container">
+                            <div class="compatibility-bar bar-purple" style="width: 48%;" data-planet="moon">
+                                <span class="compatibility-bar-value">48</span>
+                            </div>
+                        </div>
+                        <div class="compatibility-right"><span>♌</span><span>🌙</span></div>
+                    </div>
+                    <!-- Venus -->
+                    <div class="compatibility-row">
+                        <div class="compatibility-left"><span>💖</span><span>♋</span></div>
+                        <div class="compatibility-bar-container">
+                            <div class="compatibility-bar bar-pink" style="width: 86%;" data-planet="venus">
+                                <span class="compatibility-bar-value">86</span>
+                            </div>
+                        </div>
+                        <div class="compatibility-right"><span>♋</span><span>💖</span></div>
+                    </div>
+                    <!-- Mars -->
+                    <div class="compatibility-row">
+                        <div class="compatibility-left"><span>🔥</span><span>♎</span></div>
+                        <div class="compatibility-bar-container">
+                            <div class="compatibility-bar bar-red" style="width: 66%;" data-planet="mars">
+                                <span class="compatibility-bar-value">66</span>
+                            </div>
+                        </div>
+                        <div class="compatibility-right"><span>♉</span><span>🔥</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Play Button -->
+        <section class="play-section">
+            <button class="play-button" id="play-button" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="5,3 19,12 5,21"></polygon>
+                </svg>
+                Play
+            </button>
+        </section>
+    </div>
+
+    <script>
+        // Compatibility data for each match
+        const compatibilityData = {
+            ethan: {
+                title: "Maya & Ethan",
+                overall: 68,
+                tier: "Good",
+                tierClass: "good",
+                planets: {
+                    sun: { score: 42, mayaSign: "♉", matchSign: "♌", color: "bar-yellow" },
+                    moon: { score: 48, mayaSign: "♈", matchSign: "♌", color: "bar-purple" },
+                    venus: { score: 86, mayaSign: "♋", matchSign: "♋", color: "bar-pink" },
+                    mars: { score: 66, mayaSign: "♎", matchSign: "♉", color: "bar-red" }
+                }
+            },
+            leo: {
+                title: "Maya & Leo",
+                overall: 44,
+                tier: "Moderate",
+                tierClass: "moderate",
+                planets: {
+                    sun: { score: 42, mayaSign: "♉", matchSign: "♈", color: "bar-yellow" },
+                    moon: { score: 48, mayaSign: "♈", matchSign: "♌", color: "bar-purple" },
+                    venus: { score: 60, mayaSign: "♋", matchSign: "♒", color: "bar-pink" },
+                    mars: { score: 30, mayaSign: "♎", matchSign: "♒", color: "bar-orange" }
+                }
+            },
+            noah: {
+                title: "Maya & Noah",
+                overall: 62,
+                tier: "Good",
+                tierClass: "good",
+                planets: {
+                    sun: { score: 58, mayaSign: "♉", matchSign: "♊", color: "bar-yellow" },
+                    moon: { score: 56, mayaSign: "♈", matchSign: "♓", color: "bar-purple" },
+                    venus: { score: 56, mayaSign: "♋", matchSign: "♉", color: "bar-pink" },
+                    mars: { score: 66, mayaSign: "♎", matchSign: "♌", color: "bar-red" }
+                }
+            }
+        };
+
+        let selectedMatchId = null;
+
+        function selectMatch(matchId) {
+            // Update selection state
+            selectedMatchId = matchId;
+
+            // Update card styling
+            document.querySelectorAll('.match-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.querySelector(`[data-match="${matchId}"]`).classList.add('selected');
+
+            // Show and update compatibility section
+            const compatSection = document.getElementById('compatibility-section');
+            const data = compatibilityData[matchId];
+
+            // Update title and score
+            document.getElementById('compatibility-title').textContent = data.title;
+            document.getElementById('compatibility-score').textContent = data.overall;
+
+            // Update tier
+            const tierEl = document.getElementById('compatibility-tier');
+            tierEl.textContent = data.tier;
+            tierEl.className = `compatibility-tier ${data.tierClass}`;
+
+            // Update bars with animation
+            const bars = document.querySelectorAll('.compatibility-bar');
+            const planets = ['sun', 'moon', 'venus', 'mars'];
+
+            bars.forEach((bar, index) => {
+                const planet = planets[index];
+                const planetData = data.planets[planet];
+
+                // Reset width to 0 first for animation
+                bar.style.width = '0%';
+                bar.className = `compatibility-bar ${planetData.color}`;
+                bar.querySelector('.compatibility-bar-value').textContent = planetData.score;
+
+                // Update zodiac signs
+                const row = bar.closest('.compatibility-row');
+                row.querySelector('.compatibility-left span:last-child').textContent = planetData.mayaSign;
+                row.querySelector('.compatibility-right span:first-child').textContent = planetData.matchSign;
+
+                // Animate to new width
+                setTimeout(() => {
+                    bar.style.width = `${planetData.score}%`;
+                }, 100 + (index * 100));
+            });
+
+            // Show compatibility section
+            compatSection.classList.add('visible');
+
+            // Enable play button
+            document.getElementById('play-button').disabled = false;
+        }
+
+        // Theme toggle
+        function initTheme() {
+            const savedTheme = localStorage.getItem('cupid-theme');
+            const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemDark)) {
+                document.documentElement.classList.add('dark');
+                updateIcons(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateIcons(false);
+            }
+        }
+
+        function updateIcons(isDark) {
+            document.getElementById('sun-icon').style.display = isDark ? 'none' : 'block';
+            document.getElementById('moon-icon').style.display = isDark ? 'block' : 'none';
+        }
+
+        document.getElementById('theme-toggle-btn').addEventListener('click', function() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('cupid-theme', isDark ? 'dark' : 'light');
+            updateIcons(isDark);
+        });
+
+        // Play button handler
+        document.getElementById('play-button').addEventListener('click', function() {
+            if (selectedMatchId) {
+                alert(`Starting game with ${selectedMatchId.charAt(0).toUpperCase() + selectedMatchId.slice(1)}!\n\nIn the real app, this would:\n1. Create a new ChatKit thread\n2. Pass mortal_id and match_id in metadata\n3. Navigate to the ChatKit experience`);
+            }
+        });
+
+        // Initialize
+        initTheme();
+    </script>
+</body>
+</html>
