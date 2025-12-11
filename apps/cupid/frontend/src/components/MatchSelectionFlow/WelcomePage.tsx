@@ -19,16 +19,6 @@ export function WelcomePage({ mortal, onNext }: WelcomePageProps) {
           <p className="ms-hero-subtitle">
             An interactive rom-com where you play matchmaker for today's mortal.
           </p>
-          {/* Fleuron */}
-          <div className="ms-fleuron">
-            <span className="ms-fleuron-dot" />
-            <span className="ms-fleuron-dot" />
-            <span className="ms-fleuron-dot" />
-            <span className="ms-fleuron-dot" />
-            <span className="ms-fleuron-dot" />
-            <span className="ms-fleuron-dot" />
-            <span className="ms-fleuron-dot" />
-          </div>
         </section>
 
         {/* Today's Mortal */}
@@ -66,21 +56,12 @@ export function WelcomePage({ mortal, onNext }: WelcomePageProps) {
           </div>
         </article>
 
-        {/* Step Indicator */}
-        <div className="ms-step-indicator">
-          <span className="ms-step-dot active" />
-          <span className="ms-step-dot" />
-          <span className="ms-step-dot" />
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <section className="ms-nav-section">
+        {/* Navigation */}
         <button className="ms-nav-button" onClick={onNext}>
           Choose a Match
           <ArrowRight />
         </button>
-      </section>
+      </div>
     </>
   );
 }
