@@ -15,12 +15,6 @@ interface SelectMatchPageProps {
   onNext: () => void;
 }
 
-const AVATAR_COLORS: Record<number, string> = {
-  0: "var(--ms-blue)",
-  1: "var(--ms-orange)",
-  2: "var(--ms-green)",
-};
-
 export function SelectMatchPage({
   mortal,
   matches,
@@ -92,10 +86,7 @@ export function SelectMatchPage({
                 >
                   {/* Front: Profile Card */}
                   <article className="ms-flip-card-front ms-match-card">
-                    <div
-                      className="ms-match-avatar"
-                      style={{ background: AVATAR_COLORS[index] }}
-                    >
+                    <div className="ms-match-avatar">
                       <User />
                     </div>
                     <div className="ms-match-info">

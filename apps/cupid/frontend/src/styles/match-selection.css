@@ -19,6 +19,9 @@
   --ms-blue: #6CC2FF;
   --ms-purple: #9B85B7;
 
+  /* Primary accent used for avatars + primary CTAs in light mode */
+  --ms-primary-accent: var(--ms-pink);
+
   /* Spacing */
   --ms-space-xs: 6px;
   --ms-space-sm: 12px;
@@ -44,6 +47,9 @@
   --ms-shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.3);
   --ms-shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.4);
   --ms-shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  /* Primary accent used for avatars + primary CTAs in dark mode */
+  --ms-primary-accent: var(--ms-blue);
 }
 
 /* Page Wrapper */
@@ -138,7 +144,7 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: var(--ms-pink);
+  background: var(--ms-primary-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -258,7 +264,7 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--ms-blue);
+  background: var(--ms-primary-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -500,7 +506,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: var(--ms-pink);
+  background: var(--ms-primary-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -594,7 +600,7 @@
   font-size: 16px;
   letter-spacing: 0.02em;
   color: white;
-  background: var(--ms-pink);
+  background: var(--ms-primary-accent);
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -741,8 +747,8 @@
 }
 
 .ms-top-progress-step.active {
-  background: var(--ms-pink);
-  border-color: var(--ms-pink);
+  background: var(--ms-primary-accent);
+  border-color: var(--ms-primary-accent);
   color: white;
 }
 
@@ -754,7 +760,7 @@
 }
 
 .ms-top-progress-connector.completed {
-  background: rgba(231, 181, 160, 0.8);
+  background: color-mix(in srgb, var(--ms-primary-accent) 80%, transparent);
 }
 
 /* Animations */

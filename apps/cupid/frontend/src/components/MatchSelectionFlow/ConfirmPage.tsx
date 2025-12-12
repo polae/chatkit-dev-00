@@ -96,7 +96,7 @@ export function ConfirmPage({
         <div className="ms-profiles-row">
           {/* Mortal */}
           <article className="ms-profile-card">
-            <div className="ms-profile-avatar" style={{ background: "var(--ms-pink)" }}>
+            <div className="ms-profile-avatar">
               <User />
             </div>
             <h3 className="ms-profile-name">{mortal.name.split(" ")[0]}</h3>
@@ -119,7 +119,7 @@ export function ConfirmPage({
 
           {/* Match */}
           <article className="ms-profile-card">
-            <div className="ms-profile-avatar" style={{ background: "var(--ms-blue)" }}>
+            <div className="ms-profile-avatar">
               <User />
             </div>
             <h3 className="ms-profile-name">{match.name.split(" ")[0]}</h3>

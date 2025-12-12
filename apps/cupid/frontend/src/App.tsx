@@ -31,7 +31,7 @@ export default function App() {
     <div className={containerClass}>
       {showHeader && (
         <div className={headerBarClass}>
-          <div className="relative mx-auto flex w-full max-w-4xl items-center gap-4 px-6 py-4">
+          <div className="relative mx-auto flex w-full max-w-4xl items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4">
             <img src="/cupid-cherub.svg" alt="Cupid" className="h-6 w-6" />
             <h1 className="text-lg font-semibold">Cupid</h1>
             <p className="flex-1 text-sm text-slate-600 dark:text-slate-300">
@@ -45,16 +45,16 @@ export default function App() {
       {gamePhase === "selection" ? (
         <div 
           className="mx-auto w-full max-w-4xl" 
-          style={{ height: showHeader ? "calc(100vh - 80px)" : "100vh" }}
+          style={{ height: showHeader ? "calc(100dvh - 80px)" : "100dvh" }}
         >
           <MatchSelectionFlow />
         </div>
       ) : (
         <div 
-          className="mx-auto w-full max-w-4xl px-6 pb-10 pt-6" 
-          style={{ height: showHeader ? "calc(100vh - 80px)" : "100vh" }}
+          className="mx-auto w-full max-w-4xl px-3 pb-4 pt-3 sm:px-6 sm:pb-10 sm:pt-6" 
+          style={{ height: showHeader ? "calc(100dvh - 80px)" : "100dvh" }}
         >
-          <ChatKitPanel className="relative w-full h-full overflow-hidden rounded-3xl bg-[#f8f6f1]/80 shadow-lg ring-1 ring-slate-200/60 backdrop-blur dark:bg-slate-900/70 dark:ring-slate-800/60" />
+          <ChatKitPanel className="relative w-full h-full overflow-hidden rounded-2xl sm:rounded-3xl bg-[#f8f6f1]/80 shadow-lg ring-1 ring-slate-200/60 backdrop-blur dark:bg-slate-900/70 dark:ring-slate-800/60" />
         </div>
       )}
     </div>
