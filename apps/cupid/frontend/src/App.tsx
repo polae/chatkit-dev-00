@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import { ChatKitPanel } from "./components/ChatKitPanel";
 import { ThemeToggle } from "./components/ThemeToggle";
@@ -10,10 +10,65 @@ export default function App() {
   const gamePhase = useAppStore((state) => state.gamePhase);
   const currentPage = useAppStore((state) => state.currentPage);
   const selectionScrollRef = useRef<HTMLDivElement | null>(null);
+  const headerRef = useRef<HTMLDivElement | null>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   // Show header on welcome page and when playing (chat phase)
   // Hide header on mortal, select, and confirm pages for more mobile space
   const showHeader = gamePhase === "playing" || currentPage === "welcome";
+
+  // iOS Safari keyboard behavior: keep a CSS var in sync with the visual viewport height
+  // so closing the keyboard doesn't leave a large blank space at the bottom.
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof document === "undefined") return;
+
+    const vv = window.visualViewport;
+    const update = () => {
+      const height = Math.round(vv?.height ?? window.innerHeight);
+      document.documentElement.style.setProperty("--app-vh", `${height}px`);
+    };
+
+    update();
+
+    vv?.addEventListener("resize", update);
+    vv?.addEventListener("scroll", update);
+    window.addEventListener("resize", update);
+
+    return () => {
+      vv?.removeEventListener("resize", update);
+      vv?.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  // Track actual rendered header height (we use this to offset the main viewport height)
+  useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const measure = () => {
+      const next = showHeader ? headerRef.current?.offsetHeight ?? 0 : 0;
+      setHeaderHeight(next);
+    };
+
+    measure();
+
+    const ro =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => measure())
+        : null;
+    if (ro && headerRef.current) ro.observe(headerRef.current);
+
+    window.addEventListener("resize", measure);
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [showHeader]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    document.documentElement.style.setProperty("--app-header-h", `${headerHeight}px`);
+  }, [headerHeight]);
 
   // Ensure each step loads scrolled to the top (prevents carrying scroll position between pages)
   useEffect(() => {
@@ -44,10 +99,14 @@ export default function App() {
       : "bg-[#f8f6f1]/90 border-slate-200/70 text-slate-900"
   );
 
+  const contentHeightStyle = {
+    height: "calc(var(--app-vh, 100vh) - var(--app-header-h, 0px))",
+  } as const;
+
   return (
     <div className={containerClass}>
       {showHeader && (
-        <div className={headerBarClass}>
+        <div ref={headerRef} className={headerBarClass}>
           <div className="relative mx-auto flex w-full max-w-4xl items-center gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4">
             <img src="/cupid-cherub.svg" alt="Cupid" className="h-6 w-6" />
             <h1 className="text-lg font-semibold">Cupid</h1>
@@ -63,14 +122,14 @@ export default function App() {
         <div 
           ref={selectionScrollRef}
           className="mx-auto w-full max-w-4xl overflow-y-auto overscroll-contain" 
-          style={{ height: showHeader ? "calc(100dvh - 80px)" : "100dvh" }}
+          style={contentHeightStyle}
         >
           <MatchSelectionFlow />
         </div>
       ) : (
         <div 
           className="mx-auto w-full max-w-4xl px-3 pb-4 pt-3 sm:px-6 sm:pb-10 sm:pt-6" 
-          style={{ height: showHeader ? "calc(100dvh - 80px)" : "100dvh" }}
+          style={contentHeightStyle}
         >
           <ChatKitPanel className="relative w-full h-full overflow-hidden rounded-2xl sm:rounded-3xl bg-[#f8f6f1]/80 shadow-lg ring-1 ring-slate-200/60 backdrop-blur dark:bg-slate-900/70 dark:ring-slate-800/60" />
         </div>
