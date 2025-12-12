@@ -25,6 +25,7 @@ export function ChatKitPanel({ onChatKitReady, className }: ChatKitPanelProps) {
   const selectedMatchId = useAppStore((state) => state.selectedMatchId);
   const matchSessionId = useAppStore((state) => state.matchSessionId);
   const gamePhase = useAppStore((state) => state.gamePhase);
+  const resetGame = useAppStore((state) => state.resetGame);
 
   // Track if we've already started the game
   const hasStartedGame = useRef(false);
@@ -81,7 +82,13 @@ export function ChatKitPanel({ onChatKitReady, className }: ChatKitPanelProps) {
     threadItemActions: {
       feedback: false,
     },
-    onThreadChange: ({ threadId }) => setThreadId(threadId),
+    onThreadChange: ({ threadId }) => {
+      setThreadId(threadId);
+      // If threadId is null (new chat clicked), reset to welcome screen
+      if (!threadId) {
+        resetGame();
+      }
+    },
     onError: ({ error }) => {
       console.error("ChatKit error", error);
     },

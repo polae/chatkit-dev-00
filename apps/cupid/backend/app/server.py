@@ -121,6 +121,25 @@ class CupidServer(ChatKitServer[RequestContext]):
         thread.metadata["chapter"] = chapter
         await self.store.save_thread(thread, context)
 
+    async def _maybe_update_thread_title(
+        self,
+        thread: ThreadMetadata,
+        context: RequestContext,
+    ) -> None:
+        """Set thread title to 'Mortal & Match' format on first message."""
+        if thread.title is not None:
+            return
+
+        metadata = thread.metadata or {}
+        mortal_data = metadata.get("mortal_data")
+        match_data = metadata.get("match_data")
+
+        if mortal_data and match_data:
+            mortal_first = mortal_data.get("name", "").split()[0]
+            match_first = match_data.get("name", "").split()[0]
+            thread.title = f"{mortal_first} & {match_first}"
+            await self.store.save_thread(thread, context=context)
+
     async def action(
         self,
         thread: ThreadMetadata,
@@ -215,6 +234,9 @@ class CupidServer(ChatKitServer[RequestContext]):
                 "compatibility_data", {}
             ).get("overall_compatibility", 69)
             await self.store.save_thread(thread, context)
+
+        # Set thread title on first message (format: "Mortal & Match")
+        await self._maybe_update_thread_title(thread, context)
 
         # Create base agent context
         agent_context = CupidAgentContext(
