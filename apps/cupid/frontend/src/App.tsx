@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import clsx from "clsx";
 import { ChatKitPanel } from "./components/ChatKitPanel";
 import { ThemeToggle } from "./components/ThemeToggle";
@@ -8,10 +9,26 @@ export default function App() {
   const scheme = useAppStore((state) => state.scheme);
   const gamePhase = useAppStore((state) => state.gamePhase);
   const currentPage = useAppStore((state) => state.currentPage);
+  const selectionScrollRef = useRef<HTMLDivElement | null>(null);
 
   // Show header on welcome page and when playing (chat phase)
   // Hide header on mortal, select, and confirm pages for more mobile space
   const showHeader = gamePhase === "playing" || currentPage === "welcome";
+
+  // Ensure each step loads scrolled to the top (prevents carrying scroll position between pages)
+  useEffect(() => {
+    if (gamePhase === "selection") {
+      selectionScrollRef.current?.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+  }, [gamePhase, currentPage]);
+
+  // When entering chat, also start at the top of the outer container (ChatKit manages its own internal scroll)
+  useEffect(() => {
+    if (gamePhase === "playing") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
+  }, [gamePhase]);
 
   const containerClass = clsx(
     "h-full transition-colors duration-300",
@@ -44,7 +61,8 @@ export default function App() {
 
       {gamePhase === "selection" ? (
         <div 
-          className="mx-auto w-full max-w-4xl" 
+          ref={selectionScrollRef}
+          className="mx-auto w-full max-w-4xl overflow-y-auto overscroll-contain" 
           style={{ height: showHeader ? "calc(100dvh - 80px)" : "100dvh" }}
         >
           <MatchSelectionFlow />
