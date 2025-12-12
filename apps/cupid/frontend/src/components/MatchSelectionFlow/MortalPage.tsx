@@ -2,6 +2,7 @@ import { User, MapPin, ArrowLeft, ArrowRight } from "lucide-react";
 import type { PersonData } from "../../types/today";
 import { getZodiacName } from "../../types/today";
 import { TopProgressBar } from "./TopProgressBar";
+import { formatAge } from "../../lib/format";
 
 interface MortalPageProps {
   mortal: PersonData;
@@ -44,7 +45,7 @@ export function MortalPage({ mortal, onBack, onNext }: MortalPageProps) {
             <div className="ms-mortal-info">
               <h2 className="ms-mortal-name">{mortal.name}</h2>
               <p className="ms-mortal-details">
-                {mortal.occupation}, {mortal.age}
+                {mortal.occupation}, {formatAge(mortal.age)}
               </p>
               <p className="ms-mortal-location">
                 <MapPin />

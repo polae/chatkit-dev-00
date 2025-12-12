@@ -5,6 +5,7 @@ import type { PersonData, MatchEntry, CompatibilityData } from "../../types/toda
 import { getZodiacName } from "../../types/today";
 import { CompatibilityBars } from "./CompatibilityBars";
 import { TopProgressBar } from "./TopProgressBar";
+import { formatAge } from "../../lib/format";
 
 interface SelectMatchPageProps {
   mortal: PersonData;
@@ -100,7 +101,7 @@ export function SelectMatchPage({
                     <div className="ms-match-info">
                       <h3 className="ms-match-name">{person.name}</h3>
                       <p className="ms-match-details">
-                        {person.occupation}, {person.age}
+                        {person.occupation}, {formatAge(person.age)}
                       </p>
                       <p className="ms-match-location">
                         <MapPin />
