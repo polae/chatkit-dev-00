@@ -62,7 +62,8 @@ export function ChatKitPanel({ onChatKitReady, className }: ChatKitPanelProps) {
           shade: theme === "dark" ? -1 : -4,
         },
         accent: {
-          primary: theme === "dark" ? "#f1f5f9" : "#0f172a",
+          // Used by ChatKit controls + backend-served widgets that use color:"primary"
+          primary: theme === "dark" ? "#6CC2FF" : "#E7B5A0",
           level: 1,
         },
       },

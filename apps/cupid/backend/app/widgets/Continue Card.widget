@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "name": "Continue Card",
-  "template": "{\"type\":\"Card\",\"size\":\"lg\",\"children\":[{\"type\":\"Col\",\"gap\":3,\"children\":[{\"type\":\"Markdown\",\"value\":{{ (confirmation_message) | tojson }}},{\"type\":\"Button\",\"label\":\"Continue\",\"block\":true,\"style\":\"primary\",\"onClickAction\":{\"type\":\"continue\"}}]}]}",
+  "template": "{\"type\":\"Card\",\"size\":\"lg\",\"children\":[{\"type\":\"Col\",\"gap\":3,\"children\":[{\"type\":\"Markdown\",\"value\":{{ (confirmation_message) | tojson }}},{\"type\":\"Button\",\"label\":\"Continue\",\"block\":true,\"style\":\"primary\",\"color\":\"primary\",\"onClickAction\":{\"type\":\"continue\"}}]}]}",
   "jsonSchema": {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "type": "object",
