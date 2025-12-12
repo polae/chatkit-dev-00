@@ -18,14 +18,6 @@ export function WelcomePage({ onNext }: WelcomePageProps) {
 
         {/* Description */}
         <p className="ms-welcome-description">{WELCOME_DESCRIPTION}</p>
-
-        {/* Step Indicator */}
-        <div className="ms-step-indicator">
-          <span className="ms-step-dot active" />
-          <span className="ms-step-dot" />
-          <span className="ms-step-dot" />
-          <span className="ms-step-dot" />
-        </div>
       </div>
 
       {/* Navigation */}

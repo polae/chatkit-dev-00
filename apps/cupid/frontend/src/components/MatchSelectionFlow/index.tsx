@@ -7,10 +7,7 @@ import { SelectMatchPage } from "./SelectMatchPage";
 import { ConfirmPage } from "./ConfirmPage";
 import "../../styles/match-selection.css";
 
-type FlowPage = "welcome" | "mortal" | "select" | "confirm";
-
 export function MatchSelectionFlow() {
-  const [currentPage, setCurrentPage] = useState<FlowPage>("welcome");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -18,6 +15,8 @@ export function MatchSelectionFlow() {
   const setTodayData = useAppStore((state) => state.setTodayData);
   const selectedMatchId = useAppStore((state) => state.selectedMatchId);
   const scheme = useAppStore((state) => state.scheme);
+  const currentPage = useAppStore((state) => state.currentPage);
+  const setCurrentPage = useAppStore((state) => state.setCurrentPage);
 
   // Fetch today's data on mount
   useEffect(() => {

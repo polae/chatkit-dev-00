@@ -4,6 +4,7 @@ import { useAppStore } from "../../store/useAppStore";
 import type { PersonData, MatchEntry, CompatibilityData } from "../../types/today";
 import { getZodiacName } from "../../types/today";
 import { CompatibilityBars } from "./CompatibilityBars";
+import { TopProgressBar } from "./TopProgressBar";
 
 interface SelectMatchPageProps {
   mortal: PersonData;
@@ -56,6 +57,8 @@ export function SelectMatchPage({
   return (
     <>
       <div className="ms-page-wrapper">
+        <TopProgressBar step={2} />
+
         {/* Header with back button */}
         <div className="flex items-center gap-3 w-full mb-4">
           <button className="ms-back-button" onClick={onBack} aria-label="Back">
@@ -154,14 +157,6 @@ export function SelectMatchPage({
               </div>
             );
           })}
-        </div>
-
-        {/* Step Indicator */}
-        <div className="ms-step-indicator">
-          <span className="ms-step-dot completed" />
-          <span className="ms-step-dot completed" />
-          <span className="ms-step-dot active" />
-          <span className="ms-step-dot" />
         </div>
       </div>
 

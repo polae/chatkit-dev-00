@@ -4,6 +4,7 @@ import { useAppStore } from "../../store/useAppStore";
 import type { PersonData, CompatibilityData } from "../../types/today";
 import { getZodiacSymbol } from "../../types/today";
 import { CompatibilityBars } from "./CompatibilityBars";
+import { TopProgressBar } from "./TopProgressBar";
 
 interface ConfirmPageProps {
   mortal: PersonData;
@@ -71,6 +72,8 @@ export function ConfirmPage({
   return (
     <>
       <div className="ms-page-wrapper">
+        <TopProgressBar step={3} />
+
         {/* Header with back button */}
         <div className="flex items-center gap-3 w-full mb-4">
           <button className="ms-back-button" onClick={onBack} aria-label="Back">
@@ -169,14 +172,6 @@ export function ConfirmPage({
             />
           </div>
         </section>
-
-        {/* Step Indicator */}
-        <div className="ms-step-indicator">
-          <span className="ms-step-dot completed" />
-          <span className="ms-step-dot completed" />
-          <span className="ms-step-dot completed" />
-          <span className="ms-step-dot active" />
-        </div>
       </div>
 
       {/* Play Button */}

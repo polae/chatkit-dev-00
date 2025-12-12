@@ -4,6 +4,7 @@ import type { TodayData } from "../types/today";
 
 export type ColorScheme = "light" | "dark";
 export type GamePhase = "selection" | "playing";
+export type FlowPage = "welcome" | "mortal" | "select" | "confirm";
 
 type AppState = {
   // Theme
@@ -17,6 +18,10 @@ type AppState = {
   // Game phase
   gamePhase: GamePhase;
   setGamePhase: (phase: GamePhase) => void;
+
+  // Current flow page
+  currentPage: FlowPage;
+  setCurrentPage: (page: FlowPage) => void;
 
   // Today's data
   todayData: TodayData | null;
@@ -81,6 +86,10 @@ export const useAppStore = create<AppState>((set) => {
     gamePhase: "selection",
     setGamePhase: (gamePhase) => set({ gamePhase }),
 
+    // Current flow page - start at welcome
+    currentPage: "welcome",
+    setCurrentPage: (currentPage) => set({ currentPage }),
+
     // Today's data
     todayData: null,
     setTodayData: (todayData) => set({ todayData }),
@@ -100,6 +109,7 @@ export const useAppStore = create<AppState>((set) => {
     resetGame: () =>
       set({
         gamePhase: "selection",
+        currentPage: "welcome",
         threadId: null,
         selectedMatchId: null,
         matchSessionId: null,

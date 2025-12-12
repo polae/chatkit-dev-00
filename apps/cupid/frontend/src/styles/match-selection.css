@@ -706,6 +706,57 @@
   background: var(--ms-pink);
 }
 
+/* Top Progress (1-2-3) */
+.ms-top-progress {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto var(--ms-space-sm);
+  padding-top: 2px;
+}
+
+.ms-top-progress-step {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ms-border-color-hover);
+  background: var(--ms-bg-surface);
+  color: var(--ms-text-muted);
+  font-family: 'Lexend', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.ms-top-progress-step.completed {
+  background: rgba(231, 181, 160, 0.18);
+  border-color: rgba(231, 181, 160, 0.35);
+  color: var(--ms-text-primary);
+}
+
+.ms-top-progress-step.active {
+  background: var(--ms-pink);
+  border-color: var(--ms-pink);
+  color: white;
+}
+
+.ms-top-progress-connector {
+  height: 2px;
+  width: 44px;
+  border-radius: 999px;
+  background: var(--ms-border-color-hover);
+}
+
+.ms-top-progress-connector.completed {
+  background: rgba(231, 181, 160, 0.8);
+}
+
 /* Animations */
 @keyframes ms-gentle-enter {
   from {
