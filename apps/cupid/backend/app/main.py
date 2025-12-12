@@ -5,8 +5,24 @@ Following the pattern from OpenAI's news-guide/main.py and customer-support/main
 
 from __future__ import annotations
 
+import logging
 from dotenv import load_dotenv
 load_dotenv()
+
+# Initialize Langfuse instrumentation for OpenAI Agents SDK tracing
+# Must be done before importing agents/server modules
+from openinference.instrumentation.openai_agents import OpenAIAgentsInstrumentor
+from langfuse import get_client
+
+OpenAIAgentsInstrumentor().instrument()
+
+# Verify Langfuse connection
+_langfuse = get_client()
+_logger = logging.getLogger(__name__)
+if _langfuse.auth_check():
+    _logger.info("Langfuse connected successfully")
+else:
+    _logger.warning("Langfuse authentication failed - traces will not be recorded")
 
 from chatkit.server import StreamingResult
 from fastapi import Depends, FastAPI, HTTPException, Request, status

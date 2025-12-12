@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Annotated, Any, AsyncIterator
 
 from agents import Runner
+from langfuse import propagate_attributes
 from chatkit.agents import AgentContext, stream_agent_response
 from chatkit.server import ChatKitServer
 from chatkit.types import (
@@ -264,34 +265,46 @@ class CupidServer(ChatKitServer[RequestContext]):
         chapter = thread.metadata.get("chapter", 0)
         logger.info(f"Processing chapter {chapter}")
 
-        # Yield events directly from chapter handlers (enables streaming)
-        if chapter == 0:
-            async for event in self._handle_chapter_0(thread, input_items, agent_context, context):
-                yield event
+        # Wrap agent calls with Langfuse tracing metadata
+        # This attaches session_id, user_id, tags, and custom metadata to all traces
+        with propagate_attributes(
+            session_id=thread.id,
+            user_id=context.match_session_id or "anonymous",
+            tags=[f"chapter_{chapter}", "cupid"],
+            metadata={
+                "mortal": thread.metadata.get("mortal_data", {}).get("name"),
+                "match": thread.metadata.get("match_data", {}).get("name"),
+                "compatibility": thread.metadata.get("current_compatibility"),
+            }
+        ):
+            # Yield events directly from chapter handlers (enables streaming)
+            if chapter == 0:
+                async for event in self._handle_chapter_0(thread, input_items, agent_context, context):
+                    yield event
 
-        elif chapter == 1:
-            async for event in self._handle_chapter_1(thread, input_items, agent_context, context):
-                yield event
+            elif chapter == 1:
+                async for event in self._handle_chapter_1(thread, input_items, agent_context, context):
+                    yield event
 
-        elif chapter == 2:
-            async for event in self._handle_chapter_2(thread, input_items, agent_context, context):
-                yield event
+            elif chapter == 2:
+                async for event in self._handle_chapter_2(thread, input_items, agent_context, context):
+                    yield event
 
-        elif chapter == 3:
-            async for event in self._handle_chapter_3(thread, input_items, agent_context, context):
-                yield event
+            elif chapter == 3:
+                async for event in self._handle_chapter_3(thread, input_items, agent_context, context):
+                    yield event
 
-        elif chapter == 4:
-            async for event in self._handle_chapter_4(thread, input_items, agent_context, context):
-                yield event
+            elif chapter == 4:
+                async for event in self._handle_chapter_4(thread, input_items, agent_context, context):
+                    yield event
 
-        elif chapter == 5:
-            async for event in self._handle_chapter_5(thread, input_items, agent_context, context):
-                yield event
+            elif chapter == 5:
+                async for event in self._handle_chapter_5(thread, input_items, agent_context, context):
+                    yield event
 
-        else:
-            async for event in self._handle_chapter_final(thread, input_items, agent_context, context):
-                yield event
+            else:
+                async for event in self._handle_chapter_final(thread, input_items, agent_context, context):
+                    yield event
 
     async def _handle_chapter_0(
         self,
