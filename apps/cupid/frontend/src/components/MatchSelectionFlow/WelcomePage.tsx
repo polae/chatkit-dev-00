@@ -19,17 +19,6 @@ export function WelcomePage({ onNext }: WelcomePageProps) {
         {/* Description */}
         <p className="ms-welcome-description">{WELCOME_DESCRIPTION}</p>
 
-        {/* Decorative Fleuron */}
-        <div className="ms-fleuron">
-          <span className="ms-fleuron-dot" />
-          <span className="ms-fleuron-dot" />
-          <span className="ms-fleuron-dot" />
-          <span className="ms-fleuron-dot" />
-          <span className="ms-fleuron-dot" />
-          <span className="ms-fleuron-dot" />
-          <span className="ms-fleuron-dot" />
-        </div>
-
         {/* Step Indicator */}
         <div className="ms-step-indicator">
           <span className="ms-step-dot active" />

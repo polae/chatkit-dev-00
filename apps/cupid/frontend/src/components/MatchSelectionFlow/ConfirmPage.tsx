@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, ArrowLeft, Play, Heart, Loader2 } from "lucide-react";
+import { User, ArrowLeft, Play, Loader2 } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
 import type { PersonData, CompatibilityData } from "../../types/today";
 import { getZodiacSymbol } from "../../types/today";
@@ -113,12 +113,6 @@ export function ConfirmPage({
               </span>
             </div>
           </article>
-
-          {/* Heart Connector */}
-          <div className="ms-heart-connector">
-            <Heart className="ms-heart-icon" fill="currentColor" />
-            <span className="ms-heart-label">Match</span>
-          </div>
 
           {/* Match */}
           <article className="ms-profile-card">
