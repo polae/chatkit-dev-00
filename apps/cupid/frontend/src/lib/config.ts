@@ -14,7 +14,6 @@ export const STARTER_PROMPTS: StartScreenPrompt[] = [
   {
     label: "Play",
     prompt: "Play",
-    icon: "play",
   },
 ];
 

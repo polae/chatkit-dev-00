@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CompatibilityData, AstrologicalReference } from "../../types/today";
 import { getZodiacSymbol } from "../../types/today";
 
@@ -31,40 +31,43 @@ export function CompatibilityBars({
     mars: 0,
   });
 
-  const bars: BarData[] = [
-    {
-      planet: "sun",
-      icon: "☀️",
-      score: compatibility.sun_compatibility.score,
-      mortalSign: mortalAstro.sun,
-      matchSign: matchAstro.sun,
-      colorClass: "ms-bar-yellow",
-    },
-    {
-      planet: "moon",
-      icon: "🌙",
-      score: compatibility.moon_compatibility.score,
-      mortalSign: mortalAstro.moon,
-      matchSign: matchAstro.moon,
-      colorClass: "ms-bar-purple",
-    },
-    {
-      planet: "venus",
-      icon: "💖",
-      score: compatibility.venus_compatibility.score,
-      mortalSign: mortalAstro.venus,
-      matchSign: matchAstro.venus,
-      colorClass: "ms-bar-pink",
-    },
-    {
-      planet: "mars",
-      icon: "🔥",
-      score: compatibility.mars_compatibility.score,
-      mortalSign: mortalAstro.mars,
-      matchSign: matchAstro.mars,
-      colorClass: "ms-bar-red",
-    },
-  ];
+  const bars: BarData[] = useMemo(
+    () => [
+      {
+        planet: "sun",
+        icon: "☀️",
+        score: compatibility.sun_compatibility.score,
+        mortalSign: mortalAstro.sun,
+        matchSign: matchAstro.sun,
+        colorClass: "ms-bar-yellow",
+      },
+      {
+        planet: "moon",
+        icon: "🌙",
+        score: compatibility.moon_compatibility.score,
+        mortalSign: mortalAstro.moon,
+        matchSign: matchAstro.moon,
+        colorClass: "ms-bar-purple",
+      },
+      {
+        planet: "venus",
+        icon: "💖",
+        score: compatibility.venus_compatibility.score,
+        mortalSign: mortalAstro.venus,
+        matchSign: matchAstro.venus,
+        colorClass: "ms-bar-pink",
+      },
+      {
+        planet: "mars",
+        icon: "🔥",
+        score: compatibility.mars_compatibility.score,
+        mortalSign: mortalAstro.mars,
+        matchSign: matchAstro.mars,
+        colorClass: "ms-bar-red",
+      },
+    ],
+    [compatibility, mortalAstro, matchAstro]
+  );
 
   useEffect(() => {
     if (animate) {
@@ -86,7 +89,7 @@ export function CompatibilityBars({
         mars: bars[3].score,
       });
     }
-  }, [compatibility, animate]);
+  }, [bars, animate]);
 
   return (
     <div className="ms-compatibility-bars">

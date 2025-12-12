@@ -2,7 +2,7 @@ import { useState } from "react";
 import { User, MapPin, ArrowLeft, ArrowRight } from "lucide-react";
 import { useAppStore } from "../../store/useAppStore";
 import type { PersonData, MatchEntry, CompatibilityData } from "../../types/today";
-import { getZodiacSymbol, getZodiacName } from "../../types/today";
+import { getZodiacName } from "../../types/today";
 import { CompatibilityBars } from "./CompatibilityBars";
 
 interface SelectMatchPageProps {
@@ -26,7 +26,6 @@ export function SelectMatchPage({
   onBack,
   onNext,
 }: SelectMatchPageProps) {
-  const selectedMatchId = useAppStore((state) => state.selectedMatchId);
   const setSelectedMatchId = useAppStore((state) => state.setSelectedMatchId);
 
   // Track which card is flipped (showing compatibility)

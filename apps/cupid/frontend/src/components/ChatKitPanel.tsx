@@ -111,7 +111,8 @@ export function ChatKitPanel({ onChatKitReady, className }: ChatKitPanelProps) {
     }
 
     startGameWithSelectedMatch();
-  }, [gamePhase, threadId, matchSessionId, selectedMatchId, chatkit]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- chatkit object changes every render; hasStartedGame ref guards against double-sends
+  }, [gamePhase, threadId, matchSessionId, selectedMatchId]);
 
   return (
     <div className={clsx("relative h-full w-full overflow-hidden", className)}>
