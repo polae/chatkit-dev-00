@@ -74,7 +74,7 @@ export function MortalPage({ mortal, onBack, onNext }: MortalPageProps) {
       {/* Navigation */}
       <section className="ms-nav-section">
         <button className="ms-nav-button" onClick={onNext}>
-          Choose a Match
+          Accept your Mortal
           <ArrowRight />
         </button>
       </section>

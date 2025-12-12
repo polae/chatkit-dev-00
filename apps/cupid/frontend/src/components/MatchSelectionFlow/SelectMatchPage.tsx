@@ -159,7 +159,7 @@ export function SelectMatchPage({
           disabled={!canProceed}
           onClick={onNext}
         >
-          Select {flippedCardId ? matches.find(m => m.id === flippedCardId)?.data.name.split(" ")[0] : ""}
+          Choose {flippedCardId ? matches.find(m => m.id === flippedCardId)?.data.name.split(" ")[0] : "a Match"}
           <ArrowRight />
         </button>
       </section>
