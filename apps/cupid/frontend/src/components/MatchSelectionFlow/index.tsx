@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useAppStore } from "../../store/useAppStore";
 import type { TodayData } from "../../types/today";
 import { WelcomePage } from "./WelcomePage";
+import { MortalPage } from "./MortalPage";
 import { SelectMatchPage } from "./SelectMatchPage";
 import { ConfirmPage } from "./ConfirmPage";
 import "../../styles/match-selection.css";
 
-type FlowPage = "welcome" | "select" | "confirm";
+type FlowPage = "welcome" | "mortal" | "select" | "confirm";
 
 export function MatchSelectionFlow() {
   const [currentPage, setCurrentPage] = useState<FlowPage>("welcome");
@@ -92,7 +93,13 @@ export function MatchSelectionFlow() {
     <div className={containerClass}>
       {currentPage === "welcome" && (
         <WelcomePage
+          onNext={() => setCurrentPage("mortal")}
+        />
+      )}
+      {currentPage === "mortal" && (
+        <MortalPage
           mortal={todayData.mortal}
+          onBack={() => setCurrentPage("welcome")}
           onNext={() => setCurrentPage("select")}
         />
       )}
@@ -101,7 +108,7 @@ export function MatchSelectionFlow() {
           mortal={todayData.mortal}
           matches={todayData.matches}
           compatibility={todayData.compatibility}
-          onBack={() => setCurrentPage("welcome")}
+          onBack={() => setCurrentPage("mortal")}
           onNext={() => setCurrentPage("confirm")}
         />
       )}

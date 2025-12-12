@@ -100,16 +100,16 @@ export function ConfirmPage({
             <p className="ms-profile-details">{mortal.occupation}</p>
             <div className="ms-profile-zodiac">
               <span className="ms-profile-zodiac-badge">
-                ☀️{getZodiacSymbol(mortalAstro.sun)}
+                ☀️ {getZodiacSymbol(mortalAstro.sun)}
               </span>
               <span className="ms-profile-zodiac-badge">
-                🌙{getZodiacSymbol(mortalAstro.moon)}
+                🌙 {getZodiacSymbol(mortalAstro.moon)}
               </span>
               <span className="ms-profile-zodiac-badge">
-                💖{getZodiacSymbol(mortalAstro.venus)}
+                💖 {getZodiacSymbol(mortalAstro.venus)}
               </span>
               <span className="ms-profile-zodiac-badge">
-                🔥{getZodiacSymbol(mortalAstro.mars)}
+                🔥 {getZodiacSymbol(mortalAstro.mars)}
               </span>
             </div>
           </article>
@@ -129,16 +129,16 @@ export function ConfirmPage({
             <p className="ms-profile-details">{match.occupation}</p>
             <div className="ms-profile-zodiac">
               <span className="ms-profile-zodiac-badge">
-                ☀️{getZodiacSymbol(matchAstro.sun)}
+                ☀️ {getZodiacSymbol(matchAstro.sun)}
               </span>
               <span className="ms-profile-zodiac-badge">
-                🌙{getZodiacSymbol(matchAstro.moon)}
+                🌙 {getZodiacSymbol(matchAstro.moon)}
               </span>
               <span className="ms-profile-zodiac-badge">
-                💖{getZodiacSymbol(matchAstro.venus)}
+                💖 {getZodiacSymbol(matchAstro.venus)}
               </span>
               <span className="ms-profile-zodiac-badge">
-                🔥{getZodiacSymbol(matchAstro.mars)}
+                🔥 {getZodiacSymbol(matchAstro.mars)}
               </span>
             </div>
           </article>
@@ -178,6 +178,7 @@ export function ConfirmPage({
 
         {/* Step Indicator */}
         <div className="ms-step-indicator">
+          <span className="ms-step-dot completed" />
           <span className="ms-step-dot completed" />
           <span className="ms-step-dot completed" />
           <span className="ms-step-dot active" />

@@ -729,6 +729,157 @@
   }
 }
 
+/* Welcome Page Styles */
+.ms-welcome-page {
+  justify-content: center;
+  text-align: center;
+  padding-top: var(--ms-space-xl);
+}
+
+.ms-welcome-hero {
+  margin-bottom: var(--ms-space-xl);
+  animation: ms-gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 100ms both;
+}
+
+.ms-welcome-title {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  letter-spacing: -0.02em;
+  color: var(--ms-text-primary);
+  margin-bottom: var(--ms-space-xs);
+}
+
+.ms-welcome-tagline {
+  font-size: 18px;
+  color: var(--ms-text-secondary);
+  margin-bottom: var(--ms-space-sm);
+}
+
+.ms-welcome-version {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(107, 194, 255, 0.15);
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ms-blue);
+  letter-spacing: 0.02em;
+}
+
+.ms-welcome-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ms-text-secondary);
+  max-width: 320px;
+  margin: 0 auto var(--ms-space-xl);
+  animation: ms-gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) 200ms both;
+}
+
+/* Flip Card Styles */
+.ms-flip-card-container {
+  perspective: 1000px;
+  width: 100%;
+  height: 160px;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: ms-gentle-enter 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* When flipped, expand container to fit taller compatibility card */
+.ms-flip-card-container:has(.flipped) {
+  height: 220px;
+}
+
+.ms-flip-card-container:nth-child(1) { animation-delay: 150ms; }
+.ms-flip-card-container:nth-child(2) { animation-delay: 200ms; }
+.ms-flip-card-container:nth-child(3) { animation-delay: 250ms; }
+
+.ms-flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.ms-flip-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.ms-flip-card-front,
+.ms-flip-card-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ms-flip-card-front {
+  z-index: 2;
+  height: 160px;
+}
+
+.ms-flip-card-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+  height: 220px;
+}
+
+/* Override match card styles for flip cards */
+.ms-flip-card-front.ms-match-card {
+  animation: none;
+  height: 160px;
+  box-sizing: border-box;
+}
+
+.ms-flip-card-front.ms-match-card:hover {
+  border-color: var(--ms-border-color-hover);
+  box-shadow: var(--ms-shadow-medium);
+}
+
+/* Compatibility card (back face) */
+.ms-compat-card {
+  background: var(--ms-bg-surface);
+  border: 2px solid var(--ms-pink);
+  padding: var(--ms-space-sm);
+  box-shadow: 0 0 0 3px rgba(231, 181, 160, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.dark .ms-compat-card {
+  box-shadow: 0 0 0 3px rgba(231, 181, 160, 0.2);
+}
+
+.ms-compat-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--ms-space-xs);
+  padding-bottom: var(--ms-space-xs);
+  border-bottom: 1px solid var(--ms-border-color);
+}
+
+.ms-compat-card .ms-compatibility-title {
+  font-size: 13px;
+}
+
+.ms-compat-card .ms-compatibility-subtitle {
+  font-size: 10px;
+}
+
+.ms-compat-card .ms-compatibility-score-value {
+  font-size: 24px;
+}
+
+.ms-compat-card .ms-compatibility-bars {
+  flex: 1;
+}
+
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
