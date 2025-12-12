@@ -24,7 +24,18 @@ export default function App() {
 
     const vv = window.visualViewport;
     const update = () => {
-      const height = Math.round(vv?.height ?? window.innerHeight);
+      const innerHeight = window.innerHeight;
+      const vvHeight = Math.round(vv?.height ?? innerHeight);
+
+      // iOS Safari: when the keyboard is open, visualViewport.height shrinks.
+      // ChatKit already handles keyboard avoidance internally, but our earlier
+      // "shrink the container to visualViewport.height" pushed the composer out of view.
+      //
+      // So:
+      // - While keyboard is open => keep layout at innerHeight (don't shrink)
+      // - When keyboard closes => use visualViewport.height (fixes the lingering blank space)
+      const keyboardOpen = !!vv && vvHeight < innerHeight - 150;
+      const height = keyboardOpen ? innerHeight : vvHeight;
       document.documentElement.style.setProperty("--app-vh", `${height}px`);
     };
 
