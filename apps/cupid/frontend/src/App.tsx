@@ -9,16 +9,16 @@ export default function App() {
   const gamePhase = useAppStore((state) => state.gamePhase);
 
   const containerClass = clsx(
-    "h-full bg-gradient-to-br transition-colors duration-300",
+    "h-full transition-colors duration-300",
     scheme === "dark"
-      ? "from-slate-900 via-slate-950 to-slate-850 text-slate-100"
-      : "from-[#f8f6f1] via-[#faf9f5] to-[#f8f6f1] text-slate-900"
+      ? "bg-slate-900 text-slate-100"
+      : "bg-gradient-to-br from-[#f8f6f1] via-[#faf9f5] to-[#f8f6f1] text-slate-900"
   );
 
   const headerBarClass = clsx(
     "sticky top-0 z-30 w-full border-b backdrop-blur",
     scheme === "dark"
-      ? "bg-slate-950/80 border-slate-800/70 text-slate-100"
+      ? "bg-slate-900/80 border-slate-800/70 text-slate-100"
       : "bg-[#f8f6f1]/90 border-slate-200/70 text-slate-900"
   );
 
