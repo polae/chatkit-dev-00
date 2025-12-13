@@ -32,7 +32,7 @@ function MessageCard({ message }: { message: ConversationMessage }) {
     <div
       className={cn(
         'rounded-lg p-4 mb-4',
-        isUser ? 'bg-purple-500/10 border border-purple-500/20' : 'bg-card border border-border'
+        isUser ? 'bg-pink-500/10 border border-pink-500/20' : 'bg-card border border-border'
       )}
     >
       {/* Header */}
@@ -41,11 +41,11 @@ function MessageCard({ message }: { message: ConversationMessage }) {
           <div
             className={cn(
               'w-8 h-8 rounded-full flex items-center justify-center',
-              isUser ? 'bg-purple-500/20' : 'bg-primary/20'
+              isUser ? 'bg-pink-500/20' : 'bg-primary/20'
             )}
           >
             {isUser ? (
-              <User className="w-4 h-4 text-purple-400" />
+              <User className="w-4 h-4 text-pink-400" />
             ) : (
               <Bot className="w-4 h-4 text-primary" />
             )}
@@ -154,7 +154,7 @@ export default function ConversationPage() {
   const progressLabel = session.is_complete
     ? 'Complete'
     : session.max_chapter >= 0
-    ? `Made it to: ${CHAPTER_NAMES[session.max_chapter] || `Chapter ${session.max_chapter}`}`
+    ? `${CHAPTER_NAMES[session.max_chapter] || `Chapter ${session.max_chapter}`}`
     : 'Just Started'
 
   // Group messages by chapter

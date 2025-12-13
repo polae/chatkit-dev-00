@@ -16,7 +16,7 @@ function SessionRow({ session }: { session: Session }) {
   const progressLabel = session.is_complete
     ? 'Complete'
     : session.max_chapter >= 0
-    ? `Made it to: ${CHAPTER_NAMES[session.max_chapter] || `Chapter ${session.max_chapter}`}`
+    ? `${CHAPTER_NAMES[session.max_chapter] || `Chapter ${session.max_chapter}`}`
     : 'Just Started'
 
   return (
@@ -35,7 +35,7 @@ function SessionRow({ session }: { session: Session }) {
           </button>
         </td>
         <td className="px-4 py-3">
-          <span className="font-mono text-sm text-blue-400">{session.id}</span>
+          <span className="font-mono text-sm text-pink-400">{session.id}</span>
         </td>
         <td className="px-4 py-3">
           <Badge variant={session.is_complete ? 'success' : 'warning'}>

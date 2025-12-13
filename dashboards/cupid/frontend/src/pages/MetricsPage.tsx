@@ -106,9 +106,9 @@ export default function MetricsPage() {
                     nameKey="chapter"
                     cx="50%"
                     cy="50%"
+                    innerRadius={60}
                     outerRadius={80}
-                    label={({ chapter, cost }) => `${chapter}: ${formatCost(cost)}`}
-                    labelLine={false}
+                    paddingAngle={5}
                   >
                     {dashboardMetrics.cost_by_chapter.map((_, index) => (
                       <Cell
@@ -121,10 +121,16 @@ export default function MetricsPage() {
                     contentStyle={{
                       backgroundColor: 'hsl(var(--card))',
                       border: '1px solid hsl(var(--border))',
+                      borderRadius: 'var(--radius)',
                     }}
                     formatter={(value: number) => formatCost(value)}
                   />
-                  <Legend />
+                  <Legend 
+                    layout="vertical" 
+                    verticalAlign="middle" 
+                    align="right"
+                    wrapperStyle={{ paddingLeft: '20px' }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
