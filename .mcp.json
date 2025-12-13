@@ -1,13 +1,8 @@
 {
   "mcpServers": {
-    "NanoBanana": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/Users/johnsteven/GITHUB/MCP/mcp-servers/mcps/nano-mcp",
-        "run",
-        "server.py"
-      ]
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
     }
   }
 }

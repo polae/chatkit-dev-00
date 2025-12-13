@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Metrics - Cupid Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+  <style>
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    @media (max-width: 1200px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .metric-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+    }
+
+    .metric-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .metric-icon.blue { background: rgba(59, 130, 246, 0.2); }
+    .metric-icon.green { background: rgba(16, 185, 129, 0.2); }
+    .metric-icon.purple { background: rgba(139, 92, 246, 0.2); }
+    .metric-icon.pink { background: rgba(236, 72, 153, 0.2); }
+
+    .metric-value {
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .metric-label {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    .charts-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    @media (max-width: 1200px) {
+      .charts-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+    }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .chart-title {
+      font-size: var(--text-base);
+      font-weight: 600;
+    }
+
+    .chart-container {
+      height: 300px;
+      position: relative;
+    }
+
+    .chart-container.small {
+      height: 200px;
+    }
+
+    .charts-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    @media (max-width: 1200px) {
+      .charts-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .time-range-selector {
+      display: flex;
+      gap: var(--spacing-sm);
+    }
+
+    .time-range-btn {
+      padding: var(--spacing-xs) var(--spacing-md);
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-secondary);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      transition: all 0.15s ease;
+    }
+
+    .time-range-btn:hover {
+      background: var(--bg-hover);
+      color: var(--text-primary);
+    }
+
+    .time-range-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <a href="index.html" class="nav-logo">
+        <span>Cupid</span>
+      </a>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Observability</div>
+        <a href="sessions.html" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          Sessions
+        </a>
+        <a href="agent.html" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 2a10 10 0 0 1 10 10H12z"></path></svg>
+          Agents
+        </a>
+        <a href="metrics.html" class="nav-link active">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"></line><line x1="18" y1="20" x2="18" y2="4"></line><line x1="6" y1="20" x2="6" y2="16"></line></svg>
+          Metrics
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">External</div>
+        <a href="https://us.cloud.langfuse.com" target="_blank" class="nav-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          Langfuse Console
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h1 class="page-title">Metrics Dashboard</h1>
+          <p class="page-subtitle">Aggregate analytics for Cupid conversations</p>
+        </div>
+        <div class="time-range-selector">
+          <button class="time-range-btn" onclick="setTimeRange('24h')">24h</button>
+          <button class="time-range-btn active" onclick="setTimeRange('7d')">7d</button>
+          <button class="time-range-btn" onclick="setTimeRange('30d')">30d</button>
+          <button class="time-range-btn" onclick="setTimeRange('all')">All</button>
+        </div>
+      </div>
+
+      <!-- Top Metrics -->
+      <div class="metrics-grid" style="grid-template-columns: repeat(5, 1fr);">
+        <div class="metric-card">
+          <div class="metric-icon pink">&#128172;</div>
+          <div class="metric-value" id="metric-sessions">-</div>
+          <div class="metric-label">Unique Sessions</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon blue">&#128200;</div>
+          <div class="metric-value" id="metric-traces">-</div>
+          <div class="metric-label">Total Traces</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon green">&#128176;</div>
+          <div class="metric-value" id="metric-cost">-</div>
+          <div class="metric-label">Total Cost</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon purple">&#9201;</div>
+          <div class="metric-value" id="metric-latency">-</div>
+          <div class="metric-label">Avg Latency</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon green">&#128178;</div>
+          <div class="metric-value" id="metric-cost-per-session">-</div>
+          <div class="metric-label">Cost per Session</div>
+        </div>
+      </div>
+
+      <!-- Charts Row: Cost by Chapter + Traces Per Day -->
+      <div class="charts-grid-2" style="margin-bottom: var(--spacing-xl);">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Cost by Chapter</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="cost-breakdown-chart"></canvas>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div class="chart-title">Traces Per Day (Last 7 Days)</div>
+          </div>
+          <div class="chart-container">
+            <canvas id="volume-chart"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="api.js"></script>
+  <script>
+    const api = new LangfuseAPI();
+    let metricsData = null;
+    let charts = {};
+
+    // Chart.js config
+    Chart.defaults.color = '#a1a1a1';
+    Chart.defaults.borderColor = '#2a2a2a';
+
+    async function loadMetrics() {
+      try {
+        metricsData = await api.getDashboardMetrics();
+
+        // Update KPIs
+        const costPerSession = metricsData.uniqueUsers > 0
+          ? metricsData.totalCost / metricsData.uniqueUsers
+          : 0;
+
+        document.getElementById('metric-sessions').textContent = metricsData.uniqueUsers;
+        document.getElementById('metric-traces').textContent = metricsData.totalTraces;
+        document.getElementById('metric-cost').textContent = formatCost(metricsData.totalCost);
+        document.getElementById('metric-latency').textContent = formatLatency(metricsData.avgLatency * 1000);
+        document.getElementById('metric-cost-per-session').textContent = formatCost(costPerSession);
+
+        await renderCharts();
+      } catch (error) {
+        console.error('Failed to load metrics:', error);
+      }
+    }
+
+    async function renderCharts() {
+      // Destroy existing charts
+      Object.values(charts).forEach(chart => chart.destroy());
+      charts = {};
+
+      // Cost by chapter (tags)
+      const chapterCosts = {};
+      metricsData.traces.forEach(trace => {
+        const chapter = trace.tags?.find(t => t.startsWith('chapter_')) || 'other';
+        chapterCosts[chapter] = (chapterCosts[chapter] || 0) + (trace.totalCost || 0);
+      });
+
+      const chapterLabels = Object.keys(chapterCosts).map(c => c.replace('chapter_', 'Chapter '));
+      const chapterValues = Object.values(chapterCosts);
+
+      charts.breakdown = new Chart(document.getElementById('cost-breakdown-chart'), {
+        type: 'doughnut',
+        data: {
+          labels: chapterLabels,
+          datasets: [{
+            data: chapterValues,
+            backgroundColor: [
+              '#8b5cf6',
+              '#3b82f6',
+              '#10b981',
+              '#f59e0b',
+              '#ef4444',
+              '#ec4899'
+            ]
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right'
+            }
+          }
+        }
+      });
+
+      // Traces per day (always show last 7 days)
+      const last7Days = [];
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(d.getDate() - i);
+        last7Days.push(d.toISOString().split('T')[0]);
+      }
+      const traceValues = last7Days.map(day => metricsData.tracesByDay[day] || 0);
+
+      charts.volume = new Chart(document.getElementById('volume-chart'), {
+        type: 'bar',
+        data: {
+          labels: last7Days.map(d => new Date(d).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })),
+          datasets: [{
+            label: 'Traces',
+            data: traceValues,
+            backgroundColor: 'rgba(139, 92, 246, 0.6)',
+            borderColor: '#8b5cf6',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1 }
+            }
+          }
+        }
+      });
+
+    }
+
+    function setTimeRange(range) {
+      // Update button states
+      document.querySelectorAll('.time-range-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase() === range);
+      });
+
+      // In a real implementation, this would filter the data
+      // For now, just reload
+      loadMetrics();
+    }
+
+    // Initialize
+    loadMetrics();
+  </script>
+</body>
+</html>
