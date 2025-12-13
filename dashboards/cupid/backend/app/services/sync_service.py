@@ -30,8 +30,6 @@ class SyncService:
 
     def __init__(self):
         self.client = LangfuseClient()
-        self.max_requests_per_sync = 20
-        self.items_per_page = 100
 
     async def sync(self) -> None:
         """Main sync entry point."""
@@ -80,9 +78,24 @@ class SyncService:
             await db.commit()
 
     async def _sync_sessions(self) -> None:
-        """Sync sessions from Langfuse."""
-        result = await self.client.get_sessions(limit=self.items_per_page)
-        sessions = result.get("data", [])
+        """Sync sessions from Langfuse with pagination."""
+        sessions = []
+        page = 1
+        max_pages = 10  # Safety limit
+
+        while page <= max_pages:
+            result = await self.client.get_sessions(limit=100, page=page)
+            batch = result.get("data", [])
+            if not batch:
+                break
+            sessions.extend(batch)
+
+            # Check if we've fetched all pages
+            meta = result.get("meta", {})
+            total_pages = meta.get("totalPages", 1)
+            if page >= total_pages:
+                break
+            page += 1
 
         async with get_db() as db:
             for session in sessions:
@@ -101,9 +114,24 @@ class SyncService:
             await db.commit()
 
     async def _sync_traces(self) -> None:
-        """Sync traces from Langfuse."""
-        result = await self.client.get_traces(limit=self.items_per_page)
-        traces = result.get("data", [])
+        """Sync traces from Langfuse with pagination."""
+        traces = []
+        page = 1
+        max_pages = 10  # Safety limit
+
+        while page <= max_pages:
+            result = await self.client.get_traces(limit=100, page=page)
+            batch = result.get("data", [])
+            if not batch:
+                break
+            traces.extend(batch)
+
+            # Check if we've fetched all pages
+            meta = result.get("meta", {})
+            total_pages = meta.get("totalPages", 1)
+            if page >= total_pages:
+                break
+            page += 1
 
         async with get_db() as db:
             for trace in traces:
@@ -139,9 +167,24 @@ class SyncService:
             await db.commit()
 
     async def _sync_observations(self) -> None:
-        """Sync observations from Langfuse."""
-        result = await self.client.get_observations(limit=500)
-        observations = result.get("data", [])
+        """Sync observations from Langfuse with pagination."""
+        observations = []
+        page = 1
+        max_pages = 10  # Safety limit to avoid infinite loops
+
+        while page <= max_pages:
+            result = await self.client.get_observations(limit=100, page=page)
+            batch = result.get("data", [])
+            if not batch:
+                break
+            observations.extend(batch)
+
+            # Check if we've fetched all pages
+            meta = result.get("meta", {})
+            total_pages = meta.get("totalPages", 1)
+            if page >= total_pages:
+                break
+            page += 1
 
         async with get_db() as db:
             for obs in observations:

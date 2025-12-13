@@ -14,6 +14,6 @@ async def get_sync_status():
 
 @router.post("/trigger")
 async def trigger_sync(background_tasks: BackgroundTasks):
-    """Manually trigger a sync."""
+    """Manually trigger a sync from Langfuse API."""
     background_tasks.add_task(sync_service.sync)
-    return {"status": "started", "message": "Sync job started"}
+    return {"status": "started", "message": "Sync job started - fetching from Langfuse API"}

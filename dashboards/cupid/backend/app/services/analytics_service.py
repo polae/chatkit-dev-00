@@ -171,6 +171,7 @@ class AnalyticsService:
             row = await cursor.fetchone()
 
             # Calculate average duration
+            duration_where = f"{where_clause} AND first_trace_at IS NOT NULL AND last_trace_at IS NOT NULL" if where_clause else "WHERE first_trace_at IS NOT NULL AND last_trace_at IS NOT NULL"
             cursor = await db.execute(
                 f"""
                 SELECT
@@ -178,8 +179,7 @@ class AnalyticsService:
                         julianday(last_trace_at) - julianday(first_trace_at)
                     ) * 86400 as avg_duration
                 FROM sessions
-                {where_clause}
-                AND first_trace_at IS NOT NULL AND last_trace_at IS NOT NULL
+                {duration_where}
                 """,
                 params,
             )
@@ -272,7 +272,7 @@ class AnalyticsService:
                     return obs["name"]
 
                 current = obs
-                while current.get("parent_observation_id"):
+                while current["parent_observation_id"]:
                     parent = obs_map.get(current["parent_observation_id"])
                     if not parent:
                         break
@@ -370,22 +370,24 @@ class AnalyticsService:
             return output_data
 
         if isinstance(output_data, dict):
-            if output_data.get("text"):
-                return output_data["text"]
-            if output_data.get("content"):
-                content = output_data["content"]
-                return content if isinstance(content, str) else json.dumps(content)
-
-            # OpenAI Responses API format
+            # OpenAI Responses API format - check this first (most specific)
             if output_data.get("output") and isinstance(output_data["output"], list):
                 texts = []
                 for item in output_data["output"]:
-                    if isinstance(item, dict) and item.get("content"):
+                    if isinstance(item, dict) and item.get("type") == "message" and item.get("content"):
                         for c in item["content"]:
-                            if isinstance(c, dict) and c.get("text"):
+                            if isinstance(c, dict) and c.get("type") == "output_text" and c.get("text"):
                                 texts.append(c["text"])
                 if texts:
                     return "\n\n".join(texts)
+
+            # Simple text field (only if it's a string, not schema metadata)
+            if output_data.get("text") and isinstance(output_data["text"], str):
+                return output_data["text"]
+
+            if output_data.get("content"):
+                content = output_data["content"]
+                return content if isinstance(content, str) else json.dumps(content)
 
         return ""
 
@@ -570,12 +572,12 @@ class AnalyticsService:
             }
 
             # Cost by chapter
+            chapter_where = f"{trace_where} AND chapter IS NOT NULL" if trace_where else "WHERE chapter IS NOT NULL"
             cursor = await db.execute(
                 f"""
                 SELECT chapter, COALESCE(SUM(total_cost), 0) as cost
                 FROM traces
-                {trace_where}
-                AND chapter IS NOT NULL
+                {chapter_where}
                 GROUP BY chapter
                 ORDER BY chapter
                 """,
