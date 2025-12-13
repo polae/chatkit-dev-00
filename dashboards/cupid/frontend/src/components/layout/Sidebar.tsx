@@ -12,7 +12,7 @@ const navItems = [
 ]
 
 export default function Sidebar() {
-  const { syncStatus, fetchSyncStatus, triggerSync } = useDashboardStore()
+  const { syncStatus, syncInProgress, fetchSyncStatus, triggerSync } = useDashboardStore()
 
   useEffect(() => {
     fetchSyncStatus()
@@ -76,13 +76,14 @@ export default function Sidebar() {
           <span className="text-xs text-muted-foreground">Sync Status</span>
           <button
             onClick={triggerSync}
-            disabled={syncStatus?.status === 'running'}
+            disabled={syncInProgress || syncStatus?.status === 'running'}
             className="p-1 rounded hover:bg-muted disabled:opacity-50"
+            title={syncInProgress ? 'Syncing and refreshing data...' : 'Trigger manual sync'}
           >
             <RefreshCw
               className={cn(
                 'w-3 h-3 text-muted-foreground',
-                syncStatus?.status === 'running' && 'animate-spin'
+                (syncInProgress || syncStatus?.status === 'running') && 'animate-spin'
               )}
             />
           </button>
@@ -91,16 +92,19 @@ export default function Sidebar() {
           <div
             className={cn(
               'w-2 h-2 rounded-full',
-              syncStatus?.status === 'idle' && 'bg-green-500',
-              syncStatus?.status === 'running' && 'bg-yellow-500',
-              syncStatus?.status === 'error' && 'bg-red-500',
-              !syncStatus && 'bg-gray-500'
+              syncInProgress && 'bg-yellow-500',
+              !syncInProgress && syncStatus?.status === 'idle' && 'bg-green-500',
+              !syncInProgress && syncStatus?.status === 'running' && 'bg-yellow-500',
+              !syncInProgress && syncStatus?.status === 'error' && 'bg-red-500',
+              !syncStatus && !syncInProgress && 'bg-gray-500'
             )}
           />
           <span className="text-xs text-muted-foreground">
-            {syncStatus?.last_sync_at
-              ? formatRelativeTime(syncStatus.last_sync_at)
-              : 'Never synced'}
+            {syncInProgress
+              ? 'Syncing...'
+              : syncStatus?.last_sync_at
+                ? formatRelativeTime(syncStatus.last_sync_at)
+                : 'Never synced'}
           </span>
         </div>
       </div>

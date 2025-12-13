@@ -3,33 +3,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from app.database import get_db
-
-
-# Agent categories for Cupid
-AGENT_CATEGORIES = {
-    "HasEnded": "routing",
-    "StartCupidGame": "control",
-    "Introduction": "content",
-    "DisplayMortal": "ui",
-    "Mortal": "content",
-    "DisplayMatch": "ui",
-    "Match": "content",
-    "DisplayCompatibilityCard": "ui",
-    "CompatibilityAnalysis": "content",
-    "DisplayChoices": "ui",
-    "CupidEvaluation": "content",
-    "End": "control",
-}
-
-CHAPTER_NAMES = {
-    0: "Introduction",
-    1: "Mortal",
-    2: "Match",
-    3: "Compatibility",
-    4: "Story",
-    5: "Evaluation",
-    6: "End",
-}
+from app.constants import AGENT_CATEGORIES, CHAPTER_NAMES
 
 
 def _get_time_filter(time_range: str) -> str | None:

@@ -54,8 +54,10 @@ interface DashboardState {
 
   // Sync status
   syncStatus: SyncStatus | null
+  syncInProgress: boolean
   fetchSyncStatus: () => Promise<void>
   triggerSync: () => Promise<void>
+  refreshAllData: () => Promise<void>
 }
 
 export const useDashboardStore = create<DashboardState>((set, get) => ({
@@ -160,23 +162,56 @@ export const useDashboardStore = create<DashboardState>((set, get) => ({
 
   // Sync
   syncStatus: null,
+  syncInProgress: false,
 
   fetchSyncStatus: async () => {
     try {
       const status = await syncApi.getSyncStatus()
       set({ syncStatus: status })
+      return status
     } catch (error) {
       console.error('Failed to fetch sync status:', error)
+      return null
     }
   },
 
   triggerSync: async () => {
+    const { fetchSyncStatus, refreshAllData } = get()
+    set({ syncInProgress: true })
+
     try {
       await syncApi.triggerSync()
-      // Refresh status after triggering
-      setTimeout(() => get().fetchSyncStatus(), 1000)
+
+      // Poll for sync completion (max 60 seconds)
+      const maxAttempts = 30
+      for (let i = 0; i < maxAttempts; i++) {
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        const status = await syncApi.getSyncStatus()
+        set({ syncStatus: status })
+
+        if (status.status === 'idle' || status.status === 'error') {
+          break
+        }
+      }
+
+      // Refresh all data after sync completes
+      await refreshAllData()
     } catch (error) {
       console.error('Failed to trigger sync:', error)
+    } finally {
+      set({ syncInProgress: false })
+      fetchSyncStatus()
     }
+  },
+
+  refreshAllData: async () => {
+    const { fetchSessions, fetchSessionStats, fetchAgents, fetchDashboardMetrics } = get()
+    // Refresh all data in parallel
+    await Promise.all([
+      fetchSessions(),
+      fetchSessionStats(),
+      fetchAgents(),
+      fetchDashboardMetrics(),
+    ])
   },
 }))

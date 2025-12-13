@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 from datetime import datetime, timezone
 from typing import Any
 
@@ -7,22 +8,10 @@ from app.database import get_db
 from app.config import settings
 from .langfuse_client import LangfuseClient, RateLimitError
 
+logger = logging.getLogger(__name__)
 
-# Agent categories for Cupid
-AGENT_CATEGORIES = {
-    "HasEnded": "routing",
-    "StartCupidGame": "control",
-    "Introduction": "content",
-    "DisplayMortal": "ui",
-    "Mortal": "content",
-    "DisplayMatch": "ui",
-    "Match": "content",
-    "DisplayCompatibilityCard": "ui",
-    "CompatibilityAnalysis": "content",
-    "DisplayChoices": "ui",
-    "CupidEvaluation": "content",
-    "End": "control",
-}
+# Delay between paginated API requests to avoid rate limits
+REQUEST_DELAY_MS = 300
 
 
 class SyncService:
@@ -30,33 +19,45 @@ class SyncService:
 
     def __init__(self):
         self.client = LangfuseClient()
+        self._last_sync_counts: dict[str, int] = {}
 
     async def sync(self) -> None:
         """Main sync entry point."""
         try:
+            logger.info("Starting Langfuse sync...")
             await self._update_status("running")
 
             # 1. Sync sessions
-            await self._sync_sessions()
+            session_count = await self._sync_sessions()
+            logger.info(f"Synced {session_count} sessions")
 
             # 2. Sync traces
-            await self._sync_traces()
+            trace_count = await self._sync_traces()
+            logger.info(f"Synced {trace_count} traces")
 
             # 3. Sync observations for traces
-            await self._sync_observations()
+            obs_count = await self._sync_observations()
+            logger.info(f"Synced {obs_count} observations")
 
             # 4. Refresh caches
             await self._refresh_session_stats()
             await self._refresh_agent_stats()
             await self._refresh_daily_metrics()
+            logger.info("Refreshed stats caches")
+
+            # 5. Verify sync completeness
+            await self._verify_sync()
 
             await self._update_status("idle")
+            logger.info("Sync completed successfully")
 
         except RateLimitError as e:
+            logger.warning(f"Rate limited during sync: {e}")
             await self._update_status("rate_limited", str(e))
             # Will retry next cycle
 
         except Exception as e:
+            logger.error(f"Sync failed: {e}")
             await self._update_status("error", str(e))
             raise
 
@@ -77,25 +78,56 @@ class SyncService:
             )
             await db.commit()
 
-    async def _sync_sessions(self) -> None:
-        """Sync sessions from Langfuse with pagination."""
+    async def _get_last_trace_timestamp(self) -> str | None:
+        """Get last synced trace timestamp for incremental sync."""
+        async with get_db() as db:
+            cursor = await db.execute(
+                "SELECT last_trace_timestamp FROM sync_metadata WHERE id = 1"
+            )
+            row = await cursor.fetchone()
+            return row["last_trace_timestamp"] if row else None
+
+    async def _set_last_trace_timestamp(self, timestamp: str) -> None:
+        """Update last synced trace timestamp."""
+        async with get_db() as db:
+            await db.execute(
+                "UPDATE sync_metadata SET last_trace_timestamp = ? WHERE id = 1",
+                (timestamp,),
+            )
+            await db.commit()
+
+    async def _sync_sessions(self) -> int:
+        """Sync ALL sessions from Langfuse with full pagination."""
         sessions = []
         page = 1
-        max_pages = 10  # Safety limit
+        total_items = None
 
-        while page <= max_pages:
+        while True:
             result = await self.client.get_sessions(limit=100, page=page)
             batch = result.get("data", [])
+            meta = result.get("meta", {})
+
+            if total_items is None:
+                total_items = meta.get("totalItems", 0)
+                logger.info(f"Langfuse reports {total_items} total sessions")
+
             if not batch:
                 break
             sessions.extend(batch)
 
             # Check if we've fetched all pages
-            meta = result.get("meta", {})
             total_pages = meta.get("totalPages", 1)
             if page >= total_pages:
                 break
             page += 1
+            # Delay between requests to avoid rate limits
+            await asyncio.sleep(REQUEST_DELAY_MS / 1000)
+
+        # Verify we got all items
+        if total_items and len(sessions) < total_items:
+            logger.warning(
+                f"Session sync incomplete: got {len(sessions)} of {total_items}"
+            )
 
         async with get_db() as db:
             for session in sessions:
@@ -113,25 +145,63 @@ class SyncService:
                 )
             await db.commit()
 
-    async def _sync_traces(self) -> None:
-        """Sync traces from Langfuse with pagination."""
+        self._last_sync_counts["sessions"] = len(sessions)
+        return len(sessions)
+
+    async def _sync_traces(self) -> int:
+        """Sync traces from Langfuse with incremental sync and full pagination."""
+        # Get last sync timestamp for incremental sync
+        last_timestamp = await self._get_last_trace_timestamp()
+        is_incremental = last_timestamp is not None
+
+        if is_incremental:
+            logger.info(f"Incremental trace sync from {last_timestamp}")
+        else:
+            logger.info("Full trace sync (initial)")
+
         traces = []
         page = 1
-        max_pages = 10  # Safety limit
+        total_items = None
+        latest_timestamp = last_timestamp  # Track newest timestamp seen
 
-        while page <= max_pages:
-            result = await self.client.get_traces(limit=100, page=page)
+        while True:
+            result = await self.client.get_traces(
+                limit=100,
+                page=page,
+                from_timestamp=last_timestamp,
+                order_by="timestamp.asc",  # Oldest first for resume support
+            )
             batch = result.get("data", [])
+            meta = result.get("meta", {})
+
+            if total_items is None:
+                total_items = meta.get("totalItems", 0)
+                logger.info(f"Langfuse reports {total_items} traces to sync")
+
             if not batch:
                 break
+
             traces.extend(batch)
 
+            # Track the latest timestamp for next incremental sync
+            for trace in batch:
+                ts = trace.get("timestamp")
+                if ts and (latest_timestamp is None or ts > latest_timestamp):
+                    latest_timestamp = ts
+
             # Check if we've fetched all pages
-            meta = result.get("meta", {})
             total_pages = meta.get("totalPages", 1)
             if page >= total_pages:
                 break
             page += 1
+            # Delay between requests to avoid rate limits
+            await asyncio.sleep(REQUEST_DELAY_MS / 1000)
+
+        # Verify we got all items
+        if total_items and len(traces) < total_items:
+            logger.warning(
+                f"Trace sync incomplete: got {len(traces)} of {total_items}"
+            )
 
         async with get_db() as db:
             for trace in traces:
@@ -166,25 +236,46 @@ class SyncService:
                 )
             await db.commit()
 
-    async def _sync_observations(self) -> None:
-        """Sync observations from Langfuse with pagination."""
+        # Update last trace timestamp for next incremental sync
+        if latest_timestamp:
+            await self._set_last_trace_timestamp(latest_timestamp)
+            logger.info(f"Updated last_trace_timestamp to {latest_timestamp}")
+
+        self._last_sync_counts["traces"] = len(traces)
+        return len(traces)
+
+    async def _sync_observations(self) -> int:
+        """Sync ALL observations from Langfuse with full pagination."""
         observations = []
         page = 1
-        max_pages = 10  # Safety limit to avoid infinite loops
+        total_items = None
 
-        while page <= max_pages:
+        while True:
             result = await self.client.get_observations(limit=100, page=page)
             batch = result.get("data", [])
+            meta = result.get("meta", {})
+
+            if total_items is None:
+                total_items = meta.get("totalItems", 0)
+                logger.info(f"Langfuse reports {total_items} total observations")
+
             if not batch:
                 break
             observations.extend(batch)
 
             # Check if we've fetched all pages
-            meta = result.get("meta", {})
             total_pages = meta.get("totalPages", 1)
             if page >= total_pages:
                 break
             page += 1
+            # Delay between requests to avoid rate limits
+            await asyncio.sleep(REQUEST_DELAY_MS / 1000)
+
+        # Verify we got all items
+        if total_items and len(observations) < total_items:
+            logger.warning(
+                f"Observation sync incomplete: got {len(observations)} of {total_items}"
+            )
 
         async with get_db() as db:
             for obs in observations:
@@ -229,6 +320,9 @@ class SyncService:
                     ),
                 )
             await db.commit()
+
+        self._last_sync_counts["observations"] = len(observations)
+        return len(observations)
 
     async def _refresh_session_stats(self) -> None:
         """Refresh session statistics from traces."""
@@ -382,6 +476,36 @@ class SyncService:
                 )
 
             await db.commit()
+
+    async def _verify_sync(self) -> None:
+        """Verify sync completeness by comparing local counts vs synced counts."""
+        async with get_db() as db:
+            # Get local counts
+            cursor = await db.execute("SELECT COUNT(*) as cnt FROM sessions")
+            local_sessions = (await cursor.fetchone())["cnt"]
+
+            cursor = await db.execute("SELECT COUNT(*) as cnt FROM traces")
+            local_traces = (await cursor.fetchone())["cnt"]
+
+            cursor = await db.execute("SELECT COUNT(*) as cnt FROM observations")
+            local_observations = (await cursor.fetchone())["cnt"]
+
+        # Compare with what we synced this cycle
+        synced_sessions = self._last_sync_counts.get("sessions", 0)
+        synced_traces = self._last_sync_counts.get("traces", 0)
+        synced_observations = self._last_sync_counts.get("observations", 0)
+
+        logger.info(
+            f"Sync verification - Local DB: {local_sessions} sessions, "
+            f"{local_traces} traces, {local_observations} observations"
+        )
+        logger.info(
+            f"Sync verification - This cycle: {synced_sessions} sessions, "
+            f"{synced_traces} traces, {synced_observations} observations"
+        )
+
+        # Note: Local counts may be higher than synced counts for incremental sync
+        # This is expected since we only fetch new data each cycle
 
     async def get_status(self) -> dict[str, Any]:
         """Get current sync status."""

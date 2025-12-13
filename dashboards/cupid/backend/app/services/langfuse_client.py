@@ -62,11 +62,17 @@ class LangfuseClient:
         limit: int = 100,
         page: int = 1,
         session_id: str | None = None,
+        from_timestamp: str | None = None,
+        order_by: str | None = None,
     ) -> dict[str, Any]:
         """Fetch traces with optional filters."""
         params = {"limit": limit, "page": page}
         if session_id:
             params["sessionId"] = session_id
+        if from_timestamp:
+            params["fromTimestamp"] = from_timestamp
+        if order_by:
+            params["orderBy"] = order_by
         return await self._request("/traces", params)
 
     async def get_trace(self, trace_id: str) -> dict[str, Any]:
