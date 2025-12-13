@@ -3,7 +3,7 @@
 # Agent categories for Cupid game
 AGENT_CATEGORIES: dict[str, str] = {
     "HasEnded": "routing",
-    "StartCupidGame": "control",
+    "StartCupidGame": "content",
     "Introduction": "content",
     "DisplayMortal": "ui",
     "Mortal": "content",
@@ -12,8 +12,8 @@ AGENT_CATEGORIES: dict[str, str] = {
     "DisplayCompatibilityCard": "ui",
     "CompatibilityAnalysis": "content",
     "DisplayChoices": "ui",
-    "CupidEvaluation": "content",
-    "End": "control",
+    "CupidEvaluation": "meta",
+    "End": "meta",
 }
 
 # Chapter names for display

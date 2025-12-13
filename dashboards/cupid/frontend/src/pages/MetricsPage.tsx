@@ -17,15 +17,30 @@ import KPICard from '@/components/shared/KPICard'
 import TimeRangeSelector from '@/components/shared/TimeRangeSelector'
 import { formatCost, formatLatency, formatDate } from '@/lib/format'
 
+// Colors that match the app's dark theme with pink primary
 const CHART_COLORS = [
-  'hsl(262, 80%, 50%)', // primary
-  'hsl(220, 70%, 50%)', // blue
-  'hsl(142, 70%, 45%)', // green
-  'hsl(47, 90%, 50%)',  // yellow
-  'hsl(350, 70%, 50%)', // pink
-  'hsl(25, 90%, 50%)',  // orange
-  'hsl(180, 70%, 45%)', // cyan
+  'hsl(330, 80%, 50%)', // primary pink
+  'hsl(210, 60%, 55%)', // muted blue
+  'hsl(160, 50%, 45%)', // muted teal
+  'hsl(45, 60%, 50%)',  // muted gold
+  'hsl(280, 50%, 55%)', // muted purple
+  'hsl(15, 60%, 50%)',  // muted coral
+  'hsl(190, 50%, 45%)', // muted cyan
 ]
+
+// Ensure traces data always shows last 7 days
+const padTracesData = (data: Array<{ date: string; count: number }>) => {
+  const result = []
+  const today = new Date()
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date(today)
+    date.setDate(date.getDate() - i)
+    const dateStr = date.toISOString().split('T')[0]
+    const existing = data.find((d) => d.date === dateStr)
+    result.push({ date: dateStr, count: existing?.count ?? 0 })
+  }
+  return result
+}
 
 export default function MetricsPage() {
   const {
@@ -88,9 +103,9 @@ export default function MetricsPage() {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-3 gap-6">
         {/* Cost by Chapter */}
-        <div className="bg-card rounded-lg border border-border p-6">
+        <div className="col-span-1 bg-card rounded-lg border border-border p-6">
           <h2 className="text-lg font-semibold mb-4">Cost by Chapter</h2>
           {metricsLoading ? (
             <div className="h-64 flex items-center justify-center text-muted-foreground">
@@ -142,16 +157,16 @@ export default function MetricsPage() {
         </div>
 
         {/* Traces per Day */}
-        <div className="bg-card rounded-lg border border-border p-6">
+        <div className="col-span-2 bg-card rounded-lg border border-border p-6">
           <h2 className="text-lg font-semibold mb-4">Traces per Day</h2>
           {metricsLoading ? (
             <div className="h-64 flex items-center justify-center text-muted-foreground">
               Loading...
             </div>
-          ) : dashboardMetrics?.traces_per_day && dashboardMetrics.traces_per_day.length > 0 ? (
+          ) : (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={dashboardMetrics.traces_per_day}>
+                <BarChart data={padTracesData(dashboardMetrics?.traces_per_day ?? [])}>
                   <XAxis
                     dataKey="date"
                     tick={{ fontSize: 11 }}
@@ -159,6 +174,7 @@ export default function MetricsPage() {
                   />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip
+                    cursor={false}
                     contentStyle={{
                       backgroundColor: 'hsl(var(--card))',
                       border: '1px solid hsl(var(--border))',
@@ -168,10 +184,6 @@ export default function MetricsPage() {
                   <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
-            </div>
-          ) : (
-            <div className="h-64 flex items-center justify-center text-muted-foreground">
-              No data available
             </div>
           )}
         </div>

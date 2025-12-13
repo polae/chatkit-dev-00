@@ -1,52 +1,48 @@
-import { useEffect } from 'react'
-import { Bot, Clock, DollarSign, Hash, CheckCircle } from 'lucide-react'
-import {
-  LineChart,
-  Line,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts'
+import { useEffect, useState } from 'react'
+import { Bot } from 'lucide-react'
 import { useDashboardStore } from '@/store/useDashboardStore'
-import Badge from '@/components/shared/Badge'
-import { formatCost, formatLatencyMs, formatTokens, formatRelativeTime } from '@/lib/format'
+import { formatCost, formatLatencyMs, formatTokens } from '@/lib/format'
 import { cn } from '@/lib/utils'
 import { AGENT_ORDER } from '@/lib/constants'
 
 const categoryColors: Record<string, string> = {
   routing: 'text-yellow-500',
-  control: 'text-blue-500',
   content: 'text-purple-500',
   ui: 'text-green-500',
+  meta: 'text-pink-500',
 }
 
+const categoryBgColors: Record<string, string> = {
+  routing: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+  content: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+  ui: 'bg-green-500/20 text-green-400 border-green-500/30',
+  meta: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+}
+
+const categoryDotColors: Record<string, string> = {
+  routing: 'bg-yellow-500',
+  content: 'bg-purple-500',
+  ui: 'bg-green-500',
+  meta: 'bg-pink-500',
+}
+
+const CATEGORIES = ['routing', 'content', 'ui', 'meta'] as const
+
 export default function AgentsPage() {
-  const {
-    agents,
-    agentsLoading,
-    selectedAgent,
-    agentDetail,
-    agentCharts,
-    setSelectedAgent,
-    fetchAgents,
-    fetchAgentDetail,
-  } = useDashboardStore()
+  const { agents, agentsLoading, fetchAgents } = useDashboardStore()
+  const [categoryFilter, setCategoryFilter] = useState<string | null>(null)
 
   useEffect(() => {
     fetchAgents()
   }, [fetchAgents])
 
-  useEffect(() => {
-    if (selectedAgent) {
-      fetchAgentDetail(selectedAgent)
-    }
-  }, [selectedAgent, fetchAgentDetail])
+  // Filter agents by category
+  const filteredAgents = categoryFilter
+    ? agents.filter((a) => a.category === categoryFilter)
+    : agents
 
   // Sort agents by game flow order
-  const sortedAgents = [...agents].sort((a, b) => {
+  const sortedAgents = [...filteredAgents].sort((a, b) => {
     const aIndex = AGENT_ORDER.indexOf(a.name)
     const bIndex = AGENT_ORDER.indexOf(b.name)
     if (aIndex === -1 && bIndex === -1) return a.name.localeCompare(b.name)
@@ -63,150 +59,103 @@ export default function AgentsPage() {
         <p className="text-muted-foreground">Performance analytics for Cupid's 12 sub-agents</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-        {/* Agent Grid */}
-        <div className="col-span-2">
-          {agentsLoading ? (
-            <div className="grid grid-cols-2 gap-4">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="h-32 bg-muted rounded-lg animate-pulse" />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-4">
-              {sortedAgents.map((agent) => (
-                <button
-                  key={agent.name}
-                  onClick={() => setSelectedAgent(agent.name)}
-                  className={cn(
-                    'bg-card rounded-lg border p-4 text-left transition-colors',
-                    selectedAgent === agent.name
-                      ? 'border-primary'
-                      : 'border-border hover:border-primary/50'
-                  )}
-                >
-                  <div className="flex items-center justify-between mb-3">
+      {/* Category Filter */}
+      <div className="flex gap-2 mb-4">
+        <button
+          onClick={() => setCategoryFilter(null)}
+          className={cn(
+            'px-3 py-1.5 rounded-full text-sm font-medium transition-colors border',
+            categoryFilter === null
+              ? 'bg-foreground/10 text-foreground border-foreground/20'
+              : 'bg-muted/50 text-muted-foreground border-transparent hover:bg-muted'
+          )}
+        >
+          All
+        </button>
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setCategoryFilter(cat)}
+            className={cn(
+              'px-3 py-1.5 rounded-full text-sm font-medium transition-colors border flex items-center gap-2',
+              categoryFilter === cat
+                ? categoryBgColors[cat]
+                : 'bg-muted/50 text-muted-foreground border-transparent hover:bg-muted'
+            )}
+          >
+            <span className={cn('w-2 h-2 rounded-full', categoryDotColors[cat])} />
+            {cat === 'ui' ? 'UI' : cat.charAt(0).toUpperCase() + cat.slice(1)}
+          </button>
+        ))}
+      </div>
+
+      {/* Table */}
+      <div className="bg-card rounded-lg border border-border overflow-hidden">
+        <table className="w-full">
+          <thead className="bg-muted/50">
+            <tr>
+              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Agent
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Tokens
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Total Cost
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Avg Latency
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Success Rate
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                Runs
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {agentsLoading ? (
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                  Loading agents...
+                </td>
+              </tr>
+            ) : sortedAgents.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="px-4 py-8 text-center text-muted-foreground">
+                  No agents found
+                </td>
+              </tr>
+            ) : (
+              sortedAgents.map((agent) => (
+                <tr key={agent.name} className="border-b border-border hover:bg-muted/50">
+                  <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <Bot className={cn('w-5 h-5', categoryColors[agent.category] || 'text-muted-foreground')} />
-                      <span className="font-medium">{agent.name}</span>
+                      <Bot className={cn('w-4 h-4', categoryColors[agent.category] || 'text-muted-foreground')} />
+                      <span className="font-medium text-sm">{agent.name}</span>
                     </div>
-                    <Badge variant="default">{agent.execution_count} runs</Badge>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs">
-                    <div>
-                      <p className="text-muted-foreground">Avg Latency</p>
-                      <p className="font-medium">{formatLatencyMs(agent.avg_latency_ms)}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Total Cost</p>
-                      <p className="font-medium">{formatCost(agent.total_cost)}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Tokens</p>
-                      <p className="font-medium">{formatTokens(agent.total_tokens)}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Success Rate</p>
-                      <p className="font-medium">{agent.success_rate.toFixed(0)}%</p>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Detail Panel */}
-        <div>
-          {selectedAgent && agentDetail ? (
-            <div className="bg-card rounded-lg border border-border p-4 sticky top-8">
-              <h2 className="text-lg font-semibold mb-4">{agentDetail.name}</h2>
-
-              {/* Charts */}
-              {agentCharts && (
-                <>
-                  <div className="mb-4">
-                    <p className="text-xs text-muted-foreground mb-2">Latency Over Time</p>
-                    <div className="h-32">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={agentCharts.latency_over_time}>
-                          <XAxis dataKey="timestamp" tick={false} />
-                          <YAxis tick={{ fontSize: 10 }} />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: 'hsl(var(--card))',
-                              border: '1px solid hsl(var(--border))',
-                            }}
-                            formatter={(value: number) => [formatLatencyMs(value), 'Latency']}
-                          />
-                          <Line
-                            type="monotone"
-                            dataKey="latency_ms"
-                            stroke="hsl(var(--primary))"
-                            strokeWidth={2}
-                            dot={false}
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <p className="text-xs text-muted-foreground mb-2">Executions by Hour</p>
-                    <div className="h-32">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={agentCharts.executions_by_hour}>
-                          <XAxis dataKey="hour" tick={{ fontSize: 10 }} />
-                          <YAxis tick={{ fontSize: 10 }} />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: 'hsl(var(--card))',
-                              border: '1px solid hsl(var(--border))',
-                            }}
-                          />
-                          <Bar dataKey="count" fill="hsl(var(--primary))" />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {/* Recent Executions */}
-              <div>
-                <p className="text-xs text-muted-foreground mb-2">Recent Executions</p>
-                <div className="space-y-2 max-h-64 overflow-y-auto">
-                  {agentDetail.recent_executions.map((exec, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between text-xs p-2 bg-muted/50 rounded"
-                    >
-                      <div className="flex items-center gap-2">
-                        {exec.status === 'success' ? (
-                          <CheckCircle className="w-3 h-3 text-green-500" />
-                        ) : (
-                          <CheckCircle className="w-3 h-3 text-red-500" />
-                        )}
-                        <span className="font-mono text-muted-foreground">
-                          {exec.trace_id.slice(0, 8)}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3 text-muted-foreground">
-                        <span>{formatLatencyMs(exec.latency_ms)}</span>
-                        <span>{formatCost(exec.cost)}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-card rounded-lg border border-border p-8 text-center text-muted-foreground">
-              <Bot className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>Select an agent to view details</p>
-            </div>
-          )}
-        </div>
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    {formatTokens(agent.total_tokens)}
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    {formatCost(agent.total_cost)}
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    {formatLatencyMs(agent.avg_latency_ms)}
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    {agent.success_rate.toFixed(0)}%
+                  </td>
+                  <td className="px-4 py-3 text-sm">
+                    {agent.execution_count}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 export const AGENT_CATEGORIES: Record<string, string> = {
   HasEnded: 'routing',
-  StartCupidGame: 'control',
+  StartCupidGame: 'content',
   Introduction: 'content',
   DisplayMortal: 'ui',
   Mortal: 'content',
@@ -9,8 +9,8 @@ export const AGENT_CATEGORIES: Record<string, string> = {
   DisplayCompatibilityCard: 'ui',
   CompatibilityAnalysis: 'content',
   DisplayChoices: 'ui',
-  CupidEvaluation: 'content',
-  End: 'control',
+  CupidEvaluation: 'meta',
+  End: 'meta',
 }
 
 export const CHAPTER_NAMES: Record<number, string> = {
