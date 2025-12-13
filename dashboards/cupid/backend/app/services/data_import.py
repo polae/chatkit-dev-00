@@ -193,20 +193,22 @@ async def _refresh_agent_stats(db) -> None:
     """Refresh agent stats cache."""
     await db.execute("DELETE FROM agent_stats_cache")
 
+    # Cost and tokens are on child GENERATION observations, so we join to get them
     cursor = await db.execute(
         """
         SELECT
-            name,
-            COUNT(*) as execution_count,
-            COALESCE(SUM(latency_ms), 0) as total_latency_ms,
-            COALESCE(AVG(latency_ms), 0) as avg_latency_ms,
-            COALESCE(SUM(calculated_total_cost), 0) as total_cost,
-            COALESCE(SUM(total_tokens), 0) as total_tokens,
-            SUM(CASE WHEN level = 'ERROR' THEN 1 ELSE 0 END) as error_count,
-            MAX(start_time) as last_execution_at
-        FROM observations
-        WHERE type = 'AGENT' AND name != 'Agent workflow' AND name IS NOT NULL
-        GROUP BY name
+            a.name,
+            COUNT(DISTINCT a.id) as execution_count,
+            COALESCE(SUM(a.latency_ms), 0) as total_latency_ms,
+            COALESCE(AVG(a.latency_ms), 0) as avg_latency_ms,
+            COALESCE(SUM(g.calculated_total_cost), 0) as total_cost,
+            COALESCE(SUM(g.total_tokens), 0) as total_tokens,
+            SUM(CASE WHEN a.level = 'ERROR' THEN 1 ELSE 0 END) as error_count,
+            MAX(a.start_time) as last_execution_at
+        FROM observations a
+        LEFT JOIN observations g ON g.parent_observation_id = a.id AND g.type = 'GENERATION'
+        WHERE a.type = 'AGENT' AND a.name != 'Agent workflow' AND a.name IS NOT NULL
+        GROUP BY a.name
         """
     )
     rows = await cursor.fetchall()
