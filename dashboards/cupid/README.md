@@ -150,10 +150,15 @@ The `openinference-instrumentation-openai-agents` library doesn't automatically 
 - **CupidEvaluation** agent (Chapter 5)
 - **End** agent (Chapter 6)
 
-**Workaround Applied:** The Cupid backend (`apps/cupid/backend/app/server.py`) manually captures usage data from `result.raw_responses` after streaming completes and sends it to Langfuse. Look for `_log_streaming_usage_to_langfuse` method.
+**Workaround Applied:** The Cupid backend (`apps/cupid/backend/app/server.py`) manually captures usage data from `result.raw_responses` after streaming completes using the Langfuse SDK v3 API. Look for `_log_streaming_usage_to_langfuse` method.
 
-In the dashboard, you may see:
-- `CupidEvaluation_streaming_usage` and `End_streaming_usage` spans with the captured usage data
-- The parent `CupidEvaluation` and `End` observations will have proper token counts
+In Langfuse/dashboard, the workaround creates standalone GENERATION observations with:
+- Name matching the agent (`CupidEvaluation`, `End`)
+- Proper model name (`gpt-5.1`) for cost calculation
+- `metadata.workaround: "streaming_usage_capture"` marker
+- Token counts and calculated costs
+- Streamed text content in `output.text` for conversation view display
+
+The dashboard's `sync_service.py` aggregates these workaround generations when calculating agent stats, so token counts and costs are properly attributed to the agents.
 
 **When to remove:** Once the upstream issue is fixed, the workaround in `apps/cupid/backend/app/server.py` can be removed. Search for references to issue #2530.

@@ -228,7 +228,7 @@ class AnalyticsService:
                     o.id, o.trace_id, o.parent_observation_id, o.type, o.name,
                     o.start_time, o.end_time, o.latency_ms, o.model,
                     o.total_tokens, o.prompt_tokens, o.completion_tokens,
-                    o.calculated_total_cost, o.input_json, o.output_json
+                    o.calculated_total_cost, o.input_json, o.output_json, o.metadata_json
                 FROM observations o
                 WHERE o.trace_id IN ({placeholders})
                 ORDER BY o.start_time ASC
@@ -242,6 +242,17 @@ class AnalyticsService:
 
             def get_parent_agent_name(obs: dict) -> str:
                 """Find the agent name for an observation."""
+                # Workaround GENERATIONs have the agent name directly on them
+                # https://github.com/Arize-ai/openinference/issues/2530
+                if obs["metadata_json"]:
+                    try:
+                        metadata = json.loads(obs["metadata_json"])
+                        if metadata.get("workaround") == "streaming_usage_capture":
+                            # Use the observation's own name as the agent name
+                            return obs["name"] or "Unknown"
+                    except Exception:
+                        pass
+
                 if obs["type"] == "AGENT" and obs["name"] != "Agent workflow":
                     return obs["name"]
 

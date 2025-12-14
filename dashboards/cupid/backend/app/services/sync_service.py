@@ -403,6 +403,35 @@ class SyncService:
             )
             rows = await cursor.fetchall()
 
+            # Workaround for https://github.com/Arize-ai/openinference/issues/2530
+            # Get usage from GENERATIONs that are part of workaround traces
+            # Check: GENERATION's own metadata, parent SPAN metadata, or parent trace metadata
+            workaround_cursor = await db.execute(
+                """
+                SELECT
+                    g.name,
+                    COALESCE(SUM(g.total_tokens), 0) as tokens,
+                    COALESCE(SUM(g.calculated_total_cost), 0) as cost
+                FROM observations g
+                LEFT JOIN observations p ON g.parent_observation_id = p.id
+                LEFT JOIN traces t ON g.trace_id = t.id
+                WHERE g.type = 'GENERATION'
+                AND (
+                    -- Current structure: GENERATION itself has workaround metadata
+                    json_extract(g.metadata_json, '$.workaround') = 'streaming_usage_capture'
+                    OR
+                    -- Old structure: parent SPAN has workaround metadata
+                    (p.type = 'SPAN' AND json_extract(p.metadata_json, '$.workaround') = 'streaming_usage_capture')
+                    OR
+                    -- Alt structure: parent trace has workaround metadata
+                    json_extract(t.metadata_json, '$.workaround') = 'streaming_usage_capture'
+                )
+                GROUP BY g.name
+                """
+            )
+            workaround_rows = await workaround_cursor.fetchall()
+            workaround_data = {row["name"]: row for row in workaround_rows}
+
             now = datetime.now(timezone.utc).isoformat()
             for row in rows:
                 execution_count = row["execution_count"]
@@ -413,6 +442,14 @@ class SyncService:
                     else 100
                 )
 
+                # Add workaround tokens/cost if available (streaming agents fix)
+                agent_name = row["name"]
+                total_tokens = row["total_tokens"]
+                total_cost = row["total_cost"]
+                if agent_name in workaround_data:
+                    total_tokens += workaround_data[agent_name]["tokens"]
+                    total_cost += workaround_data[agent_name]["cost"]
+
                 await db.execute(
                     """
                     INSERT INTO agent_stats_cache
@@ -421,12 +458,12 @@ class SyncService:
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
-                        row["name"],
+                        agent_name,
                         execution_count,
                         row["total_latency_ms"],
                         row["avg_latency_ms"],
-                        row["total_cost"],
-                        row["total_tokens"],
+                        total_cost,
+                        total_tokens,
                         error_count,
                         success_rate,
                         row["last_execution_at"],

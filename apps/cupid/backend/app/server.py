@@ -14,6 +14,7 @@ from chatkit.agents import AgentContext, stream_agent_response
 from chatkit.server import ChatKitServer
 from chatkit.types import (
     Action,
+    AssistantMessageItem,
     Attachment,
     HiddenContextItem,
     InferenceOptions,
@@ -598,44 +599,43 @@ class CupidServer(ChatKitServer[RequestContext]):
     async def _log_streaming_usage_to_langfuse(
         self,
         agent_name: str,
+        model: str,
         result: RunResultStreaming,
         thread: ThreadMetadata,
+        output_text: str = "",
     ) -> None:
         """
         Workaround for openinference-instrumentation-openai-agents not capturing
         streaming response usage data.
         See: https://github.com/Arize-ai/openinference/issues/2530
-        """
-        from langfuse import get_client
 
-        client = get_client()
+        Uses Langfuse SDK v3 context manager API.
+        """
+        from langfuse import Langfuse
+
+        langfuse = Langfuse()
         for response in result.raw_responses:
-            model = getattr(response, "model", None) or "unknown"
-            # Create a standalone span (acts as trace when no context)
-            span = client.start_span(
-                name=f"{agent_name}_streaming_usage",
+            # Use v3 context manager API to create a generation
+            with langfuse.start_as_current_observation(
+                name=agent_name,
+                as_type="generation",
+                model=model,
+                input={"note": "See parent trace for full input"},
                 metadata={
                     "workaround": "streaming_usage_capture",
                     "thread_id": thread.id,
                     "issue": "https://github.com/Arize-ai/openinference/issues/2530",
                 },
-            )
-            # Create a generation inside the span
-            generation = span.start_generation(
-                name=agent_name,
-                model=model,
-                input={"note": "See parent trace for full input"},
-                output={"response_id": getattr(response, "response_id", None)},
-                usage_details={
-                    "input": response.usage.input_tokens,
-                    "output": response.usage.output_tokens,
-                    "total": response.usage.total_tokens,
-                },
-            )
-            generation.end()
-            span.end()
-        # Flush to ensure data is sent
-        client.flush()
+            ) as generation:
+                generation.update(
+                    output={"text": output_text} if output_text else {"response_id": getattr(response, "response_id", None)},
+                    usage_details={
+                        "input_tokens": response.usage.input_tokens,
+                        "output_tokens": response.usage.output_tokens,
+                        "total_tokens": response.usage.total_tokens,
+                    },
+                )
+        langfuse.flush()
 
     async def _handle_chapter_5(
         self,
@@ -650,14 +650,21 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Show progress indicator
         yield ProgressUpdateEvent(text="Preparing your evaluation...")
 
-        # Run CupidEvaluation agent - stream events directly
+        # Run CupidEvaluation agent - stream events and capture text content
         result = Runner.run_streamed(cupid_evaluation_agent, input_items, context=agent_context)
+        captured_text = []
         async for event in stream_agent_response(agent_context, result):
             yield event
+            # Capture text from assistant messages for Langfuse workaround
+            if isinstance(event, ThreadItemDoneEvent) and isinstance(event.item, AssistantMessageItem):
+                for content in event.item.content:
+                    if hasattr(content, 'text') and content.text:
+                        captured_text.append(content.text)
 
         # Workaround: manually log usage for streaming agents
         # https://github.com/Arize-ai/openinference/issues/2530
-        await self._log_streaming_usage_to_langfuse("CupidEvaluation", result, thread)
+        output_text = "\n\n".join(captured_text)
+        await self._log_streaming_usage_to_langfuse("CupidEvaluation", "gpt-5.1", result, thread, output_text)
 
         # Move to final chapter (End agent)
         await self._set_chapter(thread, context, 6)
@@ -675,14 +682,21 @@ class CupidServer(ChatKitServer[RequestContext]):
         # Show progress indicator
         yield ProgressUpdateEvent(text="Wrapping up...")
 
-        # Run End agent - stream events directly
+        # Run End agent - stream events and capture text content
         result = Runner.run_streamed(end_agent, input_items, context=agent_context)
+        captured_text = []
         async for event in stream_agent_response(agent_context, result):
             yield event
+            # Capture text from assistant messages for Langfuse workaround
+            if isinstance(event, ThreadItemDoneEvent) and isinstance(event.item, AssistantMessageItem):
+                for content in event.item.content:
+                    if hasattr(content, 'text') and content.text:
+                        captured_text.append(content.text)
 
         # Workaround: manually log usage for streaming agents
         # https://github.com/Arize-ai/openinference/issues/2530
-        await self._log_streaming_usage_to_langfuse("End", result, thread)
+        output_text = "\n\n".join(captured_text)
+        await self._log_streaming_usage_to_langfuse("End", "gpt-5.1", result, thread, output_text)
 
     async def to_message_content(self, _input: Attachment) -> ResponseInputContentParam:
         raise RuntimeError("File attachments are not supported.")

@@ -176,7 +176,15 @@ Langfuse tracing via OpenInference instrumentation.
 
 The `openinference-instrumentation-openai-agents` library doesn't capture token usage for streaming responses. This affects `CupidEvaluation` and `End` agents.
 
-**Workaround:** `server.py` manually captures usage from `result.raw_responses` after streaming completes. See `_log_streaming_usage_to_langfuse()` method. Remove when upstream is fixed.
+**Workaround:** `server.py` manually captures usage from `result.raw_responses` after streaming completes using the Langfuse SDK v3 API. See `_log_streaming_usage_to_langfuse()` method.
+
+The workaround creates standalone GENERATION observations with:
+- Proper model name (`gpt-5.1`) for cost calculation
+- `metadata.workaround: "streaming_usage_capture"` marker
+- Token counts via `usage_details`
+- Streamed text content in `output.text` for dashboard conversation view
+
+**When to remove:** Once the upstream issue is fixed, search for references to issue #2530 in `server.py`.
 
 ## Development
 
