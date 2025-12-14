@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Annotated, Any, AsyncIterator
 
-from agents import Runner
+from agents import Runner, RunResultStreaming
 from langfuse import propagate_attributes
 from chatkit.agents import AgentContext, stream_agent_response
 from chatkit.server import ChatKitServer
@@ -595,6 +595,48 @@ class CupidServer(ChatKitServer[RequestContext]):
 
             # Stay in chapter 4 (loop) - don't increment chapter
 
+    async def _log_streaming_usage_to_langfuse(
+        self,
+        agent_name: str,
+        result: RunResultStreaming,
+        thread: ThreadMetadata,
+    ) -> None:
+        """
+        Workaround for openinference-instrumentation-openai-agents not capturing
+        streaming response usage data.
+        See: https://github.com/Arize-ai/openinference/issues/2530
+        """
+        from langfuse import get_client
+
+        client = get_client()
+        for response in result.raw_responses:
+            model = getattr(response, "model", None) or "unknown"
+            # Create a standalone span (acts as trace when no context)
+            span = client.start_span(
+                name=f"{agent_name}_streaming_usage",
+                metadata={
+                    "workaround": "streaming_usage_capture",
+                    "thread_id": thread.id,
+                    "issue": "https://github.com/Arize-ai/openinference/issues/2530",
+                },
+            )
+            # Create a generation inside the span
+            generation = span.start_generation(
+                name=agent_name,
+                model=model,
+                input={"note": "See parent trace for full input"},
+                output={"response_id": getattr(response, "response_id", None)},
+                usage_details={
+                    "input": response.usage.input_tokens,
+                    "output": response.usage.output_tokens,
+                    "total": response.usage.total_tokens,
+                },
+            )
+            generation.end()
+            span.end()
+        # Flush to ensure data is sent
+        client.flush()
+
     async def _handle_chapter_5(
         self,
         thread: ThreadMetadata,
@@ -612,6 +654,10 @@ class CupidServer(ChatKitServer[RequestContext]):
         result = Runner.run_streamed(cupid_evaluation_agent, input_items, context=agent_context)
         async for event in stream_agent_response(agent_context, result):
             yield event
+
+        # Workaround: manually log usage for streaming agents
+        # https://github.com/Arize-ai/openinference/issues/2530
+        await self._log_streaming_usage_to_langfuse("CupidEvaluation", result, thread)
 
         # Move to final chapter (End agent)
         await self._set_chapter(thread, context, 6)
@@ -633,6 +679,10 @@ class CupidServer(ChatKitServer[RequestContext]):
         result = Runner.run_streamed(end_agent, input_items, context=agent_context)
         async for event in stream_agent_response(agent_context, result):
             yield event
+
+        # Workaround: manually log usage for streaming agents
+        # https://github.com/Arize-ai/openinference/issues/2530
+        await self._log_streaming_usage_to_langfuse("End", result, thread)
 
     async def to_message_content(self, _input: Attachment) -> ResponseInputContentParam:
         raise RuntimeError("File attachments are not supported.")

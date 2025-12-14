@@ -139,3 +139,21 @@ Langfuse API has aggressive rate limits. The dashboard uses:
 - Background sync (every 5 min) instead of real-time queries
 - Local SQLite cache for fast dashboard queries
 - Exponential backoff on 429 errors
+
+## Known Issues
+
+### Streaming Usage Data
+
+**Issue:** https://github.com/Arize-ai/openinference/issues/2530
+
+The `openinference-instrumentation-openai-agents` library doesn't automatically capture token usage for streaming responses. This affects:
+- **CupidEvaluation** agent (Chapter 5)
+- **End** agent (Chapter 6)
+
+**Workaround Applied:** The Cupid backend (`apps/cupid/backend/app/server.py`) manually captures usage data from `result.raw_responses` after streaming completes and sends it to Langfuse. Look for `_log_streaming_usage_to_langfuse` method.
+
+In the dashboard, you may see:
+- `CupidEvaluation_streaming_usage` and `End_streaming_usage` spans with the captured usage data
+- The parent `CupidEvaluation` and `End` observations will have proper token counts
+
+**When to remove:** Once the upstream issue is fixed, the workaround in `apps/cupid/backend/app/server.py` can be removed. Search for references to issue #2530.
